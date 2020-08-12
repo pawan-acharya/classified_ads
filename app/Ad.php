@@ -183,5 +183,7 @@ class Ad extends Model
         }
        return false;
     }
+
+
   
 }

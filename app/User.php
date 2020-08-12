@@ -8,6 +8,10 @@ use Laravel\Cashier\Billable;
 use Gabievi\Promocodes\Traits\Rewardable;
 use App\Notifications\ResetPassword;
 
+use Auth;
+use App\Chat;
+use App\ClassifiedAd;
+
 class User extends Authenticatable
 {
     use Notifiable, Billable, Rewardable;
@@ -73,5 +77,26 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
     $this->notify(new ResetPassword($token));
+    }
+
+
+    /* not necessary though */
+    public function chats()
+    {
+        return $this->hasMany('App\Chat');
+    }
+
+    public function checkIfOwner($id, $type){
+        if($type== 'chat'){
+            return (Chat::find($id)->classified_ad->user->id == Auth::id())? true: false;
+        }else if($type== 'classified_ad'){
+            return (ClassifiedAd::find($id)->user->id == Auth::id())? true: false;
+        }else{
+            return false;
+        }
+    }
+
+    public function checkAllowedToReply($id){
+        return (!Auth::user()->checkIfOwner($id, 'chat') && Chat::find($id)->user->id ==Auth::id());
     }
 }
