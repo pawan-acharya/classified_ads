@@ -79,17 +79,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/classified_ads/store/{cat_id}', 'ClassifiedAdController@store')->name('classified_ads.store');
 
     });/** end of ads section**/
-
-    /** chat section**/
-    Route::get('chats/{id}', 'ChatController@create')->name('chats.create');
-    Route::post('reply_to_ad/{id}', 'ReplyController@add_reply')->name('chats.add_reply');
-
-    /*owner*/
-    Route::get('chats/index/{classified_ad_id}', 'ChatController@index')->name('chats.index');
-    Route::get('replies/index/{chat_id}', 'ReplyController@index')->name('replies.index');
-    Route::post('add_reply_to_visitor/{chat_id}', 'ReplyController@add_owner_reply')->name('chats.owner_reply');
-    /*end of owner*/
-    /** end of ads section**/
 });
 
 Route::middleware(['auth','admin'])->prefix('admin')->group(function () {

@@ -61,8 +61,6 @@ class ClassifiedAdController extends Controller
      */
     public function show($id)
     {
-        app()->call('App\Http\Controllers\ChatController@create', ['id'=>$id]);
-
         $classified_ad= ClassifiedAd::with('category')->find($id);
         $form_items_collection= Category::find($classified_ad->category->id)->form_items()->get(['id','name']);
         return view('classified_ads.show', compact('classified_ad', 'form_items_collection'));
