@@ -16,4 +16,9 @@ class ClassifiedAd extends Model
     {
         return $this->belongsTo('App\Category');
     }
+
+ 	public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

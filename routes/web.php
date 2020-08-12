@@ -78,6 +78,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/classified_ads/create/{cat_id}', 'ClassifiedAdController@create')->name('classified_ads.create');
         Route::post('/classified_ads/store/{cat_id}', 'ClassifiedAdController@store')->name('classified_ads.store');
 
+        Route::post('/feedback/create/{classified_ad}', 'FeedbackController@create')->name('feedbacks.create');
+        Route::get('/messages', 'ChatRoomController@index')->name('chatrooms.index');
+        Route::get('/messages/{chat_room_id}', 'FeedbackController@show')->name('feedbacks.show');
+        Route::post('/feedback/reply/{chat_room_id}', 'FeedbackController@reply')->name('feedbacks.reply');
     });/** end of ads section**/
 });
 

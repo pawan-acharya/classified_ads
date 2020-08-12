@@ -1,4 +1,4 @@
-<form action="{{route('chats.add_reply',['id'=> $classified_ad->chats()->where('user_id', Auth::id())->first()->id])}}" method="POST">
+<form action="{{route('feedbacks.reply',['chat_room_id'=> $feedbacks->first()->chat_room->id])}}" method="POST">
 	@csrf
 	<div class="form-group">
 	    <label for="exampleInputEmail1">Chat box</label>
