@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\ChatRoom;
 use App\Feedback;
+use App\Category;
 use Auth;
 
 class FeedbackController extends Controller
@@ -54,8 +55,8 @@ class FeedbackController extends Controller
         session([
             'chat_room_id_'.$chat_room_id => $feedbacks->max('id')
         ]);
-
-    	return view('feedbacks.show', compact('feedbacks'));
+        $form_items_collection= Category::find($feedbacks->first()->chat_room->classified_ad->category->id)->form_items()->get(['id','name']);
+    	return view('feedbacks.show', compact(['feedbacks', 'form_items_collection']));
     }
 
     public function reply(Request $request, $chat_room_id){

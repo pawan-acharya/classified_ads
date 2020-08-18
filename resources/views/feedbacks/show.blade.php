@@ -30,7 +30,24 @@
 				</table>
 				@include('feedbacks.partials.chatbox')	
 			</div>
-			<div class="col-sm"></div>
+			<div class="col-sm">
+				<table class="table table-striped">
+				  <thead>
+				    <tr>
+				      <th scope="col">Field Name</th>
+				      <th scope="col">Value</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  	@foreach (json_decode($feedbacks->first()->chat_room->classified_ad->form_values) as $key=>$value)
+				    <tr>
+				      	<td>{{$form_items_collection->find($key)->name}}</td>
+				      	<td>{{$value}}</td>
+				    </tr>
+				    @endforeach
+				  </tbody>
+				</table>
+			</div>
 		</div>
 	  </div>
 	</div>
