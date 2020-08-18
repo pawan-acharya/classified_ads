@@ -47,6 +47,7 @@ class ClassifiedAdController extends Controller
         
         $classified_ad = new ClassifiedAd([
             'form_values'=> json_encode( $form_values_array),
+            'user_id'=> Auth::id(),
         ]);
         $classified_ad= Category::find($cat_id)->classified_ads()->save($classified_ad);
 

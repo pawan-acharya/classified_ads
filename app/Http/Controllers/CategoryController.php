@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use App\FormItem;
+use DB;
 
 class CategoryController extends Controller
 {
@@ -36,13 +38,22 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        
         $validatedData = $request->validate([
             'category_name' => 'required|unique:categories|max:255',
         ]);
         $category = Category::create($validatedData);
 
-        return redirect()->route('form_items.add', ['id'=>$category->id]);
+        $new_array=[];
+        foreach ($request->names as $key => $value) {
+            $temp_data=[];
+            $temp_data['name']= $value;
+            $temp_data['type']= $request->types[$key];
+            $temp_data['required']= ($request->mandatories[$key]== 'yes')?'1':'0';
+            array_push($new_array, $temp_data);
+        }
+        
+        $category->form_items()->createMany($new_array);
+        return redirect()->route('categories.show', ['category'=> $category->id]);
     }
 
     /**
@@ -78,12 +89,47 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         $validatedData = $request->validate([
             'category_name' => 'required|max:255|unique:categories,category_name,'.$id,
         ]);
-        $category= Category::find($id)->update($validatedData);
 
-        return redirect()->route('form_items.edit', ['id'=>$id]);
+        DB::beginTransaction();
+        try{
+            $category= Category::find($id);
+            $category->update($validatedData); 
+
+            // $category= Category::find($id);
+            $new_array=[];
+            $arrray_of_ids= $category->getFormItemsIdsAttribute();
+            
+            foreach ($request->names as $key => $value) {
+                if($request->ids[$key]){    
+                    FormItem::find($request->ids[$key])->update([
+                        'name'=>  $value,
+                        'type'=> $request->types[$key],
+                        'required'=> ($request->mandatories[$key]== 'yes')?'1':'0',
+                    ]);
+                }else{
+                    $temp_data=[];
+                    $temp_data['name']= $value;
+                    $temp_data['type']= $request->types[$key];
+                    $temp_data['required']= ($request->mandatories[$key]== 'yes')?'1':'0';
+                    array_push($new_array, $temp_data);
+                }
+            }
+            $unwanted_form_items= array_diff($arrray_of_ids->toArray(),$request->ids);
+            FormItem::destroy($unwanted_form_items);
+
+            $category->form_items()->createMany($new_array);
+            
+            DB::commit();
+            return redirect()->route('categories.show', ['category'=> $id]);
+        }catch(Throwable $e){
+            DB::rollBack();
+        }
+
+        // return redirect()->route('form_items.edit', ['id'=>$id]);
     }
 
     /**

@@ -8,6 +8,8 @@ class Feedback extends Model
 {
 	protected $fillable = ['message', 'user_id'];
 
+	protected $touches = ['chat_room'];
+
     public function chat_room()
     {
         return $this->belongsTo('App\ChatRoom');

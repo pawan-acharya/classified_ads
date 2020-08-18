@@ -15,17 +15,17 @@
 	  		<div class="form-group">
 			    <label for="exampleInputEmail1">Static Field 1</label>
 			    <input type="text" class="form-control" aria-describedby="emailHelp" value="Static field isn't be saved" required>
-			    <small id="emailHelp" class="form-text text-muted">&Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</small>
+			    
 		  	</div>
 		  	<div class="form-group">
 			    <label for="exampleInputEmail1">Static Field 2</label>
 			    <input type="text" class="form-control"  aria-describedby="emailHelp" value="Static field isn't be saved"  required>
-			    <small id="emailHelp" class="form-text text-muted">&Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</small>
+			    
 		  	</div>
 		  	<div class="form-group">
 			    <label for="exampleInputEmail1">Static Field 3</label>
 			    <input type="text" class="form-control" aria-describedby="emailHelp" value="Static field isn't be saved" required>
-			    <small id="emailHelp" class="form-text text-muted">&Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</small>
+			    
 		  	</div>
 
 		  	@include('classified_ads.partials.edit')

@@ -71,7 +71,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/partners/action/approve', 'PartnerController@approve')->name('partners.approve');
 
     /** ads section**/
-    Route::prefix('first_draft')->group(function () {
         Route::resource('classified_ads', 'ClassifiedAdController')->except([
             'create', 'store'
         ]);
@@ -82,7 +81,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/messages', 'ChatRoomController@index')->name('chatrooms.index');
         Route::get('/messages/{chat_room_id}', 'FeedbackController@show')->name('feedbacks.show');
         Route::post('/feedback/reply/{chat_room_id}', 'FeedbackController@reply')->name('feedbacks.reply');
-    });/** end of ads section**/
+    /** end of ads section**/
 });
 
 Route::middleware(['auth','admin'])->prefix('admin')->group(function () {
@@ -92,14 +91,13 @@ Route::middleware(['auth','admin'])->prefix('admin')->group(function () {
     Route::get('/history', 'AdminController@history')->name('admin.history');
 
     /** Category and  formItems section**/
-    Route::prefix('first_draft')->group(function () {
         Route::resource('categories', 'CategoryController');
 
-        Route::get('/add_field_items_to_form/{id}', 'FormItemController@add')->name('form_items.add');
-        Route::post('/store_field_items_to_form/{id}', 'FormItemController@store')->name('form_items.store');
-        Route::get('/edit_field_items_to_form/{id}', 'FormItemController@edit')->name('form_items.edit');
-        Route::put('/update_field_items_to_form/{id}', 'FormItemController@update')->name('form_items.update');
-    });/** end of Category and  formItems  section**/
+        // Route::get('/add_field_items_to_form/{id}', 'FormItemController@add')->name('form_items.add');
+        // Route::post('/store_field_items_to_form/{id}', 'FormItemController@store')->name('form_items.store');
+        // Route::get('/edit_field_items_to_form/{id}', 'FormItemController@edit')->name('form_items.edit');
+        // Route::put('/update_field_items_to_form/{id}', 'FormItemController@update')->name('form_items.update');
+    /** end of Category and  formItems  section**/
 });
 
 

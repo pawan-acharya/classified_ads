@@ -7,5 +7,5 @@
         <br>
     	<small class="form-text text-muted">enter your queries </small>
 	</div>
-	<button type="submit" >Send</button>
+	<button class="btn btn-success" type="submit" >Send</button>
 </form>
