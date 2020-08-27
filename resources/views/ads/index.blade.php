@@ -154,7 +154,7 @@
                                     <option value="" selected disabled></option>
                                     <option value=""> {{ __('ads.all') }}</option>
                                     @foreach ($payment_options as  $key => $amount)
-                                        <option value="{{$key}}" @if ((integer)request()->get('from_payment') == $key) selected @endif> {{$amount}}</option>
+                                        <option value="{{$key}}" @if ((integer)request()->get('from_payment')==$key)selected @endif> {{$amount}}</option>
                                     @endforeach
                                     </select>
                                 </div>

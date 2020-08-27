@@ -8,6 +8,7 @@
 	<div class="container">
 	  <div class="row">
 	    <div class="col-2">
+	    	<a class="btn btn-success" href="{{route('chatrooms.index')}}">Messages</a> <br>
 	    </div>
 	    <div class="col-8">
 	    	<div class="card card-primary">

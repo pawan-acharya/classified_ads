@@ -10,7 +10,7 @@ use Auth;
 
 class FeedbackController extends Controller
 {
-    public function create(Request $request, $classified_ad){
+    public function create(Request $request, $classified_ad= null){
     	$chat_room= app()->call('App\Http\Controllers\ChatRoomController@create', ['classified_ad'=>$classified_ad] );
 
     	$feedback= $chat_room->feedbacks()->create([
