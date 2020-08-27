@@ -13,10 +13,14 @@ class FormItem extends Model
      */
     protected $table = 'form_items';
     
-    protected $fillable = ['name', 'type', 'required'];
+    protected $fillable = ['name', 'type', 'required', 'parent', 'category_id'];
 
     public function category()
     {
         return $this->belongsTo('App\Category');
+    }
+
+    public function children(){
+        return $this->hasMany('App\FormItem', 'parent', 'id');
     }
 }

@@ -1,9 +1,3 @@
-{{-- <form action="{{ route('categories.store') }}" method="POST">
-	@csrf
-  	<label for="fname">Category name:</label><br>
-  	<input type="text" id="fname" name="category_name" placeholder="Enter new category name"><br>
-  	<input type="submit" value="Submit">
-</form> --}}
 
 <!DOCTYPE html>
 <html>
@@ -20,8 +14,7 @@
 		    	<a type="button" class="btn btn-warning d-flex justify-content-center" href="{{route('categories.index')}}">Go Back</a>
 		    </div>
 		    <div class="col-8">
-		    	<form class="" action="{{ route('categories.store') }}" method="POST">
-    			@csrf
+		    	<form class=""   id="category-form"  >
 		    	<div class="card card-primary">
 	              <!-- /.card-header -->
 	              	<div class="card-body">
@@ -38,22 +31,22 @@
 	              	</div>
 	              <!-- /.card-header -->
 	              	<div class="card-body" id="card_body">
-				  			<div class="form-group">
-				  				<div class="form-group">
+				  			<div class="form-group row divRow">
+				  				<div class="form-group col-sm-3">
 				  					<label for="exampleInputEmail1">Field Name</label>
-								    <select  class="form-control" id="exampleInputEmail1" name="types[]">
+								    <select  class="form-control types" name="types[]">
 								    	@foreach(config('form_items') as $key=>$value)
 									    	<option value='{{$key}}'
 								    		>{{$value}}</option>
 								    	@endforeach
 								    </select>
 							    </div>
-							    <div class="form-group">
+							    <div class="form-group  col-sm-3">
 							    	<label for="exampleInputEmail1">Field Type</label>
 							    	<input type="text" class="form-control" placeholder="Enter name for the form" name="names[]" required="">
 							    </div>
-							    <div class="form-group">
-							    	<label for="exampleInputEmail1">Required/Not Required</label>
+							    <div class="form-group  col-sm-3">
+							    	<label for="exampleInputEmail1">Required/Not</label>
 								    <select  class="form-control"  name="mandatories[]">
 								    	<option value= 'yes'
 								    	>Required</option>
@@ -61,7 +54,9 @@
 								    	>NOt Required</option>
 								    </select>
 							    </div>
-							    <button type="button" class="btn btn-danger" onclick="removeThisItem(this)">X</button>
+							    <div class="form-group  col-sm-3">
+							    	<button type="button" class="btn btn-warning " onclick="addBoxes($(this))">OK</button>
+								</div>
 						  	</div>
 	    			</div>
 	    			<a href="javascript:void(0);"  class="btn btn-success" onclick="return addNewColumn()">Add another column+</a> 
@@ -79,36 +74,123 @@
 	<script type="text/javascript">
 		var js_array= [];
 	 	js_array= {!! json_encode(config('form_items')) !!} ;
-		function addNewColumn(){
-			var html=`<div class="form-group">
-					
-					<input type="hidden" name="ids[]" value="0">
-					<div class="form-group">
-				    <select  class="form-control"  name="types[]">`;
-				    	for (var key in js_array) {
-						  html+=`<option value= `+key+`>`+js_array[key]+`</option>`;
-						}
-			    html+=`</select>
+		var html=`<div class="form-group row divRow">
+				
+				<input type="hidden" name="ids[]" value="0">
+				<div class="form-group   col-sm-3">
+			    <select  class="form-control types"  name="types[]">`;
+			    	for (var key in js_array) {
+					  html+=`<option value= `+key+`>`+js_array[key]+`</option>`;
+					}
+		    html+=`</select>
+		    </div>
+		    	<div class="form-group   col-sm-3">
+			    <input type="text" class="form-control " placeholder="Enter name for the form" name="names[]" required>
 			    </div>
-			    	<div class="form-group">
-				    <input type="text" class="form-control" placeholder="Enter name for the form" name="names[]" required>
-				    </div>
-				    <div class="form-group">
-				    <select  class="form-control"  name="mandatories[]">
-				    	<option value= 'yes'>Required</option>
-				    	<option value='no'>Not Required</option>
-				    </select>
-				    </div>
-				    <button type="button" class="btn btn-danger" onclick="removeThisItem(this)">X</button>
-			  	</div>` ;
-			  	debugger;
-			// $('#card_body form-group').append(html);
+			    <div class="form-group   col-sm-3">
+			    <select  class="form-control"  name="mandatories[]">
+			    	<option value= 'yes'>Required</option>
+			    	<option value='no'>Not Required</option>
+			    </select>
+			    </div>
+			    <div class="form-group  col-sm-3">
+			    <button type="button" class="btn btn-warning " onclick="addBoxes($(this))">OK</button>
+			    <button type="button" class="btn btn-danger" onclick="removeThisItem($(this))">X</button>
+			    </div>
+		  	</div>` ;
+
+
+	  	var html_child=`<div class="form-group row divRow">
+				
+				<input type="hidden" name="ids[]" value="0">
+				<div class="form-group   col-sm-3">
+			    <select  class="form-control types"  name="types[]">`;
+			    	for (var key in js_array) {
+			    		if(key=='box'){continue;}
+					  html_child+=`<option value= `+key+`>`+js_array[key]+`</option>`;
+					}
+		    html_child+=`</select>
+		    </div>
+		    	<div class="form-group   col-sm-3">
+			    <input type="text" class="form-control " placeholder="Enter name for the form" name="names[]" required>
+			    </div>
+			    <div class="form-group   col-sm-3">
+			    <select  class="form-control"  name="mandatories[]">
+			    	<option value= 'yes'>Required</option>
+			    	<option value='no'>Not Required</option>
+			    </select>
+			    </div>
+			    <div class="form-group  col-sm-3">
+			    <button type="button" class="btn btn-success " onclick="addNewColumnChild($(this))">+</button>
+			    <button type="button" class="btn btn-danger" onclick="removeThisItem($(this))">X</button>
+			    </div>
+		  	</div>` ;
+
+
+		function addNewColumn(){
 			$('#card_body').append(html) ;
 		}
-
-		function removeThisItem(val){
-			val.parentElement.remove();
+		function addNewColumnChild(item){
+			item.closest('.divRow').parent().append(html_child) ;
+			item.remove();
 		}
+
+		function addBoxes(item){
+			if(item.closest('.divRow').find('.types').first().val() =='box'){
+				item.closest('.divRow').append(html_child) ;
+			}
+		}
+
+		function removeThisItem(item){
+			item.closest('.divRow').remove();
+		}
+
+	</script>
+
+	<script type="text/javascript">
+		$( "form#category-form" ).submit(function(event) {
+			event.preventDefault();
+			var url= "{{ route('categories.store') }}";
+			var category_name= $(this).find("input[name='category_name']").val();
+			var big_array= new Array();
+			$.each( $(this).find('.card-body>.divRow'), function( key, value ) {
+				var small_array= {
+					'type': $(value).find("select[name='types[]']").first().val(),
+					'name': $(value).find("input[name='names[]']").first().val(),
+					'mandatory': $(value).find("select[name='mandatories[]']").first().val(),
+				};
+			
+			 	var tiny_array =new Array();
+			  	$.each( $(value).find('.divRow'), function( key, value ) {
+			  		tiny_array.push({
+						'type': $(value).find("select[name='types[]']").first().val(),
+						'name': $(value).find("input[name='names[]']").first().val(),
+						'mandatory': $(value).find("select[name='mandatories[]']").first().val(),
+					});
+			    });
+			    small_array['box_array']= tiny_array;
+			    big_array.push(small_array);
+			});
+			var data= new Array();
+			data= {
+				"_token": "{{ csrf_token() }}",
+				'category_name': category_name,
+				'big_array': big_array,
+			};
+		  	
+		  	$.ajax({
+			  	type: "POST",
+			  	url: url,
+			  	data: data,
+			  	dataType: "json",
+			})
+			.done(function( data ) {
+			    window.location = "{{ route('categories.index')}}";
+		  	})
+		  	.fail(function() {
+		    	alert( "error" );
+		  	});
+		});
 	</script>
 </body>
 </html>

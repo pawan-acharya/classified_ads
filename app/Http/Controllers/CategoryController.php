@@ -39,21 +39,38 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'category_name' => 'required|unique:categories|max:255',
+            'category_name' => 'required|unique:categories,category_name|max:255',
         ]);
-        $category = Category::create($validatedData);
+        $category = Category::create([
+            'category_name'=>$validatedData['category_name'],
+        ]);
 
-        $new_array=[];
-        foreach ($request->names as $key => $value) {
-            $temp_data=[];
-            $temp_data['name']= $value;
-            $temp_data['type']= $request->types[$key];
-            $temp_data['required']= ($request->mandatories[$key]== 'yes')?'1':'0';
-            array_push($new_array, $temp_data);
+        foreach ($request->big_array as $key => $value) {
+            
+            $form_item= FormItem::create([
+                'name'=> $value['name'],
+                'type'=> $value['type'],
+                'required'=> ($value['mandatory']== 'yes')?'1':'0',
+                'category_id'=> $category->id,
+            ]);
+            if(!empty($value['box_array'])){
+                foreach ($value['box_array'] as $key => $value) {
+                    FormItem::create([
+                        'name'=> $value['name'],
+                        'type'=> $value['type'],
+                        'required'=> ($value['mandatory']== 'yes')?'1':'0',
+                        'category_id'=> $category->id,
+                        'parent'=>$form_item->id,
+                    ]);
+                }
+            }
         }
-        
-        $category->form_items()->createMany($new_array);
-        return redirect()->route('categories.show', ['category'=> $category->id]);
+        return response()->json([
+            'status' => 200,
+            'url'=> route('categories.show', ['category'=> $category->id]),
+        ]);
+        // $category->form_items()->createMany($new_array);
+        // return redirect()->route('categories.show', ['category'=> $category->id]);
     }
 
     /**
