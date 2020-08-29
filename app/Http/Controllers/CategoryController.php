@@ -16,8 +16,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $usersCount = DB::table('users')->count();
+        $adsCount = DB::table('classified_ads')->where('approved', 1)->count();
+        $categoriesCount= DB::table('categories')->count();
         $categories= Category::all();
-        return view('categories.index', compact('categories'));
+        return view('categories.index', compact(['categories', 'usersCount', 'adsCount', 'categoriesCount']));
     }
 
     /**
@@ -27,7 +30,11 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        $usersCount = DB::table('users')->count();
+        $adsCount = DB::table('classified_ads')->where('approved', 1)->count();
+        $categoriesCount= DB::table('categories')->count();
+        $categories= Category::all();
+        return view('categories.create', compact([ 'usersCount', 'adsCount', 'categoriesCount']));
     }
 
     /**
@@ -52,6 +59,7 @@ class CategoryController extends Controller
                 'type'=> $value['type'],
                 'required'=> ($value['mandatory']== 'yes')?'1':'0',
                 'category_id'=> $category->id,
+                'options'=>array_key_exists('options', $value)?$value['options']:null,
             ]);
             if(!empty($value['box_array'])){
                 foreach ($value['box_array'] as $key => $value) {
@@ -60,7 +68,8 @@ class CategoryController extends Controller
                         'type'=> $value['type'],
                         'required'=> ($value['mandatory']== 'yes')?'1':'0',
                         'category_id'=> $category->id,
-                        'parent'=>$form_item->id,
+                        'parent'=>$form_item->id, 
+                        'logo'=>$value['logo']
                     ]);
                 }
             }

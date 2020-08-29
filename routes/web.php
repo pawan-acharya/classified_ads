@@ -92,12 +92,18 @@ Route::middleware(['auth','admin'])->prefix('admin')->group(function () {
 
     /** Category and  formItems section**/
         Route::resource('categories', 'CategoryController');
+        Route::get('/classified_ads/toggle/{classified_ad}', 'ClassifiedAdController@toggle')->name('classified_ads.toggle');
 
         // Route::get('/add_field_items_to_form/{id}', 'FormItemController@add')->name('form_items.add');
         // Route::post('/store_field_items_to_form/{id}', 'FormItemController@store')->name('form_items.store');
         // Route::get('/edit_field_items_to_form/{id}', 'FormItemController@edit')->name('form_items.edit');
         // Route::put('/update_field_items_to_form/{id}', 'FormItemController@update')->name('form_items.update');
     /** end of Category and  formItems  section**/
+});
+
+
+Route::get('/temp', function(){
+    dd();
 });
 
 

@@ -33,10 +33,10 @@
 						    <tr>
 						      	<td></td>
 						      	<td>{{$category->category_name}}</td>
-						      	<td>{{$category->form_items()->count()}}</td>
+						      	<td>{{$category->classified_ads()->where('approved', 1)->count()}}</td>
 						      	<td>
 						      		@php($row_count= 0)
-						      		@foreach ($category->classified_ads as $classified_ad)
+						      		@foreach ($category->classified_ads()->where('approved', 1)->get() as $classified_ad)
 						      			{{++$row_count}}. created_by: <a href="{{route('classified_ads.show', ['classified_ad'=>$classified_ad->id])}}">
 					      				 	{{($classified_ad->user->id== Auth::id())?'YOU':$classified_ad->user->name}} 
 						      			</a>

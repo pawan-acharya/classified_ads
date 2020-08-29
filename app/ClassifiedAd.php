@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ClassifiedAd extends Model
 {
-    protected $fillable = ['form_values', 'user_id'];
+    protected $fillable = ['form_values', 'user_id', 'title', 'citq', 'price', 'title_image', 'descriptions', 'alt_images'];
     
     protected $casts = [
         'form_values' => 'array'

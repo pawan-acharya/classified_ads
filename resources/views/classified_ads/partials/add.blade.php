@@ -21,6 +21,7 @@
 		           		</div>
 		           		<div class="card-body">
 		           			@foreach ($form_item->children as $child)
+		           				<img src="{{asset('storage')}}/{{$child->logo}}" style="height: 15px;">
 			           			@switch($child->type)
 				           			@case('text')
 								    	<label for="exampleInputEmail1">{{$child->name}}</label>
@@ -41,5 +42,38 @@
 		           </div>
 	           @default
 		@endswitch
+	</div>
+@endforeach
+
+
+{{-- @foreach ($category->form_items()->where('type', 'select')->where('parent', null)->get() as $form_item)
+	<div class="form-group">
+	    <label for="exampleInputEmail1">{{$form_item->name}}</label>
+        <select class="form-control" name="{{$form_item->id}}-{{$form_item->name}}">
+        	@foreach (explode(',', $form_item->options) as $option)
+	        	@if ($option)
+        			<option value="{{$option}}">{{$option}}</option>
+	        	@endif
+        	@endforeach
+        </select>
+	</div>
+@endforeach --}}
+
+@foreach ($category->form_items()->where('type', 'select')->where('parent', null)->get() as $form_item)
+	<div class="form-group">
+	  	@foreach (explode(',', $form_item->options) as $option)
+        	@if ($option)
+			 	<input type="radio"  name="{{$form_item->id}}-{{$form_item->name}}" value="{{$option}}">
+	  			<label for="">{{$option}}</label><br>
+        	@endif
+    	@endforeach
+	</div>
+@endforeach
+
+@foreach ($category->form_items()->where('type', 'check_box')->where('parent', null)->get() as $form_item)
+	<div class="form-group">
+	    <label for="exampleInputEmail1">{{$form_item->name}}</label>
+        <input type="checkbox"name="{{$form_item->id}}-{{$form_item->name}}" >
+        </select>
 	</div>
 @endforeach

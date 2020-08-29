@@ -13,7 +13,7 @@ class FormItem extends Model
      */
     protected $table = 'form_items';
     
-    protected $fillable = ['name', 'type', 'required', 'parent', 'category_id'];
+    protected $fillable = ['name', 'type', 'required', 'parent', 'category_id', 'logo', 'options'];
 
     public function category()
     {

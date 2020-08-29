@@ -42,8 +42,8 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ __('admin.total_sales') }}</h5>
-                                    <span class="h2 font-weight-bold mb-0">{{ '$'.$totalSales }}</span>
+                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ __('admin.categories') }}</h5>
+                                    <span class="h2 font-weight-bold mb-0">{{ $categoriesCount }}</span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -59,8 +59,8 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">{{ __('admin.total_partners') }}</h5>
-                                <span class="h2 font-weight-bold mb-0">{{ $partnersCount}}</span>
+                                    <h5 class="card-title text-uppercase text-muted mb-0"></h5>
+                                <span class="h2 font-weight-bold mb-0"><a href="{{route('categories.index')}}" class="btn btn-success"> Categories </a></span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape bg-info text-white rounded-circle shadow">

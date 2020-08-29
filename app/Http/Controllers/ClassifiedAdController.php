@@ -45,7 +45,6 @@ class ClassifiedAdController extends Controller
             $form_item_value= $value;
             $form_values_array[$form_item_id]=$form_item_value;
         }
-        
         $classified_ad = new ClassifiedAd([
             'form_values'=> json_encode( $form_values_array),
             'user_id'=> Auth::id(),
@@ -113,5 +112,13 @@ class ClassifiedAdController extends Controller
     {
         ClassifiedAd::find($id)->delete();
         return redirect()->route('classified_ads.index');
+    }
+
+    public function toggle($id){
+        $classified_ad= ClassifiedAd::findOrFail($id);
+        $classified_ad->approved= $classified_ad->approved?0:1;
+        $classified_ad->save();
+
+        return redirect()->back();
     }
 }

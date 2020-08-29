@@ -55,40 +55,7 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-5">
-            <div class="col-xl-12">
-                <div class="card shadow">
-                    <div class="card-header border-0">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h3 class="mb-0">{{ __('admin.partner_requests') }}</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-responsive  p-4">
-                        <!-- Projects table -->
-                        <table id="partnership-table" class="table align-items-center table-flush data-table">
-                            <thead>
-                                <tr>
-                                    <th>{{ __('partners.business_name') }}</th>
-                                    <th>{{ __('auth.first_name') }}</th>
-                                    <th>{{ __('auth.name') }}</th>
-                                    <th>{{ __('auth.email') }}</th>
-                                    <th>{{ __('auth.home_phone') }}</th>
-                                    <th>{{ __('auth.mobile_phone') }}</th>
-                                    <th>{{ __('auth.city') }}</th>
-                                    <th>{{ __('auth.province') }}</th>
-                                    <th>{{ __('auth.postal_code') }}</th>
-                                    <th width="100px">{{ __('admin.action') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+       
 
         <div class="row mt-5">
             <div class="col-xl-12">
@@ -96,7 +63,7 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="mb-0">{{ __('admin.partner_history') }}</h3>
+                                <h3 class="mb-0">{{ __('admin.classified_ads') }}</h3>
                             </div>
                         </div>
                     </div>
@@ -105,15 +72,13 @@
                         <table id="history-table" class="table align-items-center table-flush data-table">
                             <thead>
                                 <tr>
-                                    <th>{{ __('partners.business_name') }}</th>
-                                    <th>{{ __('auth.first_name') }}</th>
-                                    <th>{{ __('auth.name') }}</th>
-                                    <th>{{ __('auth.email') }}</th>
-                                    <th>{{ __('auth.home_phone') }}</th>
-                                    <th>{{ __('auth.mobile_phone') }}</th>
-                                    <th>{{ __('auth.city') }}</th>
-                                    <th>{{ __('auth.province') }}</th>
-                                    <th>{{ __('auth.postal_code') }}</th>
+                                    {{-- <th>{{ __('auth.first_name') }}</th> --}}
+                                    <th>{{ __('id') }}</th>
+                                    <th>{{ __('title') }}</th>
+                                    <th>{{ __('descriptions') }}</th>
+                                    <th>{{ __('citq') }}</th>
+                                    <th>{{ __('price') }}</th>
+                                    <th>{{ __('category_name') }}</th>
                                     <th width="100px">{{ __('admin.status') }}</th>
                                 </tr>
                             </thead>
@@ -125,93 +90,8 @@
             </div>
         </div>
 
-        <div class="row mt-5">
-            <div class="col-xl-12">
-                <div class="card shadow">
-                    <div class="card-header border-0">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h3 class="mb-0">{{ __('admin.partner_sales_data') }}</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-responsive p-4">
-                        <!-- Projects table -->
-                        <table id="partner-sales-table" class="table align-items-center table-flush data-table">
-                            <thead>
-                                <tr>
-                                    <th>{{ __('partners.business_name') }}</th>
-                                    <th>{{ __('auth.first_name') }}</th>
-                                    <th>{{ __('auth.name') }}</th>
-                                    <th>{{ __('auth.email') }}</th>
-                                    <th>{{ __('admin.promocode') }}</th>
-                                    <th>{{ __('admin.promocode_value') }}</th>
-                                    <th>{{ __('admin.promocode_usage') }}</th>
-                                    <th>{{ __('admin.total_referrals') }}</th>
-                                    <th>{{ __('admin.total_sales') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="approve-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">{{ __('admin.promocode_option') }}</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                    <form id="voucher-form" method="POST" action="{{ url("partners/approve") }}">
-                        @csrf
-                        <input type="hidden" class="form-control" id="partner_id" name="partner_id">
-                        {{-- <div class="form-group">
-                            <label for="promocode" class="col-form-label">Promocode</label>
-                            <input type="text" class="form-control" id="promocode" name="promocode">
-                        </div> --}}
-                        <label for="discount_value" class="col-form-label">{{ __('admin.promocode_value') }}</label>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="input-group mb-3 col-md-5">
-                                    <div class="input-group-prepend">
-                                       
-                                        <span class="input-group-text">$</span>
-                                    </div>
-                                    <input type="number" class="form-control" name="discount_value">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">.00</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 text-center">
-                                    <p> or </p>
-                                </div>
-                                
-                                <div class="input-group mb-3 col-md-5">
-                                    <input type="number" class="form-control" name="discount_percent">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">%</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('admin.close') }}</button>
-                  <button type="button" id="submit-form" class="btn btn-primary">{{ __('admin.submit') }}</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
         @include('layouts.admin.footers.auth')
+        
     </div>
 @endsection
 
@@ -251,28 +131,7 @@
                 }
             });
             
-            var table = $('#partnership-table').DataTable({
-                processing: true,
-                responsive: true,
-                serverSide: true,
-                pagingType: "numbers",
-                ajax: "{{ route('admin.partners') }}",
-                language: {
-                    url: "{{ app()->getLocale() == 'fr' ? asset('admin-assets/lang/french.json') : '' }}"
-                },
-                columns: [
-                    {data: 'business_name', name: 'business_name'},
-                    {data: 'first_name', name: 'first_name'},
-                    {data: 'name', name: 'name'},
-                    {data: 'email', name: 'email'},
-                    {data: 'home_phone', name: 'home_phone'},
-                    {data: 'mobile_phone', name: 'mobile_phone'},
-                    {data: 'city', name: 'city'},
-                    {data: 'province', name: 'province'},
-                    {data: 'postal_code', name: 'postal_code'},
-                    {data: 'actions', name: 'actions', orderable: false, searchable: false},
-                ]
-            });
+            
 
             var table = $('#history-table').DataTable({
                 processing: true,
@@ -284,87 +143,18 @@
                     url: "{{ app()->getLocale() == 'fr' ? asset('admin-assets/lang/french.json') : '' }}"
                 },
                 columns: [
-                    {data: 'business_name', name: 'business_name'},
-                    {data: 'first_name', name: 'first_name'},
-                    {data: 'name', name: 'name'},
-                    {data: 'email', name: 'email'},
-                    {data: 'home_phone', name: 'home_phone'},
-                    {data: 'mobile_phone', name: 'mobile_phone'},
-                    {data: 'city', name: 'city'},
-                    {data: 'province', name: 'province'},
-                    {data: 'postal_code', name: 'postal_code'},
+                    {data: 'id', name: 'id'},
+                    {data: 'title', name: 'title'},
+                    {data: 'descriptions', name: 'descriptions'},
+                    {data: 'citq', name: 'citq'},
+                    {data: 'price', name: 'price'},
+                    {data: 'category_name', name: 'category_name'},
                     {data: 'actions', name: 'actions', orderable: false, searchable: false},
                 ]
             });
 
-            var table = $('#partner-sales-table').DataTable({
-                processing: true,
-                responsive: true,
-                serverSide: true,
-                pagingType: "numbers",
-                ajax: "{{ route('admin.partnersales') }}",
-                language: {
-                    url: "{{ app()->getLocale() == 'fr' ? asset('admin-assets/lang/french.json') : '' }}"
-                },
-                columns: [
-                    {data: 'business_name', name: 'business_name'},
-                    {data: 'first_name', name: 'first_name'},
-                    {data: 'name', name: 'name'},
-                    {data: 'email', name: 'email'},
-                    {data: 'promocode', name: 'promocode', orderable: false, searchable: true},
-                    {data: 'promocode_value', name: 'promocode_value', orderable: false, searchable: true},
-                    {data: 'promocode_usage', name: 'promocode_usage', orderable: false, searchable: true},
-                    {data: 'total_referrals', name: 'total_referrals', orderable: false, searchable: true},
-                    {data: 'total_sales', name: 'total_sales', orderable: false, searchable: true}
-                ]
-            });
+            
 
-            $('body').on('click', '.approve', function () {
-                $('#partner_id').val($(this).data("id"));
-                $('#approve-modal').modal('show');
-            }); 
-
-            $('body').on('click', '#submit-form', function () {
-                $(this).prop("disabled", true);
-                // add spinner to button
-                $(this).html(
-                    `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`+ "{{ __('admin.submitting') }}"
-                );
-
-                $.ajax({
-                    type: "POST",
-                    url: SITEURL + "/action/approve",
-                    data: $('#voucher-form').serialize(),
-                    dataType: 'json',
-                    success: function (data) {
-                        var oTable = $('.data-table').dataTable(); 
-                        oTable.fnDraw(false);
-                        $(this).html(`Submit`);
-                        $('#approve-modal').modal('hide')
-                    },
-                    error: function (data) {
-                        console.log('Error:', data);
-                    }
-                });
-            }); 
-                
-            $('body').on('click', '.reject', function () {
-                var partnerId = $(this).data("id");
-                if(confirm("{{ __('admin.reject_confirmation') }}")){
-                    $.ajax({
-                        type: "POST",
-                        url: SITEURL + "/action/reject/" + partnerId,
-                        success: function (data) {
-                        var oTable = $('.data-table').dataTable(); 
-                        oTable.fnDraw(false);
-                        },
-                        error: function (data) {
-                            console.log('Error:', data);
-                        }
-                    });
-                }
-            }); 
-                    
         });
 
     </script>
