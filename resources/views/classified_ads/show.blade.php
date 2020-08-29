@@ -11,17 +11,17 @@
 	  			<div class="row">
 	  				<div class="col-sm-6 card">
 	  					<div class="card-body">
-	  						
+  							{{$classified_ad->title}}
 	  					</div>
 	  				</div>
 	  				<div class="col-sm-3 card">
 	  					<div class="card-body">
-	  						
+	  						{{$classified_ad->citq}}
 	  					</div>
 	  				</div>
 	  				<div class="col-sm-3 card">
 	  					<div class="card-body">
-	  						
+	  						{{$classified_ad->descriptions}}
 	  					</div>
 	  				</div>
 	  			</div>
@@ -76,6 +76,7 @@
 	  					
 	  				</div>
   					@endforeach
+
 	  			</div>
 	  		</div>	
 		</div>

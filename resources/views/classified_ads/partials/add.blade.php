@@ -59,21 +59,32 @@
 	</div>
 @endforeach --}}
 
-@foreach ($category->form_items()->where('type', 'select')->where('parent', null)->get() as $form_item)
-	<div class="form-group">
-	  	@foreach (explode(',', $form_item->options) as $option)
-        	@if ($option)
-			 	<input type="radio"  name="{{$form_item->id}}-{{$form_item->name}}" value="{{$option}}">
-	  			<label for="">{{$option}}</label><br>
-        	@endif
-    	@endforeach
-	</div>
-@endforeach
+ <div class="card">
+	@foreach ($category->form_items()->where('type', 'select')->where('parent', null)->get() as $form_item)
+		<div class="card-header">
+   			<label for="exampleInputEmail1">{{$form_item->name}}</label>
+   		</div>
+   		<div class="card-body">
+			<div class="form-group">
+		  	@foreach (explode(',', $form_item->options) as $option)
+	        	@if ($option)
+				 	<input type="radio"  name="{{$form_item->id}}-{{$form_item->name}}" value="{{$option}}">
+		  			<label for="">{{$option}}</label><br>
+	        	@endif
+	    	@endforeach
+			</div>
+		</div>
+	@endforeach
+</div>
 
-@foreach ($category->form_items()->where('type', 'check_box')->where('parent', null)->get() as $form_item)
-	<div class="form-group">
-	    <label for="exampleInputEmail1">{{$form_item->name}}</label>
-        <input type="checkbox"name="{{$form_item->id}}-{{$form_item->name}}" >
-        </select>
+<div class="card">
+ 	<div class="card-body">
+		@foreach ($category->form_items()->where('type', 'check_box')->where('parent', null)->get() as $form_item)
+			<div class="form-group">
+			    <label for="exampleInputEmail1">{{$form_item->name}}</label>
+		        <input type="checkbox"name="{{$form_item->id}}-{{$form_item->name}}" >
+		        </select>
+			</div>
+		@endforeach
 	</div>
-@endforeach
+</div>

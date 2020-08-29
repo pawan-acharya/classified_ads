@@ -12,16 +12,16 @@
     	<form method="POST" action="{{ route('classified_ads.store', ['cat_id'=> $category->id]) }}" id="add_new_classified_ad">
     		@csrf
 	  		<div class="form-group">
-			    <label for="exampleInputEmail1">Static Field 1</label>
-			    <input type="text" class="form-control" aria-describedby="emailHelp" value="Static field won't be saved" required>
+			    <label for="exampleInputEmail1">Title</label>
+			    <input type="text" class="form-control"  name="title" required>
 		  	</div>
 		  	<div class="form-group">
-			    <label for="exampleInputEmail1">Static Field 2</label>
-			    <input type="text" class="form-control"  aria-describedby="emailHelp" value="Static field won't be saved" required>
+			    <label for="exampleInputEmail1">#CITQ</label>
+			    <input type="text" class="form-control" name="citq"   >
 		  	</div>
 		  	<div class="form-group">
-			    <label for="exampleInputEmail1">Static Field 3</label>
-			    <input type="text" class="form-control" aria-describedby="emailHelp" value="Static field won't be saved" required>
+			    <label for="exampleInputEmail1">Description</label>
+			    <textarea class="form-control"  name="descriptions"></textarea>
 		  	</div>
 
 		  	@include('classified_ads.partials.add')

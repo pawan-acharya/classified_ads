@@ -39,6 +39,12 @@ class ClassifiedAdController extends Controller
      */
     public function store(Request $request, $cat_id)
     {
+        $validatedData = $request->validate([
+            'title' => 'required|unique:classified_ads,title|max:255',
+            'citq'=> 'nullable',
+            // 'title_image'=> 'nullable',
+            'descriptions'=> 'nullable',
+        ]);
         $form_values_array=[];
         foreach ($request->except('_token') as $key => $value) {
             $form_item_id= explode('-', $key)[0];
@@ -46,6 +52,12 @@ class ClassifiedAdController extends Controller
             $form_values_array[$form_item_id]=$form_item_value;
         }
         $classified_ad = new ClassifiedAd([
+            'title' => $validatedData['title'], 
+            'citq'=> $validatedData['citq'], 
+            // 'price' => $validatedData['price'], 
+            // 'title_image' => $validatedData['title_image'], 
+            'descriptions' => $validatedData['descriptions'], 
+            // 'alt_images' => $validatedData['alt_images'],
             'form_values'=> json_encode( $form_values_array),
             'user_id'=> Auth::id(),
         ]);
@@ -63,7 +75,7 @@ class ClassifiedAdController extends Controller
     public function show($id)
     {
         $classified_ad= ClassifiedAd::with('category')->find($id);
-        $form_items_collection= Category::find($classified_ad->category->id)->form_items()->get();
+        $form_items_collection= Category::find($classified_ad->category->id)->form_items()->whereNull('parent')->get();
         return view('classified_ads.show', compact('classified_ad', 'form_items_collection'));
     }
 

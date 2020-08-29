@@ -50,6 +50,8 @@ class CategoryController extends Controller
         ]);
         $category = Category::create([
             'category_name'=>$validatedData['category_name'],
+            'description'=> $validatedData['description'],
+            // 'image'=>,
         ]);
 
         foreach ($request->big_array as $key => $value) {
