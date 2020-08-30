@@ -138,7 +138,10 @@
                 responsive: true,
                 serverSide: true,
                 pagingType: "numbers",
-                ajax: "{{ route('admin.history') }}",
+                ajax: {
+            		"url": "{{ route('admin.history') }}",
+            		// "cache": true
+                },
                 language: {
                     url: "{{ app()->getLocale() == 'fr' ? asset('admin-assets/lang/french.json') : '' }}"
                 },
