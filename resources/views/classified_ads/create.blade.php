@@ -9,24 +9,30 @@
     <div class="col-sm">
     </div>
     <div class="col-sm">
-    	<form method="POST" action="{{ route('classified_ads.store', ['cat_id'=> $category->id]) }}" id="add_new_classified_ad">
+    	<form method="POST" action="{{ route('classified_ads.store', ['cat_id'=> $category->id]) }}" id="add_new_classified_ad" class="row" enctype="multipart/form-data">
     		@csrf
-	  		<div class="form-group">
+	  		<div class="form-group col-sm-6">
 			    <label for="exampleInputEmail1">Title</label>
 			    <input type="text" class="form-control"  name="title" required>
 		  	</div>
-		  	<div class="form-group">
+		  	<div class="form-group col-sm-6">
 			    <label for="exampleInputEmail1">#CITQ</label>
-			    <input type="text" class="form-control" name="citq"   >
+			    <input type="text" class="form-control" name="citq" >
 		  	</div>
-		  	<div class="form-group">
+		  	<div class="form-group col-sm-6">
+			    <label for="exampleInputEmail1">#Image</label>
+			    <input type="file" class="form-control" name="title_image" >
+		  	</div>
+		  	<div class="form-group col-sm-6">
 			    <label for="exampleInputEmail1">Description</label>
 			    <textarea class="form-control"  name="descriptions"></textarea>
 		  	</div>
 
 		  	@include('classified_ads.partials.add')
-
-		  	<button type="submit" class="btn btn-primary">Submit</button>
+		  	
+		  	<div class="form-group col-sm-6">
+		  		<button type="submit" class="btn btn-primary">Submit</button>
+		  	</div>
 		</form>
     </div>
     <div class="col-sm">

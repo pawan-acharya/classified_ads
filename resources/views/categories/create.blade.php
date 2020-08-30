@@ -10,7 +10,7 @@
 		    	<a type="button" class="btn btn-warning d-flex justify-content-center" href="{{route('categories.index')}}">Go Back</a>
 		    </div>
 		    <div class="col-8">
-		    	<form class=""   id="category-form"  >
+		    	<form class=""   id="category-form"  enctype="multipart/form-data">
 		    	<div class="card card-primary">
 	              <!-- /.card-header -->
 	              	<div class="card-body row">
@@ -20,7 +20,7 @@
 					  	</div>
 					  	<div class="form-group col-6">
 						    <label for="exampleInputEmail1">Category Poster Image:</label>
-						    <input type="file" class="form-control" id="fname" name="image" >
+						    <input type="file" class="form-control" id="fname" name="image" required>
 					  	</div>
 					  	<div class="form-group col-12">
 						    <label for="exampleInputEmail1">Category Description:</label>
@@ -226,6 +226,8 @@
 			event.preventDefault();
 			var url= "{{ route('categories.store') }}";
 			var category_name= $(this).find("input[name='category_name']").val();
+			var description= $(this).find("textarea[name='description']").val();
+			var image= $(this).find("input[name='image']").val();
 			var big_array= new Array();
 			$.each( $(this).find('.card-body>.divRow'), function( key, value ) {
 				var small_array= {
@@ -250,22 +252,25 @@
 			 			options+= $(value).find("input[name='selects[]']").first().val()+',';
 				 	});
 				 	small_array['options']= options;
-				 	debugger
 				}
 		    	big_array.push(small_array);
 			   
 			});
-			var data= new Array();
-			data= {
-				"_token": "{{ csrf_token() }}",
-				'category_name': category_name,
-				'big_array': big_array,
-			};
+
+			var formData = new FormData();
+		  	formData.append('_token', "{{ csrf_token() }}");
+		  	formData.append('category_name', category_name);
+		  	formData.append('description', description);
+			formData.append('image', $(this).find("input[name='image']")[0].files[0]);
+		  	formData.append('big_array', JSON.stringify(big_array));
 		  	
+		  	debugger;
 		  	$.ajax({
 			  	type: "POST",
 			  	url: url,
-			  	data: data,
+			  	data: formData,
+			  	processData: false,  // tell jQuery not to process the data
+       			contentType: false,  // tell jQuery not to set contentType
 			  	dataType: "json",
 			})
 			.done(function( data ) {

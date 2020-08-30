@@ -3,9 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\WithFiles;
+use App\Traits\Uploader;
 
 class Category extends Model
 {
+    use WithFiles, Uploader;
+    
     protected $fillable = ['category_name', 'description', 'image'];
 
     // adding the appends value will call the accessor in the JSON response

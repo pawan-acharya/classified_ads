@@ -37,8 +37,11 @@
 						      	<td>
 						      		@php($row_count= 0)
 						      		@foreach ($category->classified_ads()->where('approved', 1)->get() as $classified_ad)
-						      			{{++$row_count}}. <a href="{{route('classified_ads.show', ['classified_ad'=>$classified_ad->id])}}"> {{$classified_ad->title}}(
-					      				 	{{($classified_ad->user->id== Auth::id())?'YOU':$classified_ad->user->name}} )
+						      			@if ($classified_ad->file)
+			                       		 	<img src="{{ $classified_ad->file->getPathAttribute() }}" width="100%"/>
+			                       		@endif
+						      			{{++$row_count}}. <a href="{{route('classified_ads.show', ['classified_ad'=>$classified_ad->id])}}">
+					      				 	{{$classified_ad->title}}
 						      			</a>
 						      			<br>
 						      		@endforeach

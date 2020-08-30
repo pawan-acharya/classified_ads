@@ -3,13 +3,18 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\WithFiles;
+use App\Traits\Uploader;
 
 class ClassifiedAd extends Model
 {
-    protected $fillable = ['form_values', 'user_id', 'title', 'citq', 'price', 'title_image', 'descriptions', 'alt_images'];
+    use WithFiles, Uploader;
+    
+    protected $fillable = ['form_values', 'user_id', 'title', 'citq', 'price', 'title_image', 'descriptions'];
     
     protected $casts = [
-        'form_values' => 'array'
+        'form_values' => 'array',
+        'descriptions'=> 'array'
     ];
 
     public function category()

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Category;
 use App\FormItem;
+use App\File;
 use DB;
 
 class CategoryController extends Controller
@@ -47,14 +48,18 @@ class CategoryController extends Controller
     {
         $validatedData = $request->validate([
             'category_name' => 'required|unique:categories,category_name|max:255',
+            'description'=> 'nullable',
+            'image'=>'file|image|mimes:jpeg,png,gif,webp|max:2048',
         ]);
         $category = Category::create([
             'category_name'=>$validatedData['category_name'],
             'description'=> $validatedData['description'],
-            // 'image'=>,
+           
         ]);
+        
+        $category->file()->create($category->upload($validatedData['image']));
 
-        foreach ($request->big_array as $key => $value) {
+        foreach (json_decode($request->big_array, TRUE) as $key => $value) {
             
             $form_item= FormItem::create([
                 'name'=> $value['name'],

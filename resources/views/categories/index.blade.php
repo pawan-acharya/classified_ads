@@ -27,6 +27,11 @@
 			                        </div>
 			                      </div>
 			                       <br>
+			                       <div>
+			                       		@if ($category->file)
+			                       		 	<img src="{{ $category->file->getPathAttribute() }}" width="100%"/>
+			                       		@endif
+			                       </div>
 			                      <small>{{$category->description}}</small>
 			                    </div>
 		                    </a>
