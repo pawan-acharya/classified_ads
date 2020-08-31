@@ -39,7 +39,6 @@ class ClassifiedAdController extends Controller
      */
     public function store(Request $request, $cat_id)
     {
-
         $validatedData = $request->validate([
             'title' => 'required|unique:classified_ads,title|max:255',
             'citq'=> 'nullable',

@@ -66,7 +66,6 @@ class CategoryController extends Controller
                 'type'=> $value['type'],
                 'required'=> ($value['mandatory']== 'yes')?'1':'0',
                 'category_id'=> $category->id,
-                'options'=>array_key_exists('options', $value)?$value['options']:null,
             ]);
             if(!empty($value['box_array'])){
                 foreach ($value['box_array'] as $key => $value) {
@@ -76,7 +75,7 @@ class CategoryController extends Controller
                         'required'=> ($value['mandatory']== 'yes')?'1':'0',
                         'category_id'=> $category->id,
                         'parent'=>$form_item->id, 
-                        'logo'=>$value['logo']
+                        'logo'=>array_key_exists('logo', $value),
                     ]);
                 }
             }

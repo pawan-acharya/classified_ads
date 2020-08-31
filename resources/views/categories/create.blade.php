@@ -207,6 +207,9 @@
 			else if(item.closest('.divRow').find('.types').first().val() =='select'){
 				item.closest('.divRow').append(html_select) ;
 			}
+			else if(item.closest('.divRow').find('.types').first().val() =='check_box'){
+				item.closest('.divRow').append(html_select) ;
+			}
 			else if(item.closest('.divRow').find('.types').first().val() =='primary_price'){
 				item.closest('.divRow').append(html_primary_price) ;
 			}
@@ -236,7 +239,7 @@
 					'mandatory': $(value).find("select[name='mandatories[]']").first().val(),
 				};
 				if($(value).find("select[name='types[]']").first().val()== 'box'){
-				 	var tiny_array =new Array();
+				 	
 				  	$.each( $(value).find('.divRow'), function( key, value ) {
 				  		tiny_array.push({
 							'type': $(value).find("select[name='types[]']").first().val(),
@@ -246,12 +249,16 @@
 						});
 				    });
 			     	small_array['box_array']= tiny_array;
-				}else if($(value).find("select[name='types[]']").first().val()== 'select'){
-					var options= '';
+				}else if($(value).find("select[name='types[]']").first().val()== 'select' || $(value).find("select[name='types[]']").first().val()== 'check_box'){
+					var tiny_array =new Array();
 			 		$.each( $(value).find('.divRow'), function( key, value ) {
-			 			options+= $(value).find("input[name='selects[]']").first().val()+',';
+			 			tiny_array.push({
+							'type': 'None',
+							'name': $(value).find("input[name='selects[]']").first().val(),
+							'mandatory': 'yes',
+						});
 				 	});
-				 	small_array['options']= options;
+				 	small_array['box_array']= tiny_array;
 				}
 		    	big_array.push(small_array);
 			   

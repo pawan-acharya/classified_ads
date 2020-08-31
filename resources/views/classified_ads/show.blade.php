@@ -47,26 +47,31 @@
 	  						{{$form_item->name}}
 	  					</div>
 	  					<div class="card-body">
-	  						@foreach (explode(',', $form_item->options) as $child)
+	  						@foreach ($form_item->children as $child)
 	  							@if ($child)
-	  								<button class='btn btn-{{json_decode($classified_ad->form_values, TRUE)[$form_item->id]== $child?"success":"warning"}}'>  {{$child}} </button> <br>
+	  								<button class='btn btn-{{json_decode($classified_ad->form_values, TRUE)[$form_item->id]== $child->id?"success":"warning"}}'>  {{$child->name}} </button> <br>
 	  							@endif
 	  						@endforeach
 	  					</div>
 	  				</div>
   					@endforeach
 
-	  				<div class="col-sm-6 card">
-	  					<div class="card-header">
-	  						checkboxes
+					@foreach ($form_items_collection->where('type', '=', 'check_box') as $form_item)
+	  					<div class="col-sm-6 card">
+		  					<div class="card-header">
+		  						{{$form_item->name}}
+		  					</div>
+		  					<div class="card-body">
+		  						@foreach ($form_item->children as $child)
+	  							@if ($child)
+		  							{{$child->name}}
+		  							<input type="checkbox" name="" {{array_key_exists($child->id, json_decode($classified_ad->form_values, TRUE))?'checked':''}}>
+	  								
+	  							@endif
+	  							@endforeach
+		  					</div>
 	  					</div>
-  						@foreach ($form_items_collection->where('type', '=', 'check_box') as $form_item)
-	  					<div class="card-body">
-	  						{{$form_item->name}}
-	  						<input type="checkbox" name="" {{array_key_exists($form_item->id, json_decode($classified_ad->form_values, TRUE))?'checked':''}}>
-	  					</div>
-  						@endforeach		
-	  				</div>
+					@endforeach		
 
 	  				@foreach ($form_items_collection->whereNotIn('type', ['select', 'check_box', 'box']) as $form_item)
 	  				<div class="col-sm-6 card">
