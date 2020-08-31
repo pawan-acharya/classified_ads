@@ -42,7 +42,7 @@ class ClassifiedAdController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|unique:classified_ads,title|max:255',
             'citq'=> 'nullable',
-            'title_image'=> 'file|image|mimes:jpeg,png,gif,webp|max:2048',
+            'title_images.*'=> 'file|image|mimes:jpeg,png,gif,webp|max:2048',
             'descriptions'=> 'nullable',
         ]);
         
@@ -60,9 +60,10 @@ class ClassifiedAdController extends Controller
             'form_values'=> json_encode( $form_values_array),
             'user_id'=> Auth::id(),
         ]);
-
         $classified_ad= Category::findOrFail($cat_id)->classified_ads()->save($classified_ad);
-        $classified_ad->file()->create($classified_ad->upload($validatedData['title_image']));
+        foreach ($validatedData['title_images'] as $key => $value) {
+            $classified_ad->file()->create($classified_ad->upload($value));
+        }
 
         return redirect()->route('classified_ads.show', ['classified_ad'=>$classified_ad->id]);
     }

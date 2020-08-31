@@ -18,7 +18,7 @@ trait WithFiles
 
     public function file()
     {
-        return $this->morphOne(File::class, 'uploadable')->latest('id');
+        return $this->morphOne(File::class, 'uploadable')->oldest('id');
     }
 
     public function files()

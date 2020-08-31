@@ -66,7 +66,6 @@
 	  							@if ($child)
 		  							{{$child->name}}
 		  							<input type="checkbox" name="" {{array_key_exists($child->id, json_decode($classified_ad->form_values, TRUE))?'checked':''}}>
-	  								
 	  							@endif
 	  							@endforeach
 		  					</div>
