@@ -25,10 +25,16 @@ class ClassifiedAdController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($cat_id)
+    public function create(Request $request, $cat_id=null)
     {
-        $category= Category::with('form_items')->find($cat_id);
-        return view('classified_ads.create', compact('category'));
+        
+        $category_id=  $cat_id??null;
+        if($request->ajax()){
+            $category= Category::findOrFail($category_id);
+            return view('classified_ads.partials.create', compact(['category']));
+        }
+        $categories= Category::all();
+        return view('classified_ads.create', compact(['category_id', 'categories']));
     }
 
     /**

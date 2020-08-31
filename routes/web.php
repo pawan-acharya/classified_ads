@@ -72,9 +72,9 @@ Route::middleware(['auth'])->group(function () {
 
     /** ads section**/
         Route::resource('classified_ads', 'ClassifiedAdController')->except([
-            'create', 'store'
+            'create', 'store', 'show'
         ]);
-        Route::get('/classified_ads/create/{cat_id}', 'ClassifiedAdController@create')->name('classified_ads.create');
+        Route::get('/classified_ads/create/{cat_id?}', 'ClassifiedAdController@create')->name('classified_ads.create');
         Route::post('/classified_ads/store/{cat_id}', 'ClassifiedAdController@store')->name('classified_ads.store');
 
         Route::post('/feedback/create/{classified_ad}', 'FeedbackController@create')->name('feedbacks.create');

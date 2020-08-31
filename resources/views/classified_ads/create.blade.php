@@ -7,39 +7,26 @@
 <body>
 	<div class="row">
     <div class="col-sm">
+    	
     </div>
     <div class="col-sm">
-    	<form method="POST" action="{{ route('classified_ads.store', ['cat_id'=> $category->id]) }}" id="add_new_classified_ad" class="row" enctype="multipart/form-data">
-    		@csrf
-	  		<div class="form-group col-sm-6">
-			    <label for="exampleInputEmail1">Title</label>
-			    <input type="text" class="form-control"  name="title" required>
-		  	</div>
-		  	<div class="form-group col-sm-6">
-			    <label for="exampleInputEmail1">#CITQ</label>
-			    <input type="text" class="form-control" name="citq" required>
-		  	</div>
-		  	<div class="col-sm-12 row" id="image-div">
-			  	<div class="form-group col-sm-6">
-				    <label for="exampleInputEmail1">#Images</label>
-				    <input type="file" class="" name="title_images[]" required>
-			  	</div>
-			  	<div class="form-group  col-sm-3">
-			    	<button type="button" class="btn btn-secondary " onclick="addNewImageDiv()">+</button>
-			    	{{-- <button type="button" class="btn btn-danger" onclick="removeThisItem($(this))">X</button> --}}
-				</div>
+    	<div class=" card">
+    		<div class="card-header">
+    			<select class="form-control" id="category-select" onchange="getCategoryForm($(this))">
+	    			@foreach ($categories as $category)
+	    				<option value="{{$category->id}}" {{$category->id==$category_id?'selected':''}}> {{$category->category_name}} </option>
+	    			@endforeach
+    			</select>
+    		</div>
+    	</div>
+    	<div class=" card">
+    		<div class="card-header">
+    			Fill the form
+    		</div>
+    		<div class="card-body" id="category_form_here">
+		    	
 			</div>
-		  	<div class="form-group col-sm-12">
-			    <label for="exampleInputEmail1">Description</label>
-			    <textarea class="form-control"  name="descriptions"></textarea>
-		  	</div>
-
-		  	@include('classified_ads.partials.add')
-		  	
-		  	<div class="form-group col-sm-6">
-		  		<button type="submit" class="btn btn-primary">Submit</button>
-		  	</div>
-		</form>
+    	</div>
     </div>
     <div class="col-sm">
     </div>
@@ -48,20 +35,15 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
 	<script type="text/javascript">
-		function addNewImageDiv(){
-			var html= `<div class="form-group col-sm-6">
-			    <input type="file" class="" name="title_images[]" >
-		  	</div>
-		  	<div class="form-group col-sm-6">
-			    <button type="button" class="btn btn-danger" onclick="removeThisItem($(this))">X</button>
-		  	</div>`;
-		  	$('#image-div').append(html);
+		function getCategoryForm(item){
+			var cat_id= item.val();
+			url= "{{route('classified_ads.create', ':cat_id')}}";
+			url= url.replace(':cat_id', cat_id);
+			$.get(url, function(response){
+				$('#category_form_here').html(response);
+			});
 		}
-
-		function removeThisItem(item){
-			item.parent().prev().remove();
-			item.parent().remove();	
-		}
+		getCategoryForm($('#category-select'));
 	</script>
 </body>
 </html>
