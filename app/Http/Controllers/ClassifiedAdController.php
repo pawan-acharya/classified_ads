@@ -16,8 +16,8 @@ class ClassifiedAdController extends Controller
      */
     public function index()
     {
-        $categories= Category::with('classified_ads')->get();
-        return view('classified_ads.index', compact('categories'));
+        $classified_ads= ClassifiedAd::with('category')->where('approved', 1)->get();
+        return view('classified_ads.index', compact('classified_ads'));
     }
 
     /**

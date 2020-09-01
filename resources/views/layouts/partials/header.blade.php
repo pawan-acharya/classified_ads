@@ -14,12 +14,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ (Request::segment(1) == 'ads' && Request::segment(2) == 'create') ? 'active' : '' }}" href="{{ route('ads.create') }}">
+                    <a class="nav-link {{ (Request::segment(1) == 'classified_ads' && Request::segment(2) == 'create') ? 'active' : '' }}" href="{{ route('classified_ads.create') }}">
                     <span class="nav-text">{{ __('welcome.transfer_rental') }}</span> 
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ (Request::segment(1) == 'ads' && Request::segment(2) == '') ? 'active' : '' }}" href="{{ url('/ads') }}">
+                    <a class="nav-link {{ (Request::segment(1) == 'classified_ads' && Request::segment(2) == '') ? 'active' : '' }}" href="{{ url('/classified_ads') }}">
                     <span class="nav-text">{{ __('welcome.find_a_rental') }}</span>
                     </a>
                 </li>

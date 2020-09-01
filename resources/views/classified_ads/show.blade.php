@@ -1,111 +1,62 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-<body>
-	<div class="container">
-	  	<div class="row">
-	  		<div class="col-sm-8">
-	  			<div class="row">
-	  				<div class="col-sm-6 card">
-	  					<div class="card-body">
-  							Title:{{$classified_ad->title}}
-	  					</div>
-	  				</div>
-	  				<div class="col-sm-6 card">
-	  					<div class="card-body">
-	  						CITQ:{{$classified_ad->citq}}
-	  					</div>
-	  				</div>
-	  				<div class="col-sm-6 card">
-	  					<div class="card-body">
-	  						Description:{{$classified_ad->descriptions}}
-	  					</div>
-	  				</div>
-	  				<div class="col-sm-6 card">
-	  					<div class="card-body">
-	  						{{$classified_ad->price}}  {{$classified_ad->price_for?'PER: ':''}} {{$classified_ad->price_for}}
-	  					</div>
-	  				</div>
-	  			</div>
 
-	  			<div class="row">
+@extends('layouts.app')
 
-	  				<div class="col-sm-6 card">
-	  					<div class="card-header">
-	  						Prices
-	  					</div>
-	  					@foreach ($form_items_collection->where('type', '=', 'secondary_price') as $form_item)
-	  					<div class="card-body">
-	  							 {{json_decode($classified_ad->form_values, TRUE)[$form_item->id]}} : Per {{$form_item->children()->first()->name}} <br>
-	  					</div>
-	  					@endforeach	
-	  				</div>
+@section('content')
+<section id="single-ad-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{ Str::contains(url()->previous(), 'ads')? url()->previous() : route('home') }}" class="return-button no-print">
+                    <i class="fa fa-angle-left"></i>
+                    {{ Str::contains(url()->previous(), 'ads')?  __('ads.return_results') : __('ads.return_to_my_account') }}
+                </a>
+                <h1 class="text-center section-head">{{$classified_ad->title}}</h1>
+                <div class="row ad-single mb-4">
+                    <div class="col-md-6 col-12">
+                        @include('classified_ads.partials.main')
+                    </div>
 
-	  				@foreach ($form_items_collection->where('type', '=', 'box') as $form_item)
-	  				<div class="col-sm-6 card">
-	  					<div class="card-header">
-	  						{{$form_item->name}}
-	  					</div>
-	  					<div class="card-body">
-	  						@foreach ($form_item->children as $child)
-	  							<img src="{{asset('storage')}}/{{$child->logo}}" style="height: 15px;">
-	  							{{$child->name}}: {{json_decode($classified_ad->form_values, TRUE)[$child->id]}} <br>
-	  						@endforeach
-	  					</div>
-	  				</div>
-	  				@endforeach	
+                    <div class="col-md-6 col-12">
+                        
+                        @include('classified_ads.partials.description')
+                    </div>
+                </div>
+                <div class="row justify-content-center no-print">
+                    <div class="row col-md-8 single-ad-tools ">
+                        <div class="col-md-4"> 
+                            <a @if(Auth::check()) data-toggle="modal" data-target="#user-modal" @else href="{{ route('login') }}" @endif class="btn btn-primary btn-round text-white">
+                                {{ __('ads.contact_announcer') }}
+                            </a>    
+                        </div>
+                        <div class="row col-md-8"> 
+                            <div class="col-md-4 ad-sharing-tool">
+                                <a href="javascript:void();" id="print-ad" class="ad-sharing-tool-link"><i class="fas fa-print"></i> {{ __('ads.print') }}</a>
+                            </div>  
+                            <div class="col-md-4 ad-sharing-tool">
+                                @if($classified_ad->is_wishlisted)
+                                <a href="javascript:void()" class="ad-sharing-tool-link"><i class="fab fa-gratipay"></i> {{ __('ads.added_to_favorites') }}</a>
+                                @else 
+                                <a href="javascript:void()" id="add-to-wishlist" class="ad-sharing-tool-link" data-ad_id="{{ $classified_ad->id }}"><i class="fab fa-gratipay"></i> {{ __('ads.add_to_favorites') }}</a>
+                                @endif
+                            </div>  
+                            <div class="col-md-4 ad-sharing-tool">
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{Request::url()}}" class="ad-sharing-tool-link"><i class="fas fa-share-alt"></i> {{ __('ads.send_friend') }}</a>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
 
-	  				@foreach ($form_items_collection->where('type', '=', 'select') as $form_item)
-	  				<div class="col-sm-6 card">
-	  					<div class="card-header">
-	  						{{$form_item->name}}
-	  					</div>
-	  					<div class="card-body">
-	  						@foreach ($form_item->children as $child)
-	  							@if ($child)
-	  								<button class='btn btn-{{json_decode($classified_ad->form_values, TRUE)[$form_item->id]== $child->id?"success":"warning"}}'>  {{$child->name}} </button> <br>
-	  							@endif
-	  						@endforeach
-	  					</div>
-	  				</div>
-  					@endforeach
+    
+</section>
 
-					@foreach ($form_items_collection->where('type', '=', 'check_box') as $form_item)
-	  					<div class="col-sm-6 card">
-		  					<div class="card-header">
-		  						{{$form_item->name}}
-		  					</div>
-		  					<div class="card-body">
-		  						@foreach ($form_item->children as $child)
-	  							@if ($child)
-		  							{{$child->name}}
-		  							<input type="checkbox" name="" {{array_key_exists($child->id, json_decode($classified_ad->form_values, TRUE))?'checked':''}}>
-	  							@endif
-	  							@endforeach
-		  					</div>
-	  					</div>
-					@endforeach		
+@push('js')
 
-	  				@foreach ($form_items_collection->whereNotIn('type', ['select', 'check_box', 'box', 'secondary_price']) as $form_item)
-	  				<div class="col-sm-6 card">
-	  					<div class="card-header">
-	  						{{$form_item->name}}: {{json_decode($classified_ad->form_values, TRUE)[$form_item->id]}}
-	  					</div>
-	  					
-	  				</div>
-  					@endforeach
+@endpush
 
-	  			</div>
-	  		</div>	
-		</div>
-	</div>
-	<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-</body>
-</html>
+@endsection
+
 
 
 

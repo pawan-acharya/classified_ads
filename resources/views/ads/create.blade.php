@@ -214,19 +214,6 @@
                                 </div>
                             </div>
                             <br> </br>
-                            <div class="col-md-12  mt-3">
-                                <h5> {{ __('ads.inclusion_option') }} </h5>
-                                <div class="row">
-                                    @foreach (__('ads.inclusion_options') as $key => $option)
-                                        <div class="col-md-12">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="option_{{$key}}" value="{{$key}}" name="inclusion_options[]" @if ( old('inclusion_options') !== null && in_array($key, old('inclusion_options')) ) checked @endif>
-                                                <label class="custom-control-label" for="option_{{$key}}">{{$option}}</label>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
                         </div>
                         <!-- Ad fields end-->
                     

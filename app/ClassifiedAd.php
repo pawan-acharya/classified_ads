@@ -10,7 +10,7 @@ class ClassifiedAd extends Model
 {
     use WithFiles, Uploader;
     
-    protected $fillable = ['form_values', 'user_id', 'title', 'citq', 'price', 'title_image', 'descriptions'];
+    protected $fillable = ['form_values', 'user_id', 'title', 'citq', 'price', 'title_image', 'descriptions', 'price_for'];
     
     protected $casts = [
         'form_values' => 'array',

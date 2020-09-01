@@ -74,6 +74,7 @@
 	    </div>
 	</div>
 @endsection
+
 @push('js')	
 	<script type="text/javascript">
 		var js_array= [];
@@ -224,7 +225,7 @@
 					'mandatory': $(value).find("select[name='mandatories[]']").first().val(),
 				};
 				if($(value).find("select[name='types[]']").first().val()== 'box'){
-				 	
+					var tiny_array =new Array();
 				  	$.each( $(value).find('.divRow'), function( key, value ) {
 				  		tiny_array.push({
 							'type': $(value).find("select[name='types[]']").first().val(),
@@ -255,7 +256,7 @@
 		  	formData.append('description', description);
 			formData.append('image', $(this).find("input[name='image']")[0].files[0]);
 		  	formData.append('big_array', JSON.stringify(big_array));
-		  	
+		  	debugger;
 		  	$.ajax({
 			  	type: "POST",
 			  	url: url,

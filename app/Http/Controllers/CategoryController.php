@@ -75,7 +75,7 @@ class CategoryController extends Controller
                         'required'=> ($value['mandatory']== 'yes')?'1':'0',
                         'category_id'=> $category->id,
                         'parent'=>$form_item->id, 
-                        'logo'=>array_key_exists('logo', $value),
+                        'logo'=>array_key_exists('logo', $value)?$value:null,
                     ]);
                 }
             }

@@ -1,24 +1,24 @@
 <form method="POST" action="{{ route('classified_ads.store', ['cat_id'=> $category->id]) }}" id="add_new_classified_ad" class="row" enctype="multipart/form-data">
 	@csrf
-		<div class="form-group col-sm-6">
-	    <label for="exampleInputEmail1">Title</label>
-	    <input type="text" class="form-control"  name="title" required>
+	<div class="form-group col-sm-6">
+	    <label for="exampleInputEmail1" class="col-form-label text-md-right">Title</label>
+	    <input type="text" class="form-control  @error('title') is-invalid @enderror"  name="title" required>
+  	</div> 
+  	<div class="form-group col-sm-6" >
+	    <label for="exampleInputEmail1" class="col-form-label text-md-right">#CITQ</label>
+	    <input type="text" class="form-control  @error('citq') is-invalid @enderror" name="citq" required>
   	</div>
   	<div class="form-group col-sm-6">
-	    <label for="exampleInputEmail1">#CITQ</label>
-	    <input type="text" class="form-control" name="citq" required>
+	    <label for="exampleInputEmail1" class="col-form-label text-md-right">Price</label>
+	    <input type="number" class="form-control  @error('price') is-invalid @enderror" name="price" required>
   	</div>
   	<div class="form-group col-sm-6">
-	    <label for="exampleInputEmail1">Price</label>
-	    <input type="number" class="form-control" name="price" required>
-  	</div>
-  	<div class="form-group col-sm-6">
-	    <label for="exampleInputEmail1">Per</label>
-	    <input type="text" class="form-control" name="price_for" >
+	    <label for="exampleInputEmail1" class="col-form-label text-md-right">Per</label>
+	    <input type="text" class="form-control  @error('price_for') is-invalid @enderror" name="price_for" >
   	</div>
   	<div class="col-sm-12 row" id="image-div">
 	  	<div class="form-group col-sm-6">
-		    <label for="exampleInputEmail1">#Images</label>
+		    <label for="exampleInputEmail1" class="col-form-label text-md-right">#Images</label>
 		    <input type="file" class="" name="title_images[]" >
 	  	</div>
 	  	<div class="form-group  col-sm-3">
@@ -27,7 +27,7 @@
 		</div>
 	</div>
   	<div class="form-group col-sm-12">
-	    <label for="exampleInputEmail1">Description</label>
+	    <label for="exampleInputEmail1" class="col-form-label text-md-right  @error('descriptions') is-invalid @enderror">Description</label>
 	    <textarea class="form-control"  name="descriptions"></textarea>
   	</div>
 
