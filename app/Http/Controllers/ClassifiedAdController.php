@@ -48,7 +48,9 @@ class ClassifiedAdController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|unique:classified_ads,title|max:255',
             'citq'=> 'nullable',
-            'title_images.*'=> 'file|image|mimes:jpeg,png,gif,webp|max:2048',
+            'price' => 'required|numeric',
+            'price_for'=> 'nullable',
+            'title_images.*'=> 'nullable|file|image|mimes:jpeg,png,gif,webp|max:2048',
             'descriptions'=> 'nullable',
         ]);
         
@@ -58,17 +60,21 @@ class ClassifiedAdController extends Controller
             $form_item_value= $value;
             $form_values_array[$form_item_id]=$form_item_value;
         }
+
         $classified_ad = new ClassifiedAd([
             'title' => $validatedData['title'], 
             'citq'=> $validatedData['citq'], 
+            'price' => $validatedData['price'], 
+            'price_for'=> $validatedData['price_for'],
             'descriptions' => $validatedData['descriptions'], 
-            // 'price' => $validatedData['price'], 
             'form_values'=> json_encode( $form_values_array),
             'user_id'=> Auth::id(),
         ]);
         $classified_ad= Category::findOrFail($cat_id)->classified_ads()->save($classified_ad);
-        foreach ($validatedData['title_images'] as $key => $value) {
-            $classified_ad->file()->create($classified_ad->upload($value));
+        if(array_key_exists('title_images', $validatedData)){
+            foreach ($validatedData['title_images'] as $key => $value) {
+                $classified_ad->file()->create($classified_ad->upload($value));
+            }
         }
 
         return redirect()->route('classified_ads.show', ['classified_ad'=>$classified_ad->id]);

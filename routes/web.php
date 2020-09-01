@@ -71,11 +71,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/partners/action/approve', 'PartnerController@approve')->name('partners.approve');
 
     /** ads section**/
-        Route::resource('classified_ads', 'ClassifiedAdController')->except([
-            'create', 'store', 'show'
-        ]);
         Route::get('/classified_ads/create/{cat_id?}', 'ClassifiedAdController@create')->name('classified_ads.create');
         Route::post('/classified_ads/store/{cat_id}', 'ClassifiedAdController@store')->name('classified_ads.store');
+        Route::resource('classified_ads', 'ClassifiedAdController')->except([
+            'create', 'store', 'create'
+        ]);
 
         Route::post('/feedback/create/{classified_ad}', 'FeedbackController@create')->name('feedbacks.create');
         Route::get('/messages', 'ChatRoomController@index')->name('chatrooms.index');

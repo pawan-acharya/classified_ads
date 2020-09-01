@@ -8,10 +8,18 @@
 	    <label for="exampleInputEmail1">#CITQ</label>
 	    <input type="text" class="form-control" name="citq" required>
   	</div>
+  	<div class="form-group col-sm-6">
+	    <label for="exampleInputEmail1">Price</label>
+	    <input type="number" class="form-control" name="price" required>
+  	</div>
+  	<div class="form-group col-sm-6">
+	    <label for="exampleInputEmail1">Per</label>
+	    <input type="text" class="form-control" name="price_for" >
+  	</div>
   	<div class="col-sm-12 row" id="image-div">
 	  	<div class="form-group col-sm-6">
 		    <label for="exampleInputEmail1">#Images</label>
-		    <input type="file" class="" name="title_images[]" required>
+		    <input type="file" class="" name="title_images[]" >
 	  	</div>
 	  	<div class="form-group  col-sm-3">
 	    	<button type="button" class="btn btn-secondary " onclick="addNewImageDiv()">+</button>

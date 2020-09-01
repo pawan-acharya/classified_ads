@@ -145,27 +145,12 @@
 				<div class="form-group   col-sm-3">
 		    	</div>
 		    	<div class="form-group   col-sm-3">
-			    <input type="text" class="form-control " placeholder="Enter name for the form" name="selects[]" required>
+			    <input type="text" class="form-control " placeholder="Enter name for the form" name="child_names[]" required>
 			    </div>
 			    <div class="form-group   col-sm-3">
 			    </div>
 			    <div class="form-group  col-sm-3">
 			    <button type="button" class="btn btn-success " onclick="addNewSelectBody($(this))">+</button>
-			    <button type="button" class="btn btn-danger" onclick="removeThisItem($(this))">X</button>
-			    </div>
-	  	</div>` ;
-
-	  	var html_primary_price= `<div class="form-group row divRow">
-				<input type="hidden" name="ids[]" value="0">
-				<div class="form-group   col-sm-3">
-				 	<input type="text" class="form-control " value="Per" readonly>
-		    	</div>
-		    	<div class="form-group   col-sm-3">
-			    <input type="text" class="form-control " placeholder="Enter name for the form" name="primary_prices[]" required>
-			    </div>
-			    <div class="form-group   col-sm-3">
-			    </div>
-			    <div class="form-group  col-sm-3">
 			    <button type="button" class="btn btn-danger" onclick="removeThisItem($(this))">X</button>
 			    </div>
 	  	</div>` ;
@@ -176,7 +161,7 @@
 					 <input type="text" class="form-control " value="Per" readonly>
 		    	</div>
 		    	<div class="form-group   col-sm-3">
-			    <input type="text" class="form-control " placeholder="Enter name for the form" name="secondary_prices[]" required>
+			    <input type="text" class="form-control " placeholder="Enter name for the form" name="child_names[]" required>
 			    </div>
 			    <div class="form-group   col-sm-3">
 			    </div>
@@ -249,12 +234,12 @@
 						});
 				    });
 			     	small_array['box_array']= tiny_array;
-				}else if($(value).find("select[name='types[]']").first().val()== 'select' || $(value).find("select[name='types[]']").first().val()== 'check_box'){
+				}else if($(value).find("select[name='types[]']").first().val()== 'select' || $(value).find("select[name='types[]']").first().val()== 'check_box' || $(value).find("select[name='types[]']").first().val()== 'secondary_price'){
 					var tiny_array =new Array();
 			 		$.each( $(value).find('.divRow'), function( key, value ) {
 			 			tiny_array.push({
 							'type': 'None',
-							'name': $(value).find("input[name='selects[]']").first().val(),
+							'name': $(value).find("input[name='child_names[]']").first().val(),
 							'mandatory': 'yes',
 						});
 				 	});
@@ -271,7 +256,6 @@
 			formData.append('image', $(this).find("input[name='image']")[0].files[0]);
 		  	formData.append('big_array', JSON.stringify(big_array));
 		  	
-		  	debugger;
 		  	$.ajax({
 			  	type: "POST",
 			  	url: url,

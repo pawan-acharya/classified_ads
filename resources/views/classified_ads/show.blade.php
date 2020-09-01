@@ -11,22 +11,39 @@
 	  			<div class="row">
 	  				<div class="col-sm-6 card">
 	  					<div class="card-body">
-  							{{$classified_ad->title}}
+  							Title:{{$classified_ad->title}}
 	  					</div>
 	  				</div>
-	  				<div class="col-sm-3 card">
+	  				<div class="col-sm-6 card">
 	  					<div class="card-body">
-	  						{{$classified_ad->citq}}
+	  						CITQ:{{$classified_ad->citq}}
 	  					</div>
 	  				</div>
-	  				<div class="col-sm-3 card">
+	  				<div class="col-sm-6 card">
 	  					<div class="card-body">
-	  						{{$classified_ad->descriptions}}
+	  						Description:{{$classified_ad->descriptions}}
+	  					</div>
+	  				</div>
+	  				<div class="col-sm-6 card">
+	  					<div class="card-body">
+	  						{{$classified_ad->price}}  {{$classified_ad->price_for?'PER: ':''}} {{$classified_ad->price_for}}
 	  					</div>
 	  				</div>
 	  			</div>
 
 	  			<div class="row">
+
+	  				<div class="col-sm-6 card">
+	  					<div class="card-header">
+	  						Prices
+	  					</div>
+	  					@foreach ($form_items_collection->where('type', '=', 'secondary_price') as $form_item)
+	  					<div class="card-body">
+	  							 {{json_decode($classified_ad->form_values, TRUE)[$form_item->id]}} : Per {{$form_item->children()->first()->name}} <br>
+	  					</div>
+	  					@endforeach	
+	  				</div>
+
 	  				@foreach ($form_items_collection->where('type', '=', 'box') as $form_item)
 	  				<div class="col-sm-6 card">
 	  					<div class="card-header">
@@ -72,7 +89,7 @@
 	  					</div>
 					@endforeach		
 
-	  				@foreach ($form_items_collection->whereNotIn('type', ['select', 'check_box', 'box']) as $form_item)
+	  				@foreach ($form_items_collection->whereNotIn('type', ['select', 'check_box', 'box', 'secondary_price']) as $form_item)
 	  				<div class="col-sm-6 card">
 	  					<div class="card-header">
 	  						{{$form_item->name}}: {{json_decode($classified_ad->form_values, TRUE)[$form_item->id]}}

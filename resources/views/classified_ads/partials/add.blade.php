@@ -1,4 +1,4 @@
-@foreach ($category->form_items()->whereNotIn('type', ['check_box', 'select', 'None'])->where('parent', null)->get() as $form_item)
+@foreach ($category->form_items()->whereNotIn('type', ['check_box', 'select', 'None', 'secondary_price'])->where('parent', null)->get() as $form_item)
 	<div class="form-group col-sm-6">
 	    
 		@switch($form_item->type)
@@ -44,6 +44,27 @@
 		@endswitch
 	</div>
 @endforeach
+
+@if ($category->form_items()->where('type', 'secondary_price')->where('parent', null)->first())
+ 	<div class="card col-sm-6" >
+ 		<div class="card-header">
+   			<label for="exampleInputEmail1">Prices</label>
+   		</div>
+		@foreach ($category->form_items()->where('type', 'secondary_price')->where('parent', null)->get() as $form_item)
+	   		<div class="card-body">
+				<div class="form-group">
+			  	@foreach ($form_item->children as $child)
+		        	@if ($child)
+					 	<input type="number"  class="form-control"  name="{{$form_item->id}}-{{$form_item->name}}" >
+			  			<label for="">Per {{$child->name}}</label><br>
+		        	@endif
+		    	@endforeach
+				</div>
+			</div>
+		@endforeach
+	</div>
+@endif
+
 
 @if ($category->form_items()->where('type', 'select')->where('parent', null)->first())
  	<div class="card col-sm-6" >
