@@ -56,10 +56,9 @@ class CategoryController extends Controller
             'description'=> $validatedData['description'],
            
         ]);
-        
         $category->file()->create($category->upload($validatedData['image']));
-
         foreach (json_decode($request->big_array, TRUE) as $key => $value) {
+        
             
             $form_item= FormItem::create([
                 'name'=> $value['name'],
@@ -75,7 +74,7 @@ class CategoryController extends Controller
                         'required'=> ($value['mandatory']== 'yes')?'1':'0',
                         'category_id'=> $category->id,
                         'parent'=>$form_item->id, 
-                        'logo'=>array_key_exists('logo', $value)?$value:null,
+                        'logo'=>array_key_exists('logo', $value)?$value['logo']:null,
                     ]);
                 }
             }
