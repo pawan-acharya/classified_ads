@@ -64,7 +64,7 @@
                         <div class="col-9">
                             <form>
                                 <div class="form-row input-group">
-                                    <div class="form-group selectdiv col-md-3 my-auto">
+                                   {{--  <div class="form-group selectdiv col-md-3 my-auto">
                                         <label for="brand" class="col-form-label ">{{ __('ads.sort_by') }}</label>
                                         <select class="form-control filters" id="sort_by" name="order_by">
                                             <option value="" selected disabled></option>
@@ -72,7 +72,7 @@
                                             <option value="{{ request()->fullUrlWithQuery(['sort_by' => $key]) }}" @if ( app('request')->input('sort_by') == $key) selected @endif> {{$option}}</option>
                                             @endforeach
                                         </select>
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group selectdiv col-md-3 my-auto">
                                         <label for="brand" class="col-form-label ">{{ __('ads.order') }}</label>
                                         <select class="form-control filters" id="order" name="order_by">
@@ -123,7 +123,15 @@
 
 @push('js')
 <script type="text/javascript">
-
+window.addEventListener('DOMContentLoaded', function() {
+    (function($) {
+        $('body').on('change', '.filters', function () {
+            var that = $(this);
+            console.log(that.val());
+            window.location.href = that.val();
+        }); 
+    })(jQuery);
+});
 </script>
 @endpush
 @endsection

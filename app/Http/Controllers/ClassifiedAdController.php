@@ -17,7 +17,10 @@ class ClassifiedAdController extends Controller
     public function index(Request $request)
     {
         define('PER_PAGE', 9);
-        $classified_ads= ClassifiedAd::with(['category', 'file'])->where('approved', 1);
+        $classified_ads= ClassifiedAd::with(['category', 'file'])
+                    ->where('approved', 1)
+                    ->orderBy('created_at', $request->query('order')?:'desc');
+                    
         if($request->query('category')){
             $classified_ads->where('category_id', $request->query('category'));
         }
