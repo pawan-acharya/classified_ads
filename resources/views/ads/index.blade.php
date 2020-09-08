@@ -291,6 +291,7 @@
                             <div class= "row"><span class="font-weight-bold">{{ __('ads.page') }}</span>&nbsp;{{$ads->currentPage()}} {{ __('ads.of') }} {{ceil($ads->total()/$ads->perPage())}}</div>
                         </div>
                     </div>
+                    
                     @php($index = 0)
                     @foreach ($ads as $ad)
                     @if($index == 5)

@@ -8,7 +8,30 @@
         <div class="row justify-content-center">
             <h1 class="section-head"> {{ __('ads.search.find_a_rental') }} </h1>
             <div class="col-md-12 form-wrapper main-search">
-            <h6 class="text-white"><span class="text-theme-dark font-weight-bold">{{ number_format(\App\Ad::where('plan_id', '!=', null)->count())}}</span> {{ __('welcome.available_vehicle') }}</h6>
+                <h6 class="text-white"><span class="text-theme-dark font-weight-bold">
+                    {{ number_format($classified_ads->count()) }} </span>  add found in this search
+                </h6>
+                <form>
+                    <div class="form-row input-group">
+                        <div class="form-group selectdiv align-middle col-md-2 my-auto">
+                            <label for="category" class="col-form-label ">{{ __('ads.category') }}</label>
+                            <select id="search-category" class="form-control @error('category') is-invalid @enderror" name="category">
+                                <option value="" selected disabled></option>
+                                <option value=""> {{ __('ads.all') }}</option>
+                                @foreach (\App\Category::all() as $category)
+                                <option value="{{$category->id}}" @if (request()->get('category') === $category->id) selected @endif> {{$category->category_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group selectdiv col-md-2 my-auto">
+                            <label for="ad-name" class="col-form-label ">{{ __('ads.brand') }}</label>
+                            <input id="search-ad-name" class="form-control @error('brand') is-invalid @enderror" name="ad_name" value="{{request()->get('ad_name')}}">  
+                        </div>
+                        <div class="form-group buttondiv col-md-1 my-auto text-center">
+                            <button type="submit" class="btn btn-primary btn-circular bg-theme m-auto ">GO</button>
+                        </div>
+                    </div>
+                </form>
                
             </div>
         </div>
@@ -23,6 +46,7 @@
             </p>
         </div>
         <div class="col-12">
+            {{ $classified_ads->appends(request()->input())->links() }} 
         </div>
         <div class="row">
             <div class="col-12 col-sm-3 search-sidebar form-wrapper d-none d-md-block"">
@@ -62,48 +86,29 @@
                             </form>
                         </div>
                         <div class="col-3 mt-2">
-                       		
+           		           <div class= "row"><span class="font-weight-bold">{{ __('ads.results') }}</span>&nbsp;{{$classified_ads->firstItem()}} - {{$classified_ads->lastItem()}} {{ __('ads.of') }} {{$classified_ads->total()}}</div>
+                            <div class= "row"><span class="font-weight-bold">{{ __('ads.page') }}</span>&nbsp;{{$classified_ads->currentPage()}} {{ __('ads.of') }} {{ceil($classified_ads->total()/$classified_ads->perPage())}}</div>
                         </div>
                     </div>
                     <div class="row col-12 search-body-head pt-2 pb-3">
-                    	<table class="table">
-						  <thead class="thead-dark">
-						    <tr>
-						      <th scope="col">#</th>
-						      <th scope="col">First</th>
-						      <th>Category Name</th>
-						      <th>
-						      	View
-						      </th>
-						    </tr>
-						  </thead>
-						  <tbody>
-						   	@foreach ($classified_ads as $classified_ad)
-	                			<tr>
-	                				<td>
-	                					#
-	                				</td>
-	                				<td>
-	                					{{$classified_ad->title}}
-	                				</td>
-	                				<td>
-	                					{{$classified_ad->category->category_name}}
-	                				</td>
-	                				<th>
-	                					<a href="{{route('classified_ads.show', ['classified_ad'=>$classified_ad->id])}}">{{$classified_ad->title}}
-                                        </a>
-	                				</th>
-	                			</tr>
-		       			 	@endforeach
-						  </tbody>
-						</table>
                     	
                     </div>
+                    @php($index = 0)
+                    @foreach ($classified_ads as $classified_ad)
+                    @if($index == 5)
+                    <div class="col-md-6 even pl-5">
+                        <img src="https://via.placeholder.com/200x200" />
+                    </div>
+                    @php($index++)
+                    @endif
+                    @include('classified_ads.partials.classified_ad',['parent' => 'index'])
+                    @php($index++)
+                    @endforeach
                     
                 </div>
             </div>
             <div class="col-12">
-            	
+        	   {{ $classified_ads->appends(request()->input())->links() }} 
             </div>
         </div>
     </div>

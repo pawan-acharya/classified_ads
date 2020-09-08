@@ -14,9 +14,17 @@ class ClassifiedAdController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $classified_ads= ClassifiedAd::with('category')->where('approved', 1)->get();
+        define('PER_PAGE', 9);
+        $classified_ads= ClassifiedAd::with(['category', 'file'])->where('approved', 1);
+        if($request->query('category')){
+            $classified_ads->where('category_id', $request->query('category'));
+        }
+        if($request->query('ad_name')){
+            $classified_ads->where('title', 'like',  '%'.$request->query('ad_name').'%');
+        }
+        $classified_ads= $classified_ads->paginate(PER_PAGE);
         return view('classified_ads.index', compact('classified_ads'));
     }
 
