@@ -13,7 +13,7 @@
     @stack('scripts-vars')
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://js.stripe.com/v3/"></script>
-
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXfPt8Ul2g0-2RU70lgvbIZW_5ZKSf4-I&callback=initMap" defer></script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300;400;500;600;700&display=swap" rel="stylesheet">

@@ -24,8 +24,12 @@
                             </select>
                         </div>
                         <div class="form-group selectdiv col-md-2 my-auto">
-                            <label for="ad-name" class="col-form-label ">{{ __('ads.brand') }}</label>
+                            <label for="ad-name" class="col-form-label ">Ad Name</label>
                             <input id="search-ad-name" class="form-control @error('brand') is-invalid @enderror" name="ad_name" value="{{request()->get('ad_name')}}">  
+                        </div>
+                        <div class="form-group selectdiv col-md-2 my-auto">
+                            <label for="ad-location" class="col-form-label ">Ad Location</label>
+                            <input id="search-ad-location" class="form-control @error('location') is-invalid @enderror" name="location" value="{{request()->get('location')}}">  
                         </div>
                         <div class="form-group buttondiv col-md-1 my-auto text-center">
                             <button type="submit" class="btn btn-primary btn-circular bg-theme m-auto ">GO</button>

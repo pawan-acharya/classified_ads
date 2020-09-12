@@ -28,6 +28,9 @@ class ClassifiedAdController extends Controller
         if($request->query('ad_name')){
             $classified_ads->where('title', 'like',  '%'.$request->query('ad_name').'%');
         }
+        if($request->query('location')){
+            $classified_ads->where('location', 'like',  '%'.$request->query('location').'%');
+        }
         $classified_ads= $classified_ads->paginate(PER_PAGE);
         return view('classified_ads.index', compact('classified_ads'));
     }
@@ -64,6 +67,7 @@ class ClassifiedAdController extends Controller
             'price_for'=> 'nullable',
             'title_images.*'=> 'nullable|file|image|mimes:jpeg,png,gif,webp|max:2048',
             'descriptions'=> 'nullable',
+            'location'=> 'required'
         ]);
         
         $form_values_array=[];

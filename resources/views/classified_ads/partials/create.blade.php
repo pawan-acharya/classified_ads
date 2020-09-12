@@ -26,6 +26,11 @@
 	    	{{-- <button type="button" class="btn btn-danger" onclick="removeThisItem($(this))">X</button> --}}
 		</div>
 	</div>
+	<div class="form-group col-sm-12">
+     	<label for="pac-location" class="col-form-label text-md-right">Location</label>
+	    <input type="text"  id="pac-input" class="form-control  @error('location') is-invalid @enderror" name="location" >
+  	</div>
+
   	<div class="form-group col-sm-12">
 	    <label for="exampleInputEmail1" class="col-form-label text-md-right  @error('descriptions') is-invalid @enderror">Description</label>
 	    <textarea class="form-control"  name="descriptions"></textarea>
@@ -53,4 +58,11 @@
 		item.parent().prev().remove();
 		item.parent().remove();	
 	}
+
+	function initialize() {
+	  var input = document.getElementById('pac-input');
+	  new google.maps.places.Autocomplete(input);
+	}
+
+	google.maps.event.addDomListener(window, 'load', initialize);
 </script>
