@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\ClassifiedAd;
 use App\Category;
 use Auth;
+use Lang;
 
 class ClassifiedAdController extends Controller
 {
@@ -155,7 +156,6 @@ class ClassifiedAdController extends Controller
         $classified_ad= ClassifiedAd::findOrFail($id);
         $classified_ad->approved= $classified_ad->approved?0:1;
         $classified_ad->save();
-
-        return redirect()->back();
+        return $classified_ad->approved?Lang::get('admin.approved'):Lang::get('admin.rejected');
     }
 }

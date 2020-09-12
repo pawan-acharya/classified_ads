@@ -75,13 +75,12 @@
                                     {{-- <th>{{ __('auth.first_name') }}</th> --}}
                                     <th>{{ __('id') }}</th>
                                     <th>{{ __('title') }}</th>
-                                    <th>{{ __('descriptions') }}</th>
                                     <th>{{ __('citq') }}</th>
                                     <th>{{ __('price') }}</th>
                                     <th>{{ __('category_name') }}</th>
                                     <th width="100px">{{ __('admin.status') }}</th>
                                 </tr>
-                            </thead>
+                            </thead> 
                             <tbody>
                             </tbody>
                         </table>
@@ -148,17 +147,31 @@
                 columns: [
                     {data: 'id', name: 'id'},
                     {data: 'title', name: 'title'},
-                    {data: 'descriptions', name: 'descriptions'},
                     {data: 'citq', name: 'citq'},
                     {data: 'price', name: 'price'},
                     {data: 'category_name', name: 'category_name'},
                     {data: 'actions', name: 'actions', orderable: false, searchable: false},
                 ]
             });
-
-            
-
         });
+        
+        var currentElement= null;
+        function toggleVerification( id, element ){
+            currentElement= element;
+            url= "{{route('classified_ads.toggle', ':classified_ad_id')}}";
+            url= url.replace(':classified_ad_id', id);
+            $.get(url, function(response){
+                if(currentElement.hasClass('btn-success')){
+                    currentElement.removeClass('btn-success');
+                    currentElement.addClass('btn-danger');
+                    currentElement.html(response);
+                }else{      
+                    currentElement.removeClass('btn-danger');
+                    currentElement.addClass('btn-success');
+                    currentElement.html(response);
+                }
+            });
+        }
 
     </script>
 @endpush

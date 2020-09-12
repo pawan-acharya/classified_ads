@@ -43,8 +43,8 @@ Route::post('/my-account/edit', 'HomeController@update')->name('home.update');
 Route::post('/action/invite', 'HomeController@invite')->name('home.invite');
 
 Route::get('/wishlists', 'WishlistController@index')->name('wishlists');
-Route::post('/wishlists/{ad_id}', 'WishlistController@create')->name('wishlists.create');
-Route::delete('/wishlists/{ad_id}', 'WishlistController@delete')->name('wishlists.create');
+Route::post('/wishlists/{classified_ad_id}', 'WishlistController@create')->name('wishlists.create');
+Route::delete('/wishlists/{classified_ad_id}', 'WishlistController@delete')->name('wishlists.create');
 
 Route::get('ads', 'AdController@index')->name('ads.index');
 Route::post('ads', 'AdController@store')->name('ads.store')->middleware('auth');

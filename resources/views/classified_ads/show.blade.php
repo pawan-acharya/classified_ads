@@ -36,7 +36,7 @@
                                 @if($classified_ad->is_wishlisted)
                                 <a href="javascript:void()" class="ad-sharing-tool-link"><i class="fab fa-gratipay"></i> {{ __('ads.added_to_favorites') }}</a>
                                 @else 
-                                <a href="javascript:void()" id="add-to-wishlist" class="ad-sharing-tool-link" data-ad_id="{{ $classified_ad->id }}"><i class="fab fa-gratipay"></i> {{ __('ads.add_to_favorites') }}</a>
+                                <a href="javascript:void()" id="add-to-wishlist" class="ad-sharing-tool-link" onclick="addToFavoutires({{$classified_ad->id}})"><i class="fab fa-gratipay"></i> {{ __('ads.add_to_favorites') }}</a>
                                 @endif
                             </div>  
                             <div class="col-md-4 ad-sharing-tool">
@@ -52,6 +52,21 @@
 </section>
 
 @push('js')
+<script type="text/javascript">
+    function addToFavoutires(id){
+            url= "{{route('wishlists.create', ':classified_ad_id')}}";
+            url= url.replace(':classified_ad_id', id);
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                },
+            })
+            .done(function( data ) {
+            });
+    }
+</script>
 
 @endpush
 

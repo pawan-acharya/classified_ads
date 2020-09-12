@@ -76,10 +76,10 @@ class AdminController extends Controller
                     ->addColumn('actions', function($row){
                         $url= route("classified_ads.toggle", ["classified_ad"=>$row->id]);
                         if ($row->approved === 1) {
-                            $btns = '<a href="'.$url.'" class="btn btn-success btn-sm">'.Lang::get('admin.approved').'</a>';
+                            $btns = '<a href="javascript:void(0)" class="btn btn-success btn-sm" onclick="toggleVerification('.$row->id.', $(this))">'.Lang::get('admin.approved').'</a>';
                             return $btns;
                         } elseif ($row->approved === 0) {
-                            $btns = '<a href="'.$url.'" class="btn btn-danger btn-sm">'.Lang::get('admin.rejected').'</a>';
+                            $btns = '<a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="toggleVerification('.$row->id.', $(this))">'.Lang::get('admin.rejected').'</a>';
                             return $btns;
                         }
                     })
