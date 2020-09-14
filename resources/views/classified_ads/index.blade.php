@@ -19,7 +19,7 @@
                                 <option value="" selected disabled></option>
                                 <option value=""> {{ __('ads.all') }}</option>
                                 @foreach (\App\Category::all() as $category)
-                                <option value="{{$category->id}}" @if (request()->get('category') === $category->id) selected @endif> {{$category->category_name}}</option>
+                                <option value="{{$category->id}}" @if (request()->get('category') == $category->id) selected @endif> {{$category->category_name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -136,6 +136,13 @@ window.addEventListener('DOMContentLoaded', function() {
         }); 
     })(jQuery);
 });
+
+    function initialize() {
+      var input = document.getElementById('search-ad-location');
+      new google.maps.places.Autocomplete(input);
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 @endpush
 @endsection

@@ -85,6 +85,7 @@ class ClassifiedAdController extends Controller
             'descriptions' => $validatedData['descriptions'], 
             'form_values'=> json_encode( $form_values_array),
             'user_id'=> Auth::id(),
+            'location'=> $validatedData['location'], 
         ]);
         $classified_ad= Category::findOrFail($cat_id)->classified_ads()->save($classified_ad);
         if(array_key_exists('title_images', $validatedData)){

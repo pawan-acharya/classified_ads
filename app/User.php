@@ -57,7 +57,7 @@ class User extends Authenticatable
 
     public function ads()
     {
-        return $this->hasMany('App\Ad');
+        return $this->hasMany('App\ClassifiedAd');
     }
 
     public function partner()
