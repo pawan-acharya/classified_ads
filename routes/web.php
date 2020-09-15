@@ -14,13 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 //Static Pages
-Route::get('/', function () {
-    $payment_options = collect(range(1, 20))->mapWithKeys(function ($item) {
-        $amount = $item*50;
-        return [$amount => $amount];
-    });
-    return view('welcome', compact('payment_options'));
-});
+Route::get('/', 'HomeController@homepage');
+   
 Route::get('/faq', function () {
     return view('/pages/faq');
 });
@@ -86,14 +81,14 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth','admin'])->prefix('admin')->group(function () {
     Route::get('/', 'AdminController@index');
-    Route::get('/partners', 'AdminController@partners')->name('admin.partners');
-    Route::get('/partnersales', 'AdminController@partnerSales')->name('admin.partnersales');
-    Route::get('/history', 'AdminController@history')->name('admin.history');
+    // Route::get('/partners', 'AdminController@partners')->name('admin.partners');
+    Route::get('/featured', 'AdminController@featured')->name('admin.featured');
+    Route::get('/validation', 'AdminController@validation')->name('admin.validation');
 
     /** Category and  formItems section**/
         Route::resource('categories', 'CategoryController');
         Route::get('/classified_ads/toggle/{classified_ad}', 'ClassifiedAdController@toggle')->name('classified_ads.toggle');
-
+        Route::get('/classified_ads/toggle_featured/{classified_ad}', 'ClassifiedAdController@toggle_featured')->name('classified_ads.toggle_featured');
         // Route::get('/add_field_items_to_form/{id}', 'FormItemController@add')->name('form_items.add');
         // Route::post('/store_field_items_to_form/{id}', 'FormItemController@store')->name('form_items.store');
         // Route::get('/edit_field_items_to_form/{id}', 'FormItemController@edit')->name('form_items.edit');

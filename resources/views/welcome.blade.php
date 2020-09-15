@@ -17,70 +17,26 @@
     </div>
     <div class="col-md-12 form-wrapper main-search">
       <h6 class="text-white"><span class="text-theme-dark font-weight-bold">{{ number_format(\App\Ad::where('plan_id', '>', 0)->count())}}</span> {{ __('welcome.available_vehicle') }}</h6>
-      <form method="GET" action="{{ route("ads.index") }}">
+      <form method="GET" action="{{ route("classified_ads.index") }}">
           <div class="form-row input-group">
               <div class="form-group selectdiv align-middle col-md-2 my-auto">
-                  <label for="category" class="col-form-label ">{{ __('ads.category') }}</label>
-                  <select id="category" class="form-control @error('category') is-invalid @enderror" name="category">
-                      <option value="" selected disabled></option>
-                      <option value=""> {{ __('ads.all') }}</option>                     
-                      @foreach (__('ads.category_options') as $key => $category)
-                      <option value="{{$key}}" @if (request()->get('category') === $key) selected @endif> {{$category}}</option>
-                      @endforeach
-                  </select>
-              </div>
-              <div class="form-group selectdiv col-md-2 my-auto">
-                  <label for="brand" class="col-form-label ">{{ __('ads.brand') }}</label>
-                  <select id="brand" class="form-control @error('brand') is-invalid @enderror" name="brand">
-                      <option value="" selected disabled></option>
-                      <option value=""> {{ __('ads.all') }}</option>
-                      @foreach (__('ads.brand_options') as $key => $brand)
-                      <option value="{{$key}}" @if (request()->get('brand') === $key) selected @endif> {{$brand}}</option>
-                      @endforeach
-                  </select>
-              </div>
-              <div class="form-group selectdiv col-md-2 my-auto">
-                  <label for="model" class="col-form-label ">{{ __('ads.model') }}</label>
-                  <select id="model" class="form-control @error('model') is-invalid @enderror" name="model">
-                      <option value="" selected disabled></option>
-                      <option value=""> {{ __('ads.all') }}</option>
-                      <option value="" >{{ __('ads.select_model') }}</option>        
-                  </select>
-              </div>
-              <div class="form-group selectdiv col-md-2 my-auto">
-                  <label for="province" class="col-form-label ">{{ __('auth.province') }}</label>
-                  <select id="province" class="custom-select form-control @error('province') is-invalid @enderror"  name="province" >
-                      <option value="" selected disabled></option>
-                      <option value=""> {{ __('ads.all') }}</option>
-                      @foreach (__('auth.province_options') as $key => $province)
-                          <option value="{{$key}}" @if (request()->get('province') === $key) selected @endif> {{$province}}</option>
-                      @endforeach
-                  </select>
-              </div>
-              <div class="form-group selectdiv col-md-1 col-5 my-auto">
-                  <label for="from_payment" class="col-form-label ">{{ __('ads.payment') }}</label>
-                  <select class="custom-select form-control" id="search-from-payment" name="from_payment">
-                    <option value="" selected disabled></option>
-                      <option value=""> {{ __('ads.all') }}</option>
-                  @foreach ($payment_options as  $key => $amount)
-                    <option value="{{$key}}" @if ((integer)request()->get('from_payment') == $key) selected @endif> {{$amount}}</option>
-                  @endforeach
-                  </select>
-              </div>
-              <div class="form-group selectdiv my-auto">
-                  <label class="col-form-label mt-4 mx-1">{{ __('ads.to') }}</label>
-              </div>
-              <div class="form-group selectdiv col-md-1 col-5 my-auto">
-                  <label for="to_payment" class="col-form-label "> </label>
-                  <select class="custom-select form-control " id="search-to-payment" name="to_payment">
-                    <option value="" selected disabled></option>
-                      <option value=""> {{ __('ads.all') }}</option>
-                  @foreach ($payment_options as $key => $amount)
-                    <option value="{{$key}}" @if ((integer)request()->get('to_payment') === $key) selected @endif> {{$amount}}</option>
-                  @endforeach
-                  </select>
-              </div>
-
+                            <label for="category" class="col-form-label ">{{ __('ads.category') }}</label>
+                            <select id="search-category" class="form-control @error('category') is-invalid @enderror" name="category">
+                                <option value="" selected disabled></option>
+                                <option value=""> {{ __('ads.all') }}</option>
+                                @foreach ($categories as $category)
+                                <option value="{{$category->id}}" @if (request()->get('category') == $category->id) selected @endif> {{$category->category_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group selectdiv col-md-2 my-auto">
+                            <label for="ad-name" class="col-form-label ">Ad Name</label>
+                            <input id="search-ad-name" class="form-control @error('brand') is-invalid @enderror" name="ad_name" value="{{request()->get('ad_name')}}">  
+                        </div>
+                        <div class="form-group selectdiv col-md-2 my-auto">
+                            <label for="ad-location" class="col-form-label ">Ad Location</label>
+                            <input id="search-ad-location" class="form-control @error('location') is-invalid @enderror" name="location" value="{{request()->get('location')}}">  
+                        </div>
               <div class="form-group buttondiv col-md-1 my-auto text-center">
                   <button type="submit" class="btn btn-primary btn-circular bg-theme m-auto ">GO</button>
               </div>
@@ -107,82 +63,31 @@
                 <div class="container-fluid">
                     <div id="carousel-home" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner row w-100 mx-auto" role="listbox">
+                          @foreach ($featured_ads as $classified_ad)
                             <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-4 active">
                               <div class="effective-payment-wrapper">
                                 <div class="row effective-payment bg-white pt-5">
-                                    <img src="{{ asset('images/aston-martin.png') }}" style="max-width: 100%;" />
+                                  @if (!empty($classified_ad->file))
+                                      <img src="{{ $classified_ad->file->getPathAttribute() }}" style="max-width: 100%;" />
+                                  @else
+                                      <img src="{{ asset('images/placeholder_car.png') }}" style="max-width: 100%;" />
+                                  @endif
                                     <div class="col-md-6">
-                                        <h6>Paiement effectif de</h6>
+                                        <h6>{{$classified_ad->title}}</h6>
                                     </div>
                                     <div class="col-md-6">
-                                        <h3 class="text-green">2552<sup>$</sup></h3>
+                                        <h3 class="text-green">{{$classified_ad->price}}<sup>$</sup></h3>
                                     </div>
                                 </div>
                                 <div class="row effective-payment bg-theme-dark text-white justify-content-center py-5">
-                                      <h6>Île-du-Prince Édouard</h6>
-                                      <h5>Aston Martin</h5>
-                                      <h5>Ultra LX Super LX</h5>
-                                      <button type="button" class="btn btn-secondary btn-round ml-2">{{ __('welcome.more_details') }}</button>
+                                      <h6>{{$classified_ad->location?? ''}}</h6>
+                                      <h5></h5>
+                                      <h5></h5>
+                                      <a type="button"  href= "{{ route('classified_ads.show',$classified_ad->id ) }}" class="btn btn-secondary btn-round ml-2">{{ __('welcome.more_details') }}</a>
                                 </div>
                               </div>
                             </div>
-                            <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-4">
-                              <div class="effective-payment-wrapper ">
-                                <div class="row bg-white effective-payment pt-5">
-                                    <img src="{{ asset('images/aston-martin.png') }}" style="max-width: 100%;" />
-                                    <div class="col-md-6">
-                                        <h6>{{ __('welcome.effective_payment') }}</h6>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <h3 class="text-green">5466<sup>$</sup></h3>
-                                    </div>
-                                </div>
-                                <div class="row effective-payment bg-theme-dark text-white justify-content-center py-5">
-                                  <h6>Île-du-Prince Édouard</h6>
-                                  <h5>Aston Martin</h5>
-                                  <h5>Ultra LX Super LX</h5>
-                                  <button type="button" class="btn btn-secondary btn-round ml-2">{{ __('welcome.more_details') }}</button>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-4">
-                              <div class="effective-payment-wrapper">
-                                <div class="row effective-payment bg-white pt-5">
-                                    <img src="{{ asset('images/aston-martin.png') }}" style="max-width: 100%;" />
-                                    <div class="col-md-6 float-left">
-                                        <h6>{{ __('welcome.effective_payment') }}</h6>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <h3 class="text-green">2555<sup>$</sup></h3>
-                                    </div>
-                                </div>
-                                <div class="row effective-payment bg-theme-dark text-white justify-content-center py-5">
-                                  <h6>Île-du-Prince Édouard</h6>
-                                  <h5>Aston Martin</h5>
-                                  <h5>Ultra LX Super LX</h5>
-                                  <button type="button" class="btn btn-secondary btn-round ml-2">{{ __('welcome.more_details') }}</button>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-4">
-                              <div class="effective-payment-wrapper">
-                                <div class="row effective-payment bg-white pt-5">
-                                  <img src="{{ asset('images/aston-martin.png') }}" style="max-width: 100%;" />
-                                  <div class="col-md-6 float-left">
-                                      <h6>{{ __('welcome.effective_payment') }}</h6>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <h3 class="text-green">1245<sup>$</sup></h3>
-                                  </div>
-                                </div>
-                                <div class="row effective-payment bg-theme-dark text-white justify-content-center py-5">
-                                  <h6>Île-du-Prince Édouard</h6>
-                                  <h5>Aston Martin</h5>
-                                  <h5>Ultra LX Super LX</h5>
-                                  <button type="button" class="btn btn-secondary btn-round ml-2">{{ __('welcome.more_details') }}</button>
-                                </div>
-                              </div>
-                            </div>
+                            @endforeach
                         </div>
                         <a class="carousel-control-prev" href="#carousel-home" role="button" data-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>

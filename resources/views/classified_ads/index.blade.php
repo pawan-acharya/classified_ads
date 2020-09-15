@@ -18,7 +18,7 @@
                             <select id="search-category" class="form-control @error('category') is-invalid @enderror" name="category">
                                 <option value="" selected disabled></option>
                                 <option value=""> {{ __('ads.all') }}</option>
-                                @foreach (\App\Category::all() as $category)
+                                @foreach ($categories as $category)
                                 <option value="{{$category->id}}" @if (request()->get('category') == $category->id) selected @endif> {{$category->category_name}}</option>
                                 @endforeach
                             </select>

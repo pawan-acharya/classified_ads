@@ -8,6 +8,8 @@ use Auth,Mail,Lang;
 use App\Ad;
 use App\User;
 use App\Mail\CreateAccount;
+use App\Category;
+use App\ClassifiedAd;
 
 
 class HomeController extends Controller
@@ -115,5 +117,17 @@ class HomeController extends Controller
         } catch(\Exception $e) {
             abort(500, Lang::get('auth.'.$e->getMessage()));
         } 
+    }
+
+    public function homepage(){
+        $payment_options = collect(range(1, 20))->mapWithKeys(function ($item) {
+            $amount = $item*50;
+            return [$amount => $amount];
+        });
+        $categories= Category::all();
+        $featured_ads=  ClassifiedAd::where('approved', 1)
+            ->where('is_featured', 1)
+            ->get();
+        return view('welcome', compact('payment_options', 'categories', 'featured_ads'));
     }
 }

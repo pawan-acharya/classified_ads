@@ -63,9 +63,7 @@ class AdminController extends Controller
         return view('admin.index', compact('usersCount', 'adsCount', 'monthlySalesCount', 'totalSalesData', 'categoriesCount'));
     }
 
-
-
-    public function history(Request $request) {
+    public function validation(Request $request) {
         if($request->ajax()){
             $data = ClassifiedAd::latest('created_at')->get();
             return Datatables::of($data)
@@ -80,6 +78,29 @@ class AdminController extends Controller
                             return $btns;
                         } elseif ($row->approved === 0) {
                             $btns = '<a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="toggleVerification('.$row->id.', $(this))">'.Lang::get('admin.rejected').'</a>';
+                            return $btns;
+                        }
+                    })
+                    ->rawColumns(['actions'])
+                    ->make(true);
+        }
+    }
+
+     public function featured(Request $request) {
+        if($request->ajax()){
+            $data = ClassifiedAd::where('approved', 1)->latest('created_at')->get();
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('category_name', function($row){
+                         return $row->category->category_name;
+                     })
+                    ->addColumn('actions', function($row){
+                        $url= route("classified_ads.toggle", ["classified_ad"=>$row->id]);
+                        if ($row->is_featured === 1) {
+                            $btns = '<a href="javascript:void(0)" class="btn btn-success btn-sm" onclick="toggleFeatured('.$row->id.', $(this))">'.Lang::get('admin.featured').'</a>';
+                            return $btns;
+                        } elseif ($row->is_featured === 0) {
+                            $btns = '<a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="toggleFeatured('.$row->id.', $(this))">'.Lang::get('admin.not_featured').'</a>';
                             return $btns;
                         }
                     })

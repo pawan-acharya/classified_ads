@@ -89,6 +89,38 @@
             </div>
         </div>
 
+        <div class="row mt-5">
+            <div class="col-xl-12">
+                <div class="card shadow">
+                    <div class="card-header border-0">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="mb-0">{{ __('admin.featured_ads') }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive p-4">
+                        <!-- Projects table -->
+                        <table id="featured-table" class="table align-items-center table-flush data-table">
+                            <thead>
+                                <tr>
+                                    {{-- <th>{{ __('auth.first_name') }}</th> --}}
+                                    <th>{{ __('id') }}</th>
+                                    <th>{{ __('title') }}</th>
+                                    <th>{{ __('citq') }}</th>
+                                    <th>{{ __('price') }}</th>
+                                    <th>{{ __('category_name') }}</th>
+                                    <th width="100px">{{ __('admin.status') }}</th>
+                                </tr>
+                            </thead> 
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         @include('layouts.admin.footers.auth')
         
     </div>
@@ -138,8 +170,31 @@
                 serverSide: true,
                 pagingType: "numbers",
                 ajax: {
-            		"url": "{{ route('admin.history') }}",
+            		"url": "{{ route('admin.validation') }}",
             		// "cache": true
+                },
+                language: {
+                    url: "{{ app()->getLocale() == 'fr' ? asset('admin-assets/lang/french.json') : '' }}"
+                },
+                columns: [
+                    {data: 'id', name: 'id'},
+                    {data: 'title', name: 'title'},
+                    {data: 'citq', name: 'citq'},
+                    {data: 'price', name: 'price'},
+                    {data: 'category_name', name: 'category_name'},
+                    {data: 'actions', name: 'actions', orderable: false, searchable: false},
+                ]
+            });
+
+
+            var featured_table = $('#featured-table').DataTable({
+                processing: true,
+                responsive: true,
+                serverSide: true,
+                pagingType: "numbers",
+                ajax: {
+                    "url": "{{ route('admin.featured') }}",
+                    // "cache": true
                 },
                 language: {
                     url: "{{ app()->getLocale() == 'fr' ? asset('admin-assets/lang/french.json') : '' }}"
@@ -159,6 +214,22 @@
         function toggleVerification( id, element ){
             currentElement= element;
             url= "{{route('classified_ads.toggle', ':classified_ad_id')}}";
+            url= url.replace(':classified_ad_id', id);
+            $.get(url, function(response){
+                if(currentElement.hasClass('btn-success')){
+                    currentElement.removeClass('btn-success');
+                    currentElement.addClass('btn-danger');
+                    currentElement.html(response);
+                }else{      
+                    currentElement.removeClass('btn-danger');
+                    currentElement.addClass('btn-success');
+                    currentElement.html(response);
+                }
+            });
+        }
+        function toggleFeatured( id, element ){
+            currentElement= element;
+            url= "{{route('classified_ads.toggle_featured', ':classified_ad_id')}}";
             url= url.replace(':classified_ad_id', id);
             $.get(url, function(response){
                 if(currentElement.hasClass('btn-success')){

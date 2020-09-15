@@ -32,7 +32,9 @@ class ClassifiedAdController extends Controller
             $classified_ads->where('location', 'like',  '%'.$request->query('location').'%');
         }
         $classified_ads= $classified_ads->paginate(PER_PAGE);
-        return view('classified_ads.index', compact('classified_ads'));
+
+        $categories= Category::all();
+        return view('classified_ads.index', compact('classified_ads', 'categories'));
     }
 
     /**
@@ -162,5 +164,13 @@ class ClassifiedAdController extends Controller
         $classified_ad->approved= $classified_ad->approved?0:1;
         $classified_ad->save();
         return $classified_ad->approved?Lang::get('admin.approved'):Lang::get('admin.rejected');
+    }
+
+
+    public function toggle_featured($id){
+        $classified_ad= ClassifiedAd::findOrFail($id);
+        $classified_ad->is_featured= $classified_ad->is_featured?0:1;
+        $classified_ad->save();
+        return $classified_ad->is_featured?Lang::get('admin.featured'):Lang::get('admin.not_featured');
     }
 }
