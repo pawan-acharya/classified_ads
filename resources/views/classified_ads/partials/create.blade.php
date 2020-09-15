@@ -26,9 +26,17 @@
 	    	{{-- <button type="button" class="btn btn-danger" onclick="removeThisItem($(this))">X</button> --}}
 		</div>
 	</div>
-	<div class="form-group col-sm-12">
+	<div class="form-group col-sm-6">
      	<label for="pac-input" class="col-form-label text-md-right">Location</label>
 	    <input type="text"  id="pac-input" class="form-control  @error('location') is-invalid @enderror" name="location" >
+  	</div>
+  	<div class="form-group col-sm-6" id="url-div">
+  		@if ($category->type != 'none')
+	     	<label for="classified_ad-url" class="col-form-label text-md-right">Location</label>
+		    <input type="text"  id="classified_ad-url" class="form-control  @error('url') is-invalid @enderror" name="url" >
+	    @else
+	    	<label for="classified_ad-url" class="col-form-label text-md-right" onclick="addURL($(this))">Ad a URL</label>
+  		@endif
   	</div>
 
   	<div class="form-group col-sm-12">
@@ -38,6 +46,18 @@
 
   	@include('classified_ads.partials.add')
   	
+  	<div class="form-group col-sm-6">
+  		<label for="featured-ad" class="col-form-label text-md-right">Make this ad Featured</label>
+  		<input type="checkbox" name="featured" id="make-featured" onclick="makeFeatured($(this))">
+  	</div>
+  	<div class="form-group col-sm-6" id="featured-for">
+  		<label for="featured-ad-duration" class="col-form-label text-md-right">choose duration</label>
+  		<select  class="form-control" id="featured-ad-duration" name="featured_duration" onchange="addFeaturedAmount($(this))">
+  			<option value="day">1 Day</option>
+  			<option value="week">1 Week</option>
+  			<option value="month">1 Month</option>
+  		</select>
+  	</div>
   	<div class="form-group col-sm-6">
   		<button type="submit" class="btn btn-primary">Submit</button>
   	</div>
@@ -51,14 +71,74 @@
 	  	<div class="form-group col-sm-6">
 		    <button type="button" class="btn btn-danger" onclick="removeThisItem($(this))">X</button>
 	  	</div>`;
+	  	var imageDivCount= $('#image-div input').length;
+	  	var category_type= "{!! $category->type !!}";
+	  	if(category_type == 'none'){
+		  	if(imageDivCount== 6){
+		  		alert( 'additional 5$' );
+		  		calculateTotalAmount(5);
+		  	}
+	  	}
 	  	$('#image-div').append(html);
 	}
 
 	function removeThisItem(item){
+		var imageDivCount= $('#image-div input').length;
+	  	var category_type= "{!! $category->type !!}";
+	  	if(category_type == 'none'){
+		  	if(imageDivCount== 7){
+		  		alert( 'deduce 5$' );
+		  		calculateTotalAmount(-5);
+		  	}
+	  	}
 		item.parent().prev().remove();
 		item.parent().remove();	
 	}
 
+	function addURL(item){
+		alert( 'additional 1$' );
+		calculateTotalAmount(1);
+		var url_input_field= '<input type="text"  id="classified_ad-url" class="form-control  @error('url') is-invalid @enderror" name="url" > <button type="button" class="btn btn-danger " onclick="removeURLField($(this))">X</button>';
+		item.parent('#url-div').append(url_input_field);
+	}
+
+	function removeURLField(item){
+		alert( 'deduction 1$' );
+		calculateTotalAmount(-1);
+		item.prev().remove();
+		item.remove();
+	}
+	var previousAmount= 0;
+	function addFeaturedAmount(item){
+		if(item.val() == 'day'){
+			calculateTotalAmount(5-previousAmount);
+			previousAmount= 5; 
+		}else if(item.val() == 'week'){
+			calculateTotalAmount(8-previousAmount);
+			previousAmount= 8;
+		}else if(item.val() == 'month'){
+			calculateTotalAmount(20-previousAmount);
+			previousAmount= 20;
+		}
+	}
+
+	var totalamount= 0;
+	function calculateTotalAmount(number){
+		totalamount+= number;
+		alert('total amount= '+totalamount+ '$');
+	}
+
+	function makeFeatured(item){
+		if( item.is(':checked') ){
+			$('#featured-for').children().show();
+			addFeaturedAmount($('#featured-ad-duration'));
+		}else{
+			$('#featured-for').children().hide();
+			calculateTotalAmount(-previousAmount);
+			previousAmount= 0;
+		}
+	}
+	makeFeatured($('#make-featured'));
 	function initialize() {
 	  var input = document.getElementById('pac-input');
 	  new google.maps.places.Autocomplete(input);

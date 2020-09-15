@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIsFeaturedToClassifiedAdsTable extends Migration
+class AddTypeToCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddIsFeaturedToClassifiedAdsTable extends Migration
      */
     public function up()
     {
-        Schema::table('classified_ads', function (Blueprint $table) {
-             $table->boolean('is_featured' )->deafault(0);
-            
+        Schema::table('categories', function (Blueprint $table) {
+            $table->enum('type', ['rental', 'sales', 'none'])->default('none');
         });
     }
 
@@ -26,8 +25,8 @@ class AddIsFeaturedToClassifiedAdsTable extends Migration
      */
     public function down()
     {
-        Schema::table('classified_ads', function (Blueprint $table) {
-            $table->dropColumn('is_featured');
+        Schema::table('categories', function (Blueprint $table) {
+            $table->dropColumn('type');
         });
     }
 }
