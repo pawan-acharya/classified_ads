@@ -91,7 +91,8 @@ class ClassifiedAdController extends Controller
             'descriptions' => $validatedData['descriptions'], 
             'form_values'=> json_encode( $form_values_array),
             'user_id'=> Auth::id(),
-            'location'=> $validatedData['location'], 
+            'location'=> $validatedData['location'],
+            'url'=> $validatedData['url'], 
             'is_featured'=> $validatedData['is_featured']?1:0,
             'feature_type'=> $validatedData['feature_type']
         ]);

@@ -65,7 +65,9 @@ class AdminController extends Controller
 
     public function validation(Request $request) {
         if($request->ajax()){
-            $data = ClassifiedAd::latest('created_at')->get();
+            $data = ClassifiedAd::latest('created_at')
+                // ->whereNotNull('plan_id')
+                ->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('category_name', function($row){

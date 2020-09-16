@@ -75,7 +75,6 @@
 	  	var category_type= "{!! $category->type !!}";
 	  	if(category_type == 'none'){
 		  	if(imageDivCount== 6){
-		  		alert( 'additional 5$' );
 		  		calculateTotalAmount(5);
 		  	}
 	  	}
@@ -87,7 +86,6 @@
 	  	var category_type= "{!! $category->type !!}";
 	  	if(category_type == 'none'){
 		  	if(imageDivCount== 7){
-		  		alert( 'deduce 5$' );
 		  		calculateTotalAmount(-5);
 		  	}
 	  	}
@@ -96,14 +94,12 @@
 	}
 
 	function addURL(item){
-		alert( 'additional 1$' );
 		calculateTotalAmount(1);
 		var url_input_field= '<input type="text"  id="classified_ad-url" class="form-control  @error('url') is-invalid @enderror" name="url" > <button type="button" class="btn btn-danger " onclick="removeURLField($(this))">X</button>';
 		item.parent('#url-div').append(url_input_field);
 	}
 
 	function removeURLField(item){
-		alert( 'deduction 1$' );
 		calculateTotalAmount(-1);
 		item.prev().remove();
 		item.remove();
@@ -125,7 +121,12 @@
 		}
 	}
 
-	var totalamount= 0;
+	var category_type= "{!! $category->type !!}";
+  	if(category_type != 'none'){
+  		var totalamount= 20;
+  	}else{
+		var totalamount= 0;
+  	}
 	function calculateTotalAmount(number){
 		totalamount+= number;
 		alert('total amount= '+totalamount+ '$');
