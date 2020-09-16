@@ -48,11 +48,11 @@
   	
   	<div class="form-group col-sm-6">
   		<label for="featured-ad" class="col-form-label text-md-right">Make this ad Featured</label>
-  		<input type="checkbox" name="featured" id="make-featured" onclick="makeFeatured($(this))">
+  		<input type="checkbox"  id="make-featured" onclick="makeFeatured($(this))" name="is_featured">
   	</div>
   	<div class="form-group col-sm-6" id="featured-for">
   		<label for="featured-ad-duration" class="col-form-label text-md-right">choose duration</label>
-  		<select  class="form-control" id="featured-ad-duration" name="featured_duration" onchange="addFeaturedAmount($(this))">
+  		<select  class="form-control" id="featured-ad-duration" name="feature_type" onchange="addFeaturedAmount($(this))">
   			<option value="day">1 Day</option>
   			<option value="week">1 Week</option>
   			<option value="month">1 Month</option>

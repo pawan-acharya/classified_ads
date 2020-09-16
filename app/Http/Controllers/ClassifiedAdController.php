@@ -70,9 +70,11 @@ class ClassifiedAdController extends Controller
             'title_images.*'=> 'nullable|file|image|mimes:jpeg,png,gif,webp|max:2048',
             'descriptions'=> 'nullable',
             'location'=> 'required',
-            'is_featured'=> 'nullable',
-            'feature_type'=> 'required_with:is_featured'
+            'url'=> 'nullable',
+            'is_featured' => 'nullable',
+            'feature_type'=> 'nullable'
         ]);
+        // dd($validatedData);
         
         $form_values_array=[];
         foreach ($request->except('_token') as $key => $value) {
@@ -172,9 +174,10 @@ class ClassifiedAdController extends Controller
 
     public function toggle($id){
         $classified_ad= ClassifiedAd::findOrFail($id);
-        $classified_ad->approved= $classified_ad->approved?0:1;
+        $classified_ad->approved= 1;
+        $classified_ad->validated_date= date('Y-m-d');
         $classified_ad->save();
-        return $classified_ad->approved?Lang::get('admin.approved'):Lang::get('admin.rejected');
+        return Lang::get('admin.approved');
     }
 
 

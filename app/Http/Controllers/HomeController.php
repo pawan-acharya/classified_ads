@@ -10,6 +10,7 @@ use App\User;
 use App\Mail\CreateAccount;
 use App\Category;
 use App\ClassifiedAd;
+use Carbon\Carbon; 
 
 
 class HomeController extends Controller
@@ -127,7 +128,26 @@ class HomeController extends Controller
         $categories= Category::all();
         $featured_ads=  ClassifiedAd::where('approved', 1)
             ->where('is_featured', 1)
+            ->whereNotNull('plan_id')
             ->get();
+        $featured_ads = $featured_ads->filter(function ($ad, $key) {
+            return $ad->has_expired == false;
+            $date= Carbon::now();
+            switch ($row->feature_type) {
+                case 'month':
+                    $date->addMonth();
+                    break;
+                case 'week':
+                    $date->addWeek();
+                    break;
+                default:
+                    $date->addDay();
+                    break;
+            }
+            if($row->validated_date<= $date){
+                return ;
+            }
+        });
         return view('welcome', compact('payment_options', 'categories', 'featured_ads'));
     }
 }

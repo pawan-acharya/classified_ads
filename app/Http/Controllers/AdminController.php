@@ -74,7 +74,7 @@ class AdminController extends Controller
                     ->addColumn('actions', function($row){
                         $url= route("classified_ads.toggle", ["classified_ad"=>$row->id]);
                         if ($row->approved === 1) {
-                            $btns = '<a href="javascript:void(0)" class="btn btn-success btn-sm" onclick="toggleVerification('.$row->id.', $(this))">'.Lang::get('admin.approved').'</a>';
+                            $btns = '<a href="javascript:void(0)" class="btn btn-success btn-sm" >'.Lang::get('admin.approved').'</a>';
                             return $btns;
                         } elseif ($row->approved === 0) {
                             $btns = '<a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="toggleVerification('.$row->id.', $(this))">'.Lang::get('admin.rejected').'</a>';
@@ -94,6 +94,31 @@ class AdminController extends Controller
                     ->addColumn('category_name', function($row){
                          return $row->category->category_name;
                      })
+                    ->addColumn('plan_status', function($row){
+                        if(!$row->plan){
+                            return 'Not Paid';
+                        }
+                        else{
+                            $date= Carbon::now();
+                            switch ($row->feature_type) {
+                                case 'month':
+                                    $date->addMonth();
+                                    break;
+                                case 'week':
+                                    $date->addWeek();
+                                    break;
+                                default:
+                                    $date->addDay();
+                                    break;
+                            }
+                            if($row->validated_date<= $date){
+                                return 'On going';
+                            }else{
+                                return 'expired';
+                            }
+                        }
+                    })
+                    ->rawColumns(['plan_status'])
                     ->addColumn('actions', function($row){
                         $url= route("classified_ads.toggle", ["classified_ad"=>$row->id]);
                         if ($row->is_featured === 1) {

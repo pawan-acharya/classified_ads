@@ -110,6 +110,7 @@
                                     <th>{{ __('citq') }}</th>
                                     <th>{{ __('price') }}</th>
                                     <th>{{ __('category_name') }}</th>
+                                    <th width="100px">{{ __('admin.plan_status') }}</th>
                                     <th width="100px">{{ __('admin.status') }}</th>
                                 </tr>
                             </thead> 
@@ -205,6 +206,7 @@
                     {data: 'citq', name: 'citq'},
                     {data: 'price', name: 'price'},
                     {data: 'category_name', name: 'category_name'},
+                    {data: 'plan_status', name: 'plan_status'},
                     {data: 'actions', name: 'actions', orderable: false, searchable: false},
                 ]
             });

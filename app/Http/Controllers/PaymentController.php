@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Constants;
 use Auth;
 use Lang;
+use DB;
 use App\Plan;
 use App\ClassifiedAd;
 use Gabievi\Promocodes\Facades\Promocodes;
@@ -37,10 +38,12 @@ class PaymentController extends Controller
 			// 'total' => money_format('$%i', $payment_plan['cost'] +  $payment_plan['cost']*Constants::TAX_RATE),
 		];
 		$plan_list= false;
-		return view('payment.plans', compact('payment_plan', 'checkout_data', 'plan_list'));
+		return view('payment.plans', compact('payment_plan', 'checkout_data', 'plan_list', 'id'));
 	}
 
-	public function charge(Request $request, $slug = null) {
+	public function charge(Request $request, $id) {
+		// dd('here');
+		$slug= 'exceptional';
 		try {
 			$payment_plan = Constants::PAYMENT_PLANS['exceptional'];
 			$total_cost = (float)$payment_plan['cost'];
@@ -75,11 +78,10 @@ class PaymentController extends Controller
 				'is_active' => 1
 			]);
 
-			$ad = ClassifiedAd::latest()->first();
-			if($ad) {
-				$ad->plan()->associate($plan);
-				$ad->save();
-			}
+			$ad = ClassifiedAd::findOrFail($id);
+			$ad->plan()->associate($plan);
+			$ad->save();
+			
 			if($voucher){
 				Auth::user()->redeemCode($voucher->code);
 				session()->forget('voucher');

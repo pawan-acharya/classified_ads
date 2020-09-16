@@ -57,7 +57,7 @@ Route::delete('files/{id}', 'AdController@deleteFile')->name('ads.files.delete')
 Route::middleware(['auth'])->group(function () {
     Route::get('/payment/{id?}', 'PaymentController@plans')->name('payment.plans');
     Route::get('/payment-form/{id?}', 'PaymentController@plansForm')->name('payment.plans_form');
-    Route::post('/payment/{id?}', 'PaymentController@charge')->name('payment.charge');
+    Route::post('/charge/{id}', 'PaymentController@charge')->name('payment.charge');
     Route::post('/payment/action/applyvoucher/{voucher}', 'PaymentController@voucher')->name('payment.voucher');
 
     Route::get('/partners/create', 'PartnerController@create')->name('partners.create');

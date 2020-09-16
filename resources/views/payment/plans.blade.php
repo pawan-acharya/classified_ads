@@ -45,7 +45,7 @@
                 {{ session('error') }}
             </div>
         @endif
-        <form id="payment-form" role="form" method="POST" url="{{ route('payment.charge') }}">
+        <form id="payment-form" role="form" method="POST" action="{{ route('payment.charge', $id) }}">
             @csrf
             <h1 class="section-head mb-3">{{ __('payments.payment_details') }}</h1>
             <div class="row info-block p-0">
@@ -212,10 +212,12 @@ window.addEventListener('DOMContentLoaded', function() {
                 billing_details: { name: cardHolderName.value }
             }
         );
+
         if (error) {
             showAlert( e.target, 'danger', '{{ __('payments.wrong_card_details') }}')
         } else {
             paymentMethodElement.value = paymentMethod.id
+            debugger;
             form.submit();
         }
     });
