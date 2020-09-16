@@ -32,10 +32,10 @@
   	</div>
   	<div class="form-group col-sm-6" id="url-div">
   		@if ($category->type != 'none')
-	     	<label for="classified_ad-url" class="col-form-label text-md-right">Location</label>
+	     	<label for="classified_ad-url" class="col-form-label text-md-right">Add a URl</label>
 		    <input type="text"  id="classified_ad-url" class="form-control  @error('url') is-invalid @enderror" name="url" >
 	    @else
-	    	<label for="classified_ad-url" class="col-form-label text-md-right" onclick="addURL($(this))">Ad a URL</label>
+	    	<label for="classified_ad-url" class="col-form-label text-md-right" onclick="addURL($(this))">Add a URL</label>
   		@endif
   	</div>
 
@@ -110,15 +110,18 @@
 	}
 	var previousAmount= 0;
 	function addFeaturedAmount(item){
-		if(item.val() == 'day'){
-			calculateTotalAmount(5-previousAmount);
-			previousAmount= 5; 
-		}else if(item.val() == 'week'){
-			calculateTotalAmount(8-previousAmount);
-			previousAmount= 8;
-		}else if(item.val() == 'month'){
-			calculateTotalAmount(20-previousAmount);
-			previousAmount= 20;
+		var category_type= "{!! $category->type !!}";
+	  	if(category_type == 'none'){
+			if(item.val() == 'day'){
+				calculateTotalAmount(5-previousAmount);
+				previousAmount= 5; 
+			}else if(item.val() == 'week'){
+				calculateTotalAmount(8-previousAmount);
+				previousAmount= 8;
+			}else if(item.val() == 'month'){
+				calculateTotalAmount(20-previousAmount);
+				previousAmount= 20;
+			}
 		}
 	}
 

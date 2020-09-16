@@ -3,7 +3,7 @@
 @section('content')
 <section id="plan-intro">
     <div class="container">
-        @if(Request::segment(2) == null)
+        @if($plan_list)
             <h1 class="section-head mb-3">{{ __('payments.payment_title') }}</h1>
             @if (session('status'))
                 <div class="alert alert-success" role="alert">
@@ -11,46 +11,10 @@
                 </div>
             @endif
             <div class="row plan-selection">
-                <div class="col-md-4 plan-item">
-                        <div class="plan-image pt-3">
-                            <img src="{{ asset('images/payment-arrow-green.png') }}">
-                            <h2>{{ __('payments.payment_plans.standard.title') }} <span class="price">99 $</span></h2>
-                        </div>
-                    <div class="mb-auto pt-3">
-                        <ul>
-                            <li class="mb-0">{{ __('payments.payment_plans.standard.feature1') }}</li>
-                            <li>{{ __('payments.payment_plans.standard.feature2') }}</li>
-                        </ul>
-                    </div>
-                    <div >
-                        <a type="button" class="btn btn-primary btn-round" href="{{route('payment.plans','standard')}}">{{ __('payments.payment_link') }}</a>
-                    </div>
-                </div>
-
-                <div class="col-md-4 plan-item">
-                    <div class="plan-image pt-3">
-                        <img src="{{ asset('images/payment-arrow-green.png') }}">
-                        <h2>{{ __('payments.payment_plans.best.title') }}<span class="price">149 $</span></h2>
-                    </div>
-                    <div class="mb-auto">
-                        <ul>
-                            <li class="mb-0 pt-3">{{ __('payments.payment_plans.best.feature1') }}</li>
-                            <li>{{ __('payments.payment_plans.best.feature2') }}</li>
-                        </ul>
-                        <div class="text-secondary">
-                            <h6>{{ __('payments.payment_plans.best.feature3_title') }}</h6>
-                            <p>{{ __('payments.payment_plans.best.feature3_body') }}</p>
-                        </div>
-                    </div>
-                    <div>
-                        <a type="button" class="btn btn-primary btn-round" href="{{route('payment.plans','best')}}">{{ __('payments.payment_link') }}</a>
-                    </div>
-                </div>
-
                 <div class="col-md-4 plan-item featured">
                     <div class="plan-image pt-3">
                         <img src="{{ asset('images/payment-arrow-white.png') }}">
-                        <h2>{{ __('payments.payment_plans.exceptional.title') }} <span class="price">199 $</span></h2>
+                        <h2>{{ __('payments.payment_plans.exceptional.title') }} <span class="price"> {{$payment_plan['cost']}}$</span></h2>
                     </div>
                     <div class="text-white pt-3">
                         <ul>
@@ -71,7 +35,7 @@
                         </div>
                     </div>
                     <div>
-                        <a type="button" class="btn btn-primary btn-round" href="{{route('payment.plans','exceptional')}}">{{ __('payments.payment_link') }}</a>
+                        <a type="button" class="btn btn-primary btn-round" href="{{route('payment.plans_form',  $id)}}">{{ __('payments.payment_link') }}</a>
                     </div>
                 </div>
             </div>

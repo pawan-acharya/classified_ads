@@ -56,6 +56,7 @@ Route::delete('files/{id}', 'AdController@deleteFile')->name('ads.files.delete')
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/payment/{id?}', 'PaymentController@plans')->name('payment.plans');
+    Route::get('/payment-form/{id?}', 'PaymentController@plansForm')->name('payment.plans_form');
     Route::post('/payment/{id?}', 'PaymentController@charge')->name('payment.charge');
     Route::post('/payment/action/applyvoucher/{voucher}', 'PaymentController@voucher')->name('payment.voucher');
 
@@ -71,6 +72,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('classified_ads', 'ClassifiedAdController')->except([
             'create', 'store', 'create'
         ]);
+        Route::get('/classified_ads/review/{classified_ad}', 'ClassifiedAdController@review')->name('classified_ads.review');
 
         Route::post('/feedback/create/{classified_ad}', 'FeedbackController@create')->name('feedbacks.create');
         Route::get('/messages', 'ChatRoomController@index')->name('chatrooms.index');

@@ -9,33 +9,40 @@ use Constants;
 use Auth;
 use Lang;
 use App\Plan;
+use App\ClassifiedAd;
 use Gabievi\Promocodes\Facades\Promocodes;
 
 class PaymentController extends Controller
 {
-	public function plans(Request $request) 
+	public function plans(Request $request, $id=null) 
 	{
-		if($request->segment(2)){
-			$payment_plan = Constants::PAYMENT_PLANS[$request->segment(2)];
-			$checkout_data = [
-				'cost' => $payment_plan['cost'],
-				'cost_formatted' =>  $payment_plan['cost'],
-				'subtotal' => $payment_plan['cost'],
-				'tax' => $payment_plan['cost']* Constants::TAX_RATE,
-				'total' => $payment_plan['cost'] +  $payment_plan['cost']*Constants::TAX_RATE,
-				// 'cost_formatted' => money_format('$%i', $payment_plan['cost']),
-				// 'subtotal' => money_format('$%i',$payment_plan['cost']),
-				// 'tax' => money_format('$%i',$payment_plan['cost']* Constants::TAX_RATE),
-				// 'total' => money_format('$%i', $payment_plan['cost'] +  $payment_plan['cost']*Constants::TAX_RATE),
-			];
-			return view('payment.plans', compact('payment_plan', 'checkout_data'));
-		}
-		return view('payment.plans');
+		$plan_list= true;
+		$payment_plan['cost']= findTotalAmount($id);
+		return view('payment.plans', compact('id', 'plan_list', 'payment_plan'));
+	}
+
+	public function plansForm($id) 
+	{
+		$payment_plan = Constants::PAYMENT_PLANS['exceptional'];
+		$payment_plan['cost']= findTotalAmount($id);
+		$checkout_data = [
+			'cost' => $payment_plan['cost'],
+			'cost_formatted' =>  $payment_plan['cost'],
+			'subtotal' => $payment_plan['cost'],
+			'tax' => $payment_plan['cost']* Constants::TAX_RATE,
+			'total' => $payment_plan['cost'] +  $payment_plan['cost']*Constants::TAX_RATE,
+			// 'cost_formatted' => money_format('$%i', $payment_plan['cost']),
+			// 'subtotal' => money_format('$%i',$payment_plan['cost']),
+			// 'tax' => money_format('$%i',$payment_plan['cost']* Constants::TAX_RATE),
+			// 'total' => money_format('$%i', $payment_plan['cost'] +  $payment_plan['cost']*Constants::TAX_RATE),
+		];
+		$plan_list= false;
+		return view('payment.plans', compact('payment_plan', 'checkout_data', 'plan_list'));
 	}
 
 	public function charge(Request $request, $slug = null) {
 		try {
-			$payment_plan = Constants::PAYMENT_PLANS[$slug];
+			$payment_plan = Constants::PAYMENT_PLANS['exceptional'];
 			$total_cost = (float)$payment_plan['cost'];
 			$voucher = session()->get('voucher');
 			if($voucher) {
@@ -68,7 +75,7 @@ class PaymentController extends Controller
 				'is_active' => 1
 			]);
 
-			$ad = Ad::latest()->first();
+			$ad = ClassifiedAd::latest()->first();
 			if($ad) {
 				$ad->plan()->associate($plan);
 				$ad->save();
@@ -105,5 +112,44 @@ class PaymentController extends Controller
 			return abort(500, $e->getMessage());
 		}
 		
+	}
+}
+
+function findTotalAmount($id){
+	$classified_ad= ClassifiedAd::findOrFail($id);
+	switch ($classified_ad->category->type) {
+		case 'sales':
+			return 20;
+			break;
+		
+		case 'rental':
+			return 20;
+			break;
+		
+		default:
+			$amount= 0;
+			if($classified_ad->url){
+				$amount++;
+			}
+			if($classified_ad->files()->count() >6 ){
+				$amount+= 5;
+			}
+			if($classified_ad->is_featured){
+				switch ($classified_ad->feature_type) {
+					case 'week':
+						$amount+= 8;
+						break;
+					
+					case 'month':
+						$amount+= 20;
+						break;
+					
+					default:
+						$amount+= 5;
+						break;
+				}
+			}
+			return $amount;
+			break;
 	}
 }

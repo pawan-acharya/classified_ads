@@ -69,7 +69,9 @@ class ClassifiedAdController extends Controller
             'price_for'=> 'nullable',
             'title_images.*'=> 'nullable|file|image|mimes:jpeg,png,gif,webp|max:2048',
             'descriptions'=> 'nullable',
-            'location'=> 'required'
+            'location'=> 'required',
+            'is_featured'=> 'nullable',
+            'feature_type'=> 'required_with:is_featured'
         ]);
         
         $form_values_array=[];
@@ -88,6 +90,8 @@ class ClassifiedAdController extends Controller
             'form_values'=> json_encode( $form_values_array),
             'user_id'=> Auth::id(),
             'location'=> $validatedData['location'], 
+            'is_featured'=> $validatedData['is_featured']?1:0,
+            'feature_type'=> $validatedData['feature_type']
         ]);
         $classified_ad= Category::findOrFail($cat_id)->classified_ads()->save($classified_ad);
         if(array_key_exists('title_images', $validatedData)){
@@ -96,7 +100,7 @@ class ClassifiedAdController extends Controller
             }
         }
 
-        return redirect()->route('classified_ads.show', ['classified_ad'=>$classified_ad->id]);
+        return redirect()->route('classified_ads.review', ['classified_ad'=>$classified_ad->id]);
     }
 
     /**
@@ -157,6 +161,13 @@ class ClassifiedAdController extends Controller
     {
         ClassifiedAd::find($id)->delete();
         return redirect()->route('classified_ads.index');
+    }
+
+    public function review($id)
+    {
+        $classified_ad= ClassifiedAd::with('category')->find($id);
+        $form_items_collection= Category::find($classified_ad->category->id)->form_items()->whereNull('parent')->get();
+        return view('classified_ads.review', compact('classified_ad', 'form_items_collection'));
     }
 
     public function toggle($id){
