@@ -101,19 +101,7 @@ class AdminController extends Controller
                             return 'Not Paid';
                         }
                         else{
-                            $date= Carbon::now();
-                            switch ($row->feature_type) {
-                                case 'month':
-                                    $date->addMonth();
-                                    break;
-                                case 'week':
-                                    $date->addWeek();
-                                    break;
-                                default:
-                                    $date->addDay();
-                                    break;
-                            }
-                            if($row->validated_date<= $date){
+                            if($row->plan->ends_at>= date('Y-m-d')){
                                 return 'On going';
                             }else{
                                 return 'expired';

@@ -44,7 +44,7 @@ class HomeController extends Controller
         $referrals = User::where('referred_by', $user->id)->get();
         $totalAdsReferred = 0;
         foreach($referrals as $referral) {
-            $referredAdsCount = Ad::where('user_id', $referral->id)->count();
+            $referredAdsCount = ClassifiedAd::where('user_id', $referral->id)->count();
             $totalAdsReferred = $totalAdsReferred + $referredAdsCount;
         }
         
@@ -126,28 +126,33 @@ class HomeController extends Controller
             return [$amount => $amount];
         });
         $categories= Category::all();
-        $featured_ads=  ClassifiedAd::where('approved', 1)
-            ->where('is_featured', 1)
-            ->whereNotNull('plan_id')
+        $featured_ads=  ClassifiedAd::where('classified_ads.approved', 1)
+            ->where('classified_ads.is_featured', 1)
+            ->whereNotNull('classified_ads.plan_id')
+            ->join('plans', 'plans.id', '=', 'classified_ads.plan_id')
+            ->whereDate('plans.ends_at','>=' ,date('Y-m-d'))
             ->get();
-        $featured_ads = $featured_ads->filter(function ($ad, $key) {
-            return $ad->has_expired == false;
-            $date= Carbon::now();
-            switch ($row->feature_type) {
-                case 'month':
-                    $date->addMonth();
-                    break;
-                case 'week':
-                    $date->addWeek();
-                    break;
-                default:
-                    $date->addDay();
-                    break;
-            }
-            if($row->validated_date<= $date){
-                return ;
-            }
-        });
+
+        // dd($featured_ads);
+
+        // $featured_ads = $featured_ads->filter(function ($ad, $key) {
+        //     return $ad->has_expired == false;
+        //     $date= Carbon::now();
+        //     switch ($row->feature_type) {
+        //         case 'month':
+        //             $date->addMonth();
+        //             break;
+        //         case 'week':
+        //             $date->addWeek();
+        //             break;
+        //         default:
+        //             $date->addDay();
+        //             break;
+        //     }
+        //     if($row->validated_date<= $date){
+        //         return ;
+        //     }
+        // });
         return view('welcome', compact('payment_options', 'categories', 'featured_ads'));
     }
 }

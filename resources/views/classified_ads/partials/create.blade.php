@@ -31,7 +31,7 @@
 	    <input type="text"  id="pac-input" class="form-control  @error('location') is-invalid @enderror" name="location" >
   	</div>
   	<div class="form-group col-sm-6" id="url-div">
-  		@if ($category->type != 'none')
+  		@if ($category->type != 'none' || Auth::user()->checkIfAdmin() || Auth::user()->ifLeftAds())
 	     	<label for="classified_ad-url" class="col-form-label text-md-right">Add a URl</label>
 		    <input type="text"  id="classified_ad-url" class="form-control  @error('url') is-invalid @enderror" name="url" >
 	    @else
@@ -53,8 +53,10 @@
   	<div class="form-group col-sm-6" id="featured-for">
   		<label for="featured-ad-duration" class="col-form-label text-md-right">choose duration</label>
   		<select  class="form-control" id="featured-ad-duration" name="feature_type" onchange="addFeaturedAmount($(this))">
-  			<option value="day">1 Day</option>
-  			<option value="week">1 Week</option>
+  			@if ($category->type =='none' && !Auth::user()->checkIfAdmin() && !Auth::user()->ifLeftAds())
+	  			<option value="day">1 Day</option>
+	  			<option value="week">1 Week</option>
+  			@endif
   			<option value="month">1 Month</option>
   		</select>
   	</div>
@@ -64,6 +66,8 @@
 </form>
 
 <script type="text/javascript">
+	var is_admin= {!! Auth::user()->checkIfAdmin()?1:0!!} ;
+	var has_plan = {!! Auth::user()->ifLeftAds()?1:0!!};
 	function addNewImageDiv(){
 		var html= `<div class="form-group col-sm-6">
 		    <input type="file" class="" name="title_images[]" >
@@ -73,7 +77,7 @@
 	  	</div>`;
 	  	var imageDivCount= $('#image-div input').length;
 	  	var category_type= "{!! $category->type !!}";
-	  	if(category_type == 'none'){
+	  	if(category_type == 'none' && !is_admin && !has_plan){
 		  	if(imageDivCount== 6){
 		  		calculateTotalAmount(5);
 		  	}
@@ -84,7 +88,7 @@
 	function removeThisItem(item){
 		var imageDivCount= $('#image-div input').length;
 	  	var category_type= "{!! $category->type !!}";
-	  	if(category_type == 'none'){
+	  	if(category_type == 'none' && !is_admin && !has_plan){
 		  	if(imageDivCount== 7){
 		  		calculateTotalAmount(-5);
 		  	}
@@ -107,7 +111,7 @@
 	var previousAmount= 0;
 	function addFeaturedAmount(item){
 		var category_type= "{!! $category->type !!}";
-	  	if(category_type == 'none'){
+	  	if(category_type == 'none' && !is_admin && !has_plan){
 			if(item.val() == 'day'){
 				calculateTotalAmount(5-previousAmount);
 				previousAmount= 5; 
@@ -122,7 +126,7 @@
 	}
 
 	var category_type= "{!! $category->type !!}";
-  	if(category_type != 'none'){
+  	if(category_type != 'none' && !is_admin && !has_plan){
   		var totalamount= 20;
   	}else{
 		var totalamount= 0;

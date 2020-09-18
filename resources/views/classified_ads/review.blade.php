@@ -20,11 +20,13 @@
                         {{ __('ads.review.go_back_and_edit') }}
                     </a>    
                 </div>
-                <div class="col-md-6"> 
-                    <a href="{{ route('payment.plans' , $classified_ad->id) }}" class="btn btn-secondary btn-round float-right">
-                        {{ __('ads.review.approve_and_continue') }}
-                    </a>    
-                </div>
+                @if (!($classified_ad->plan_id && $classified_ad->plan->ends_at> date('Y-m-d')))
+                    <div class="col-md-6"> 
+                        <a href="{{ route('payment.plans' , $classified_ad->id) }}" class="btn btn-secondary btn-round float-right">
+                            {{ __('ads.review.approve_and_continue') }}
+                        </a>    
+                    </div>
+                @endif
             </div>
         </div>
     </div>

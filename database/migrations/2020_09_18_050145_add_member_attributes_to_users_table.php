@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPlanToClassifiedAdsTable extends Migration
+class AddMemberAttributesToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class AddPlanToClassifiedAdsTable extends Migration
      */
     public function up()
     {
-        Schema::table('classified_ads', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->unsignedBigInteger('plan_id')->nullable();
             $table->foreign('plan_id')->references('id')->on('plans');
+
+            $table->boolean('is_member')->deafault(0);
+            $table->date('validated_date')->nullable();
         });
     }
 
@@ -26,9 +29,11 @@ class AddPlanToClassifiedAdsTable extends Migration
      */
     public function down()
     {
-        Schema::table('classified_ads', function (Blueprint $table) {
-            $table->dropForeign('classified_ads_plan_id_foreign');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign('users_plan_id_foreign');
             $table->dropColumn('plan_id');
+            $table->dropColumn('is_member');
+            $table->dropColumn('validated_date');
         });
     }
 }

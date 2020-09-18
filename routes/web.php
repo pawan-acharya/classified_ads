@@ -79,6 +79,17 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/messages/{chat_room_id}', 'FeedbackController@show')->name('feedbacks.show');
         Route::post('/feedback/reply/{chat_room_id}', 'FeedbackController@reply')->name('feedbacks.reply');
     /** end of ads section**/
+
+
+    /** membership for month and multi add pay **/
+        Route::get('/become_member', 'PaymentController@become_member')->name('become_member');
+        Route::post('/membership/charge', 'PaymentController@membership_charge')->name('membership.charge');
+
+        // Route::get('/classified_ads_list', 'ClassifiedAdController@ads_list')->name('ads_list');
+        Route::get('/bulk/payment', 'PaymentController@bulk_pay')->name('bulk_pay');
+        Route::get('/bulk_payment_form/{type}', 'PaymentController@bulk_payment_form')->name('bulk_payment_form');
+        Route::post('/bulk_payment/charge/{type}', 'PaymentController@bulk_payment_charge')->name('bulk_payment.charge');
+    /** membership for month and multi add pay **/
 });
 
 Route::middleware(['auth','admin'])->prefix('admin')->group(function () {

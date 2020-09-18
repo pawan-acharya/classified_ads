@@ -7,6 +7,7 @@ use App\ClassifiedAd;
 use App\Category;
 use Auth;
 use Lang;
+use Carbon\Carbon;
 
 class ClassifiedAdController extends Controller
 {
@@ -31,10 +32,11 @@ class ClassifiedAdController extends Controller
         if($request->query('location')){
             $classified_ads->where('location', 'like',  '%'.$request->query('location').'%');
         }
+        $classified_ads_count= $classified_ads->count();
         $classified_ads= $classified_ads->paginate(PER_PAGE);
 
         $categories= Category::all();
-        return view('classified_ads.index', compact('classified_ads', 'categories'));
+        return view('classified_ads.index', compact('classified_ads', 'categories', 'classified_ads_count'));
     }
 
     /**
@@ -62,48 +64,55 @@ class ClassifiedAdController extends Controller
      */
     public function store(Request $request, $cat_id)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|unique:classified_ads,title|max:255',
-            'citq'=> 'nullable',
-            'price' => 'required|numeric',
-            'price_for'=> 'nullable',
-            'title_images.*'=> 'nullable|file|image|mimes:jpeg,png,gif,webp|max:2048',
-            'descriptions'=> 'nullable',
-            'location'=> 'required',
-            'url'=> 'nullable',
-            'is_featured' => 'nullable',
-            'feature_type'=> 'nullable'
-        ]);
-        // dd($validatedData);
-        
-        $form_values_array=[];
-        foreach ($request->except('_token') as $key => $value) {
-            $form_item_id= explode('-', $key)[0];
-            $form_item_value= $value;
-            $form_values_array[$form_item_id]=$form_item_value;
-        }
-
-        $classified_ad = new ClassifiedAd([
-            'title' => $validatedData['title'], 
-            'citq'=> $validatedData['citq'], 
-            'price' => $validatedData['price'], 
-            'price_for'=> $validatedData['price_for'],
-            'descriptions' => $validatedData['descriptions'], 
-            'form_values'=> json_encode( $form_values_array),
-            'user_id'=> Auth::id(),
-            'location'=> $validatedData['location'],
-            'url'=> $validatedData['url'], 
-            'is_featured'=> $validatedData['is_featured']?1:0,
-            'feature_type'=> $validatedData['feature_type']
-        ]);
-        $classified_ad= Category::findOrFail($cat_id)->classified_ads()->save($classified_ad);
-        if(array_key_exists('title_images', $validatedData)){
-            foreach ($validatedData['title_images'] as $key => $value) {
-                $classified_ad->file()->create($classified_ad->upload($value));
+        try {
+            $validatedData = $request->validate([
+                'title' => 'required|unique:classified_ads,title|max:255',
+                'citq'=> 'nullable',
+                'price' => 'required|numeric',
+                'price_for'=> 'nullable',
+                'title_images.*'=> 'nullable|file|image|mimes:jpeg,png,gif,webp|max:2048',
+                'descriptions'=> 'nullable',
+                'location'=> 'required',
+                'url'=> 'nullable',
+                'is_featured' => 'nullable',
+                'feature_type'=> 'nullable'
+            ]);
+            
+            $form_values_array=[];
+            foreach ($request->except('_token') as $key => $value) {
+                $form_item_id= explode('-', $key)[0];
+                $form_item_value= $value;
+                $form_values_array[$form_item_id]=$form_item_value;
             }
-        }
 
-        return redirect()->route('classified_ads.review', ['classified_ad'=>$classified_ad->id]);
+            $classified_ad = new ClassifiedAd([
+                'title' => $validatedData['title'], 
+                'citq'=> $validatedData['citq'], 
+                'price' => $validatedData['price'], 
+                'price_for'=> $validatedData['price_for'],
+                'descriptions' => $validatedData['descriptions'], 
+                'form_values'=> json_encode( $form_values_array),
+                'user_id'=> Auth::id(),
+                'location'=> $validatedData['location'],
+                'url'=> $validatedData['url'], 
+                'is_featured'=> $validatedData['is_featured']?1:0,
+                'feature_type'=> $validatedData['feature_type']
+            ]);
+            $classified_ad= Category::findOrFail($cat_id)->classified_ads()->save($classified_ad);
+            if(array_key_exists('title_images', $validatedData)){
+                foreach ($validatedData['title_images'] as $key => $value) {
+                    $classified_ad->file()->create($classified_ad->upload($value));
+                }
+            }
+            if(Auth::user()->checkIfAdmin()){
+                $plan =Auth::user()->plan;
+                $classified_ad->plan()->associate($plan);
+                $classified_ad->save();
+            }
+            return redirect()->route('classified_ads.review', ['classified_ad'=>$classified_ad->id]);
+        } catch (Exception $e) {
+            dd($e);
+        }
     }
 
     /**
@@ -176,7 +185,23 @@ class ClassifiedAdController extends Controller
     public function toggle($id){
         $classified_ad= ClassifiedAd::findOrFail($id);
         $classified_ad->approved= 1;
-        $classified_ad->validated_date= date('Y-m-d');
+        if(!(Auth::user()->plan_id && Auth::user()->plan->ends_at>= date('Y-m-d'))){
+            $date= Carbon::now();
+            switch ($classified_ad->feature_type) {
+                case 'month':
+                    $date->addMonth();
+                    break;
+                case 'week':
+                    $date->addWeek();
+                    break;
+                default:
+                    $date->addDay();
+                    break;
+            }
+            $plan= $classified_ad->plan;
+            $plan->ends_at= $date;
+            $plan->save();
+        }
         $classified_ad->save();
         return Lang::get('admin.approved');
     }
@@ -187,5 +212,10 @@ class ClassifiedAdController extends Controller
         $classified_ad->is_featured= $classified_ad->is_featured?0:1;
         $classified_ad->save();
         return $classified_ad->is_featured?Lang::get('admin.featured'):Lang::get('admin.not_featured');
+    }
+
+    public function ads_list(){
+        $classified_ads= ClassifiedAd::whereNull('plan_id')->get();
+        return view('classified_ads.list', compact('classified_ads'));
     }
 }

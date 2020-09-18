@@ -9,7 +9,7 @@
             <h1 class="section-head"> {{ __('ads.search.find_a_rental') }} </h1>
             <div class="col-md-12 form-wrapper main-search">
                 <h6 class="text-white"><span class="text-theme-dark font-weight-bold">
-                    {{ number_format($classified_ads->count()) }} </span>  add found in this search
+                    {{ number_format($classified_ads_count) }} </span>  add found in this search
                 </h6>
                 <form>
                     <div class="form-row input-group">

@@ -18,7 +18,8 @@ class Plan extends Model
         'user_id',
         'ad_id',
         'ends_at',
-        'is_active'
+        'is_active',
+        'type'
     ];
 
 }
