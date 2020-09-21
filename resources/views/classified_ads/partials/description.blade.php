@@ -64,7 +64,11 @@
                 <div class= "row container">
                     <ul class="col-7 property-list">
                         @foreach($form_item->children as $child)
-                        <li>{{json_decode($classified_ad->form_values, TRUE)[$form_item->id]== $child->id?$child->name:""}}</li>
+                        <li>
+                            @if (array_key_exists($form_item->id, json_decode($classified_ad->form_values, TRUE)))
+                                {{json_decode($classified_ad->form_values, TRUE)[$form_item->id]== $child->id?$child->name:""}}
+                            @endif
+                        </li>
                         @endforeach
                     </ul>
                 </div>

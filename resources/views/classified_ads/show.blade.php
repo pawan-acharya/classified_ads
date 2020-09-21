@@ -11,6 +11,12 @@
                     {{ Str::contains(url()->previous(), 'ads')?  __('ads.return_results') : __('ads.return_to_my_account') }}
                 </a>
                 <h1 class="text-center section-head">{{$classified_ad->title}}</h1>
+                @if ($classified_ad->user->id == Auth::id())
+                     <a href="{{ route('classified_ads.review', ['classified_ad'=>$classified_ad->id]) }}" class=" no-print" style="float: right;">
+                        <i class="fa fa-angle-left"></i>
+                        Review Page
+                    </a>
+                @endif
                 <div class="row ad-single mb-4">
                     <div class="col-md-6 col-12">
                         @include('classified_ads.partials.main')

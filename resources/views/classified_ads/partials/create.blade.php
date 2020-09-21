@@ -147,9 +147,4 @@
 		}
 	}
 	makeFeatured($('#make-featured'));
-	function initialize() {
-	  var input = document.getElementById('pac-input');
-	  new google.maps.places.Autocomplete(input);
-	}
-	google.maps.event.addDomListener(window, 'load', initialize);
 </script>

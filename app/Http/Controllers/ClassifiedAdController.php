@@ -21,6 +21,9 @@ class ClassifiedAdController extends Controller
         define('PER_PAGE', 9);
         $classified_ads= ClassifiedAd::with(['category', 'file'])
                     ->where('approved', 1)
+                    ->whereNotNull('classified_ads.plan_id')
+                    ->join('plans', 'plans.id', '=', 'classified_ads.plan_id')
+                    ->whereDate('plans.ends_at','>=' ,date('Y-m-d'))
                     ->orderBy('created_at', $request->query('order')?:'desc');
                     
         if($request->query('category')){
@@ -95,7 +98,7 @@ class ClassifiedAdController extends Controller
                 'user_id'=> Auth::id(),
                 'location'=> $validatedData['location'],
                 'url'=> $validatedData['url'], 
-                'is_featured'=> $validatedData['is_featured']?1:0,
+                'is_featured'=> array_key_exists('is_featured', $validatedData)?1:0,
                 'feature_type'=> $validatedData['feature_type']
             ]);
             $classified_ad= Category::findOrFail($cat_id)->classified_ads()->save($classified_ad);
@@ -136,8 +139,12 @@ class ClassifiedAdController extends Controller
      */
     public function edit($id)
     {
-        $classified_ad= ClassifiedAd::find($id);
-        return view('classified_ads.edit', compact('classified_ad'));
+        $classified_ad= ClassifiedAd::findOrFail($id);
+        if(Auth::user()->id !=  $classified_ad->user_id){
+            return redirect()->back();
+        }
+        $category= $classified_ad->category;
+        return view('classified_ads.edit', compact('classified_ad', 'category'));
     }
 
     /**
@@ -149,6 +156,19 @@ class ClassifiedAdController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $classified_ad= ClassifiedAd::findOrFail($id);
+        if(Auth::user()->checkIfAdmin()){
+            //no need to add additional money
+        }elseif(Auth::user()->checkForPlan() && $classified_ad->plan->id== Auth::user()->plan->id){
+            //no need to add additional money
+        }elseif($classified_ad->category->type= 'rental' || $classified_ad->category->type= 'sales'){
+            //no need to add additional money
+        }elseif(!$classified_ad->plan){
+            //no need to add additional money
+        }else{
+
+        }
+
         $form_values_array=[];
         foreach ($request->except(['_token', '_method']) as $key => $value) {
             $form_item_id= explode('-', $key)[0];
@@ -156,7 +176,7 @@ class ClassifiedAdController extends Controller
             $form_values_array[$form_item_id]=$form_item_value;
         }
         
-        ClassifiedAd::find($id)->update([
+        $classified_ad->update([
             'form_values'=> json_encode( $form_values_array),
         ]);
 

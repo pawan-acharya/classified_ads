@@ -126,33 +126,14 @@ class HomeController extends Controller
             return [$amount => $amount];
         });
         $categories= Category::all();
-        $featured_ads=  ClassifiedAd::where('classified_ads.approved', 1)
+        $featured_ads=  ClassifiedAd::with('file')
+            ->where('classified_ads.approved', 1)
             ->where('classified_ads.is_featured', 1)
             ->whereNotNull('classified_ads.plan_id')
             ->join('plans', 'plans.id', '=', 'classified_ads.plan_id')
             ->whereDate('plans.ends_at','>=' ,date('Y-m-d'))
             ->get();
 
-        // dd($featured_ads);
-
-        // $featured_ads = $featured_ads->filter(function ($ad, $key) {
-        //     return $ad->has_expired == false;
-        //     $date= Carbon::now();
-        //     switch ($row->feature_type) {
-        //         case 'month':
-        //             $date->addMonth();
-        //             break;
-        //         case 'week':
-        //             $date->addWeek();
-        //             break;
-        //         default:
-        //             $date->addDay();
-        //             break;
-        //     }
-        //     if($row->validated_date<= $date){
-        //         return ;
-        //     }
-        // });
         return view('welcome', compact('payment_options', 'categories', 'featured_ads'));
     }
 }
