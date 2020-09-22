@@ -50,11 +50,10 @@ class PaymentController extends Controller
 	}
 
 	public function charge(Request $request, $id) {
-		// dd('here');
 		$slug= 'exceptional';
 		try {
 			$payment_plan = Constants::PAYMENT_PLANS['exceptional'];
-			$total_cost = (float)$payment_plan['cost'];
+			$total_cost = (float)(findTotalAmount($id) + findTotalAmount($id)*0.14975);
 			$voucher = session()->get('voucher');
 			if($voucher) {
 				if($voucher->data['type'] === Constants::VOUCHER_TYPES['PERCENT']) {
@@ -141,7 +140,7 @@ class PaymentController extends Controller
 		$slug= 'exceptional';
 		try {
 			$payment_plan = Constants::PAYMENT_PLANS['exceptional'];
-			$total_cost = (float)$payment_plan['cost'];
+			$total_cost = (float)(150 + 150*0.14975);
 			$voucher = session()->get('voucher');
 			if($voucher) {
 				if($voucher->data['type'] === Constants::VOUCHER_TYPES['PERCENT']) {
@@ -217,18 +216,9 @@ class PaymentController extends Controller
 		// 	$totalSum+= ClassifiedAd::findOrFail($value)->getCost();
 		// }
 		$payment_plan = Constants::PAYMENT_PLANS['exceptional'];
-		switch ($type) {
-			case 'ten':
-				$totalSum= 75;
-				break;
-			case 'five':
-				$totalSum= 50;
-				break;
-			default:
-				$totalSum= 20;
-				break;
-		}
-		$payment_plan['cost']= $totalSum;
+
+		
+		$payment_plan['cost']= getPlanAmount($type);
 		$checkout_data = [
 			'cost' => $payment_plan['cost'],
 			'cost_formatted' =>  $payment_plan['cost'],
@@ -244,7 +234,7 @@ class PaymentController extends Controller
 		$slug= 'exceptional';
 		try {
 			$payment_plan = Constants::PAYMENT_PLANS['exceptional'];
-			$total_cost = (float)$payment_plan['cost'];
+			$total_cost = (float)(getPlanAmount($type) + getPlanAmount($type)*0.14975);
 			$voucher = session()->get('voucher');
 			if($voucher) {
 				if($voucher->data['type'] === Constants::VOUCHER_TYPES['PERCENT']) {
@@ -277,12 +267,6 @@ class PaymentController extends Controller
 				'type'=> $type
 			]);
 
-			// foreach (json_decode($request['ids'][0], TRUE) as $key => $value) {
-			// 	$ad = ClassifiedAd::findOrFail($value);
-			// 	$ad->plan()->associate($plan);
-			// 	$ad->save();
-			// }
-
 			$user = Auth::user();
 			$user->plan()->associate($plan);
 			$user->validated_date= Carbon::now()->addMonth();
@@ -293,6 +277,89 @@ class PaymentController extends Controller
 				session()->forget('voucher');
 			}
 			return redirect()->route('home')->with('status', Lang::get('payments.payment_successful'));
+		} catch (\Exception $e) {
+			return redirect()->back()->with('error', $e->getMessage());
+		}
+	}
+
+	public function edit_pay($id){
+		$total_amount= findTotalAmountOfRequest(request()->session()->get('requests'));
+		$amount_paid= findTotalAmount($id);
+		// ClassifiedAd::findOrFail($id)->plan->cost- (float)(0.14975* ClassifiedAd::findOrFail($id)->plan->cost) ;
+		$additional_amount= $total_amount- $amount_paid;
+		// dd($total_amount, $amount_paid, $additional_amount);
+		if(!$additional_amount){
+			return redirect()->route('classified_ad.update', ['classified_ad'=> $id]);
+		}
+		return view('payment.edit.plan', compact('amount_paid', 'additional_amount', 'id'));
+	}
+
+	public function edit_payment_form($id){
+		$type= 'exceptional';
+		$payment_plan = Constants::PAYMENT_PLANS['exceptional'];
+
+		$total_amount= findTotalAmountOfRequest(request()->session()->get('requests'));
+		$amount_paid= findTotalAmount($id);
+		// ClassifiedAd::findOrFail($id)->plan->cost- (0.14975* ClassifiedAd::findOrFail($id)->plan->cost) ;
+		$additional_amount= $total_amount- $amount_paid;
+
+		$payment_plan['cost']= $additional_amount;
+		$checkout_data = [
+			'cost' => $payment_plan['cost'],
+			'cost_formatted' =>  $payment_plan['cost'],
+			'subtotal' => $payment_plan['cost'],
+			'tax' => $payment_plan['cost']* Constants::TAX_RATE,
+			'total' => $payment_plan['cost'] +  $payment_plan['cost']*Constants::TAX_RATE,
+		];
+		request()->session()->push('requests', request()->session()->get('requests'));
+		return view('payment.edit.payment_form', compact('payment_plan', 'checkout_data', 'type', 'id'));
+	}
+
+	public function edit_payment_charge(Request $request, $id){
+		$slug= 'exceptional';
+		try {
+			$payment_plan = Constants::PAYMENT_PLANS['exceptional'];
+
+			$total_amount= findTotalAmountOfRequest(request()->session()->get('requests'));
+			$amount_paid= findTotalAmount($id);
+			// ClassifiedAd::findOrFail($id)->plan->cost- (0.14975* ClassifiedAd::findOrFail($id)->plan->cost) ;
+			$additional_amount= $total_amount- $amount_paid;
+			$total_cost = (float)($additional_amount + $additional_amount*0.14975);
+
+			$voucher = session()->get('voucher');
+			if($voucher) {
+				if($voucher->data['type'] === Constants::VOUCHER_TYPES['PERCENT']) {
+					$total_cost = $total_cost - ($voucher->reward * $total_cost / 100);
+				} elseif($voucher->data['type'] === Constants::VOUCHER_TYPES['VALUE']) {
+					$total_cost = $total_cost - $voucher->reward;
+				}
+			}
+
+			$stripe_cost = (int)($total_cost*100);
+			$ends_at = Carbon::now()->addMonths(1);
+
+			$payment = Auth::user()->charge($stripe_cost, $request->input('payment-method') , [
+				'metadata' => [
+					'plan' => $slug,
+					'city' => $request->input('city'),
+					'state' => $request->input('state'),
+					'country' => 'ca'
+				],
+			]);
+
+			$ad = ClassifiedAd::findOrFail($id);
+			$plan= $ad->plan;
+			$plan->cost+= $total_cost;
+			$plan->save(); 
+			$ad->approved= 0;
+			$ad->save();
+			
+			if($voucher){
+				Auth::user()->redeemCode($voucher->code);
+				session()->forget('voucher');
+			}
+			request()->session()->push('requests', request()->session()->get('requests'));
+			return redirect()->route('classified_ads.update', $id);
 		} catch (\Exception $e) {
 			return redirect()->back()->with('error', $e->getMessage());
 		}
@@ -334,6 +401,36 @@ function findTotalAmount($id){
 				}
 			}
 			return $amount;
+			break;
+	}
+}
+
+function findTotalAmountOfRequest($request){
+	// dd($request[0]);
+	$total_amount= 0;
+	$classified_ad= $request[0];
+	if(array_key_exists('url', $classified_ad)){
+		$total_amount+= 1;
+	}
+	// if(){
+	// 	title_images
+	// }
+	if(array_key_exists('is_featured', $classified_ad) && array_key_exists('feature_type', $classified_ad)){
+		$total_amount+= getPlanAmount($classified_ad['feature_type']);
+	}
+	return $total_amount;
+}
+
+function getPlanAmount($type){
+	switch ($type) {
+		case 'ten':
+			return 75;
+			break;
+		case 'five':
+			return 50;
+			break;
+		default:
+			return 20;
 			break;
 	}
 }

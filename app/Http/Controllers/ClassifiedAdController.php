@@ -20,11 +20,11 @@ class ClassifiedAdController extends Controller
     {
         define('PER_PAGE', 9);
         $classified_ads= ClassifiedAd::with(['category', 'file'])
-                    ->where('approved', 1)
+                    ->where('classified_ads.approved', 1)
                     ->whereNotNull('classified_ads.plan_id')
                     ->join('plans', 'plans.id', '=', 'classified_ads.plan_id')
                     ->whereDate('plans.ends_at','>=' ,date('Y-m-d'))
-                    ->orderBy('created_at', $request->query('order')?:'desc');
+                    ->orderBy('classified_ads.created_at', $request->query('order')?:'desc');
                     
         if($request->query('category')){
             $classified_ads->where('category_id', $request->query('category'));
@@ -97,7 +97,7 @@ class ClassifiedAdController extends Controller
                 'form_values'=> json_encode( $form_values_array),
                 'user_id'=> Auth::id(),
                 'location'=> $validatedData['location'],
-                'url'=> $validatedData['url'], 
+                'url'=>  array_key_exists('url', $validatedData)?$validatedData['url']:null, 
                 'is_featured'=> array_key_exists('is_featured', $validatedData)?1:0,
                 'feature_type'=> $validatedData['feature_type']
             ]);
@@ -157,16 +157,21 @@ class ClassifiedAdController extends Controller
     public function update(Request $request, $id)
     {
         $classified_ad= ClassifiedAd::findOrFail($id);
-        if(Auth::user()->checkIfAdmin()){
-            //no need to add additional money
-        }elseif(Auth::user()->checkForPlan() && $classified_ad->plan->id== Auth::user()->plan->id){
-            //no need to add additional money
-        }elseif($classified_ad->category->type= 'rental' || $classified_ad->category->type= 'sales'){
-            //no need to add additional money
-        }elseif(!$classified_ad->plan){
-            //no need to add additional money
-        }else{
-
+        if(app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName()== 'classified_ads.edit'){
+            if(Auth::user()->checkIfAdmin() || (Auth::user()->checkForPlan() && $classified_ad->plan->id== Auth::user()->plan->id) || ($classified_ad->category->type== 'rental' || $classified_ad->category->type== 'sales') || !$classified_ad->plan || ($classified_ad->plan->ends_at< date('Y-m-d'))){
+                //no need to add additional money
+            }else{
+                //no need to rediect to pay additional money
+                request()->session()->forget('requests');
+                request()->session()->push('requests', $request->except('title_images'));
+                foreach($request->file('title_images') as $image) {
+                    $request->session()->push('title_images', $ad->upload($image));
+                }
+                return redirect()->route('edit_pay', ['id'=> $id]);
+            }
+        }
+        if(app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName()== 'edit_payment.charge'){
+            $request= request()->session()->get('requests');
         }
 
         $form_values_array=[];
@@ -177,9 +182,26 @@ class ClassifiedAdController extends Controller
         }
         
         $classified_ad->update([
+            'title' => $validatedData['title'], 
+            'citq'=> $validatedData['citq'], 
+            'price' => $validatedData['price'], 
+            'price_for'=> $validatedData['price_for'],
+            'descriptions' => $validatedData['descriptions'], 
             'form_values'=> json_encode( $form_values_array),
+            'user_id'=> Auth::id(),
+            'location'=> $validatedData['location'],
+            'url'=>  array_key_exists('url', $validatedData)?$validatedData['url']:null, 
+            'is_featured'=> array_key_exists('is_featured', $validatedData)?1:0,
+            'feature_type'=> $validatedData['feature_type']
         ]);
 
+        if ($request->session()->has('title_images')) {
+            foreach($request->session()->get('title_images') as $image) {
+                $ad->file()->create($image);
+            }
+        }
+
+        request()->session()->forget('requests'); 
         return redirect()->route('classified_ads.show', ['classified_ad'=>$id]);
     }
 

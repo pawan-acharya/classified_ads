@@ -89,6 +89,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/bulk/payment', 'PaymentController@bulk_pay')->name('bulk_pay');
         Route::get('/bulk_payment_form/{type}', 'PaymentController@bulk_payment_form')->name('bulk_payment_form');
         Route::post('/bulk_payment/charge/{type}', 'PaymentController@bulk_payment_charge')->name('bulk_payment.charge');
+
+        Route::get('/edit/payment/{id}', 'PaymentController@edit_pay')->name('edit_pay');
+        Route::get('/edit_payment_form/{id}', 'PaymentController@edit_payment_form')->name('edit_payment_form');
+        Route::post('/edit_payment/charge/{id}', 'PaymentController@edit_payment_charge')->name('edit_payment.charge');
     /** membership for month and multi add pay **/
 });
 
