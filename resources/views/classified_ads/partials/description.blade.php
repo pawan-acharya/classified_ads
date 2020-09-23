@@ -29,7 +29,7 @@
      <hr class="solid">
     <div class="row">
         <div class="col-12 details">
-            @foreach ( $form_items_collection->whereNotIn('type', ['select', 'check_box', 'box', 'secondary_price']) as $form_item ) 
+            @foreach ( $form_items_collection->whereNotIn('type', ['select', 'check_box', 'box', 'secondary_price', 'activity']) as $form_item ) 
                 <div class="detail-item">
                     <p class="detail-item-text mb-0 col-7 font-weight-bold">{{$form_item->name}}</hp>
                     <p class="detail-item-value mb-0 col-5">{{json_decode($classified_ad->form_values, TRUE)[$form_item->id]}}</p>
@@ -96,7 +96,6 @@
 
     <div class="row">
         <div class="col-12 details">
-           
             @foreach ($form_items_collection->where('type', '=', 'box') as $form_item)
             <div class="col-sm-6  detail-item">
                 <h5 class="col-12">{{$form_item->name}}</h5>
@@ -104,6 +103,26 @@
                     @foreach ($form_item->children as $child)
                         <img src="{{asset('storage')}}/{{$child->logo}}" style="height: 15px;">
                         {{$child->name}}: {{json_decode($classified_ad->form_values, TRUE)[$child->id]}} <br>
+                    @endforeach
+                </div>
+            </div>
+            @endforeach 
+        </div>
+    </div>
+    <hr class="solid">
+    <div class="row">
+        <div class="col-12 details">
+            @foreach ($form_items_collection->where('type', '=', 'activity') as $form_item)
+            <div class="col-sm-6  detail-item">
+                <h5 class="col-12">{{$form_item->name}}</h5>
+                <div class="card-body">
+                    @foreach ($form_item->children as $child)
+                    @if (array_key_exists($child->id, json_decode($classified_ad->form_values, TRUE)))
+                        <img src="{{asset('storage')}}/{{$child->logo}}" style="height: 15px;">
+                        {{$child->name}}
+                        {{-- : {{json_decode($classified_ad->form_values, TRUE)[$child->id]}}  --}}
+                        <br>
+                    @endif
                     @endforeach
                 </div>
             </div>

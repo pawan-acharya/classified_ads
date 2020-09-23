@@ -46,6 +46,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        DB::beginTransaction();
         $validatedData = $request->validate([
             'category_name' => 'required|unique:categories,category_name|max:255',
             'description'=> 'nullable',
@@ -69,8 +70,8 @@ class CategoryController extends Controller
                 foreach ($value['box_array'] as $key => $value) {
                     FormItem::create([
                         'name'=> $value['name'],
-                        'type'=> $value['type'],
-                        'required'=> ($value['mandatory']== 'yes')?'1':'0',
+                        'type'=> array_key_exists('type', $value)?$value['type']:'None',
+                        'required'=> array_key_exists('mandatory', $value)?($value['mandatory']== 'yes')?'1':'0':'0',
                         'category_id'=> $category->id,
                         'parent'=>$form_item->id, 
                         'logo'=>array_key_exists('logo', $value)?$value['logo']:null,
@@ -78,6 +79,7 @@ class CategoryController extends Controller
                 }
             }
         }
+        DB::commit();
         return response()->json([
             'status' => 200,
             'url'=> route('categories.show', ['category'=> $category->id]),
