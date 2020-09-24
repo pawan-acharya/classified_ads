@@ -1,8 +1,80 @@
+<div class="main-header-area">
+    <div class="container">
+        <div class="d-flex header-divs">
+            <a class="navbar-brand" href="{{ route('home') }}">
+                <img class="nav-logo" src="{{ asset('images/logo.png') }}" width="100" />
+            </a>
+
+            <div class="search-sec">
+                <form action="#" method="post" novalidate="novalidate">
+                    <div class="d-flex">
+                        <div class="p-0">
+                            <input type="text" class="form-control search-slt" placeholder="Enter Pickup City">
+                        </div>
+                        <div class="p-0">
+                            <input type="text" class="form-control search-slt" placeholder="Search by Locations,Type of camping & More">
+                        </div>
+                        <div class="p-0">
+                            <select class="form-control search-slt" id="exampleFormControlSelect1">
+                                <option value=""> {{ __('ads.all') }}</option>
+                                @foreach (\App\Category::all() as $category)
+                                <option value="{{$category->id}}" @if (request()->get('category') === $category->id) selected @endif> {{$category->category_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="p-0">
+                            <button type="button" class="btn btn-search"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="navbarResponsiveAccount">
+                <ul class="navbar-nav account-menu flex-row">
+                <!-- Authentication Links -->
+                @guest
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">{{ __('welcome.login') }}</a>
+                    </li>
+                    @if (Route::has('register'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('welcome.register') }}</a>
+                        </li>
+                    @endif
+                @else
+                    <li class="nav-item">
+                        <a class="dropdown-item" href="{{ route('home') }}"><i class="fas fa-comment-alt"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="dropdown-item" href="{{ route('wishlists') }}"><i class="fas fa-heart"></i></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            Good morning, {{ Auth::user()->name }} 
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('lang','en') }}">En</a>
+                            <a class="dropdown-item" href="{{ route('lang','fr') }}">Fr</a>
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                {{ __('welcome.logout') }}
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
+                @endguest
+                    
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 <nav class="navbar navbar-expand-lg navbar-light bg-white" id="mainNav">
     <div class="container">
-        <a class="navbar-brand" href="{{ route('home') }}">
-            <img class="nav-logo" src="{{ asset('images/logo.png') }}" />
-        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -10,65 +82,43 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link {{ Request::segment(1) == '' ? 'active' : '' }}" href="{{ url('/') }}">
-                    <span class="nav-text">{{ __('welcome.home')}}</span> 
+                    <span class="nav-text">{{ __('welcome.chalet')}}</span> 
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::segment(1) == 'camping' ? 'active' : '' }}" href="{{ url('/') }}">
+                    <span class="nav-text">{{ __('welcome.camping')}}</span> 
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::segment(1) == 'lodging' ? 'active' : '' }}" href="{{ url('/') }}">
+                    <span class="nav-text">{{ __('welcome.lodging')}}</span> 
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ (Request::segment(1) == 'classified_ads' && Request::segment(2) == 'create') ? 'active' : '' }}" href="{{ route('classified_ads.create') }}">
-                    <span class="nav-text">{{ __('welcome.transfer_rental') }}</span> 
+                    <span class="nav-text">{{ __('welcome.rvtrailer') }}</span> 
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ (Request::segment(1) == 'classified_ads' && Request::segment(2) == '') ? 'active' : '' }}" href="{{ url('/classified_ads') }}">
-                    <span class="nav-text">{{ __('welcome.find_a_rental') }}</span>
+                    <span class="nav-text">{{ __('welcome.packages') }}</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Request::segment(1) == 'articles' ? 'active' : '' }}" href="{{ url('/articles') }}">
-                    <span class="nav-text">{{ __('welcome.articles') }}</span>
+                    <span class="nav-text">{{ __('welcome.itemsforsale') }}</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Request::segment(1) == 'contact' ? 'active' : '' }}" href="{{ url('/contact') }}">
-                    <span class="nav-text">{{ __('welcome.contact') }}</span>
+                    <span class="nav-text">{{ __('welcome.services') }}</span>
                     </a>
                 </li>
-            </ul>
-            <ul class="navbar-nav ml-auto account-menu">
-            <!-- Authentication Links -->
-            @guest
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">{{ __('welcome.login') }}</a>
-                </li>
-                @if (Route::has('register'))
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">{{ __('welcome.register') }}</a>
-                    </li>
-                @endif
-            @else
-                <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->name }} <img src="{{ asset('images/short-logo-dark.png') }}" width=28>
+                    <a class="nav-link" href="{{ url('/ads/create') }}">
+                    <span class="nav-text">Post an Ad <i class="fas fa-chevron-right"></i></span>
                     </a>
-
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('home') }}">{{ __('welcome.my_account') }}</a>
-                        <a class="dropdown-item" href="{{ route('wishlists') }}">{{ __('welcome.wishlist') }}</a>
-                        <a class="dropdown-item" href="{{ route('logout') }}"
-                            onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">
-                            {{ __('welcome.logout') }}
-                        </a>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    </div>
-                </li>
-            @endguest
-                
-                <li class="nav-item language-option">
-                    <a href="{{ route('lang','en') }}">En</a> | <a href="{{ route('lang','fr') }}">Fr</a>
                 </li>
             </ul>
         </div>

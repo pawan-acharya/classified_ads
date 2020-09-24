@@ -6,21 +6,13 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <a href="{{ Str::contains(url()->previous(), 'ads')? url()->previous() : route('home') }}" class="return-button no-print">
-                    <i class="fa fa-angle-left"></i>
-                    {{ Str::contains(url()->previous(), 'ads')?  __('ads.return_results') : __('ads.return_to_my_account') }}
-                </a>
-                <h1 class="text-center section-head">{{$classified_ad->title}}</h1>
                 <div class="row ad-single mb-4">
-                    <div class="col-md-6 col-12">
+                    <div class="col-md-8 col-12">
                         @include('classified_ads.partials.main')
-                    </div>
-
-                    <div class="col-md-6 col-12">
-                        
                         @include('classified_ads.partials.description')
                     </div>
                 </div>
+                
                 <div class="row justify-content-center no-print">
                     <div class="row col-md-8 single-ad-tools ">
                         <div class="col-md-4"> 
@@ -45,6 +37,7 @@
                         </div>
                     </div>
                 </div>
+                
         </div>
     </div>
 

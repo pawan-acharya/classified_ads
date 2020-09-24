@@ -28,4 +28,11 @@ return [
   'follow_us' => 'Follow us on',
   'copyright' => 'Website Designed by Affichez | © All rights reserved 2020 Affichez',
 
+  'chalet' => 'Chalet',
+  'camping' => 'Camping',
+  'lodging' => 'Lodging',
+  'rvtrailer' => 'RV & Trailer',
+  'packages' => 'Packages & Activities',
+  'itemsforsale' => 'Items for Sale',
+  'services' => 'Services'
 ];

@@ -1,10 +1,10 @@
-@theme-color-blue: #0c0652;
-@theme-color-green: #43b280;
+@theme-color-primary: #2ABC57;
+@theme-color-secondary: #3E79CB;
 @theme-font-family: 'Montserrat Alternates', sans-serif;
 @theme-linear-grad: linear-gradient(to right, #43b280 40%, #0c0652);
 
 body {
-    color: @theme-color-blue;
+    color: @theme-color-primary;
 }
 
 a:hover{
@@ -37,12 +37,11 @@ input[type=number] {
 }
 
 .section-head {
-    text-align: center;
     font-weight: 700;
     font-size: 40px;
     font-style: italic;
-    margin: 24px;
-    color: @theme-color-blue;
+    margin: 24px 0;
+    color: @theme-color-primary;
 }
 
 .section-header {
@@ -154,16 +153,9 @@ form {
     }
 }
 
-.primary-background {
-    background: linear-gradient(to right, transparent 20%, rgba(255,255,255,1) 70%),linear-gradient(to bottom, transparent 50% , rgba(255,255,255,1) 80%),url('../images/car-with-key.jpg') no-repeat center center; 
-    background-size:cover;
-    @media (min-width: 768px) {
-        padding: 300px 0 60px 0; 
-    }
-    .container {
-        background: linear-gradient(210deg, rgba(12, 6, 82, 0.7), rgba(12, 6, 82, 0) 80%), linear-gradient(210deg, #00d488 55%,  rgba(0, 212, 136, 0.8) 75%, rgba(0, 212, 136, 0.4)),url('../images/car.png') no-repeat left bottom;
-        border-radius: 10px;
-    }
+
+.main-header-area {
+    background: #fff;
 }
 /* Navbar Styling */
 nav {
@@ -175,7 +167,6 @@ nav {
             font-size: 14px;
             .nav-text {
                 padding: 0px 16px 0px 0px;
-                border-right: 2px solid #5d5e50;
                 font-weight: 600;
                 color: #5d5e50;
                 @media (min-width: 992px) and (max-width: 1200px) {
@@ -212,9 +203,6 @@ nav {
 // Home page styling
 // Intro section
 #intro {
-    background: linear-gradient(to bottom, transparent 70%, #fff 90%), url('../images/auto-automobile.jpg') no-repeat center 150%;
-    background-size: cover;
-    padding:400px 0 150px 0;
     h1 {
         font-size: 52px;
         text-align: center;
@@ -359,7 +347,7 @@ div.carousel-item{
 
 #blog-articles{
     .heading-text span {
-        border-color: @theme-color-blue;
+        border-color: @theme-color-primary;
     }
     .initial-line {
         border-color: #0c0652;
@@ -367,13 +355,13 @@ div.carousel-item{
     .blog-list-wrapper div{
         max-width: 100%;
         & a h6{
-                color: @theme-color-blue;
+                color: @theme-color-primary;
                 font-weight: 700;
         }
         & p {
             font-size: 13px;
             a {
-                color: @theme-color-green;
+                color: @theme-color-secondary;
             }
         }
     }
@@ -484,7 +472,7 @@ section {
             width: 85%;
         }
         a{
-            color: @theme-color-blue;
+            color: @theme-color-primary;
         }
     }
     .ad {
@@ -511,12 +499,12 @@ section {
                 }
             }
             span.price{
-                color: @theme-color-green;
+                color: @theme-color-secondary;
                 font-weight: 600;
                 font-size: 12px;
             }
             span{
-                color: @theme-color-green;
+                color: @theme-color-secondary;
                 font-size: 10px;
             }
             img{
@@ -598,12 +586,6 @@ section {
     &#search-page {
         padding-bottom: 0px;
     }
-    &#search-page-body {
-        background: linear-gradient(to bottom, #fff 80%, transparent), linear-gradient(to right, rgba(255,255,255,0.2) 20%, #fff 40%), url(/images/car-with-key.jpg?d3c4157e7e680ace79ee2cd24c28b948) no-repeat left bottom/40%;
-        .heading-text span , .initial-line{
-            border-color: #0c0652;
-        }
-    }
 }
 
 .search-sidebar{
@@ -635,7 +617,6 @@ section {
 }
 
 ul.pagination{
-    justify-content: flex-end;
     .page-item{
         .page-link{
             padding: 2px 8px;
@@ -645,8 +626,8 @@ ul.pagination{
         }
         &.active{
             .page-link{
-                background-color: @theme-color-green;
-                border: @theme-color-green;
+                background-color: @theme-color-secondary;
+                border: @theme-color-secondary;
                 border-radius: 50%;
             }
         }
@@ -658,12 +639,11 @@ ul.pagination{
     margin: 0 15px;
     border-radius: 10px;
     label.col-form-label{
-        color: @theme-color-blue;
+        color: @theme-color-primary;
     }
 }
 
 #single-ad-page {
-    background: linear-gradient(to bottom, #fff 30%, transparent), url('/images/page-bg.jpg') center center/cover no-repeat;
     .return-button 
     {
         width: 120px;
@@ -699,7 +679,7 @@ ul.pagination{
     }
     .ad-single{
         .thumbnail{
-            margin-top:15px;
+            margin-top:5px;
         }
         img{
             border:2px solid;
@@ -740,7 +720,6 @@ ul.pagination{
         font-size: 12px;
     }
     .detail-wrapper {
-        background: rgba(226,242,237,1);
         border-radius: 5px;
         padding: 30px 15px;
         .details {
@@ -794,7 +773,7 @@ ul.pagination{
     position: relative;
     overflow: hidden;
     padding: 75% 0 0 0;
-
+    border-radius: 15px;
     img {
         display: block;
         width: 100%;
@@ -807,32 +786,8 @@ ul.pagination{
     }  
 }
 
-.account-menu {
-    position: absolute;
-    top: 30%;
-    right: 2%;
-    a {
-        color: @theme-color-blue !important;
-        font-weight: bold;
-    }
-    .language-option {
-        padding: 10px 8px;
-        font-size: 14px;
-        @media (max-width: 992px) {
-            padding: 10px 0;
-        }
-        @media (min-width: 992px) and (max-width: 1200px) {
-            padding: 4px;
-            font-size: 12px;
-        }
-    }
-    @media (min-width:1200px) and (max-width: 1430px) {
-        top:50%;
-    }
-    @media (max-width: 992px) {
-        position: relative;
-        right: 0;
-    }
+.ad-image-wrapper .aspect-ratio-box {
+    padding: 65% 0 0 0;
 }
 
 .single-ad-tools {
@@ -858,7 +813,7 @@ ul.pagination{
         
         &:hover{
             .ad-sharing-tool-link {
-            color: @theme-color-green;
+            color: @theme-color-secondary;
             }
         }
         @media (min-width: 768px){
@@ -933,7 +888,7 @@ span.select2-selection.select2-selection--single {
     padding: 3px 13px;
 }
 .select2-container--default .select2-selection--single .select2-selection__arrow {
-    color: @theme-color-blue;
+    color: @theme-color-primary;
     font-size: 30px;
     padding: 0px 25px;
     height: 27px;
@@ -955,7 +910,7 @@ span.select2-selection.select2-selection--single {
 }
 
 .select2-container--open i.fa.fa-angle-down {
-    color: @theme-color-green;
+    color: @theme-color-secondary;
 }
 span.select2-selection.select2-selection--single {
     outline: none;
@@ -986,7 +941,7 @@ span.select2.select2-container.select2-container--default {
 }
 
 .search-sidebar .select2-container--default .select2-selection--single .select2-selection__arrow {
-    color: @theme-color-blue;
+    color: @theme-color-primary;
     font-size: 27px;
     top: -3px;
 }
@@ -1001,7 +956,7 @@ span.select2.select2-container.select2-container--default {
 }
 
 .search-body-head .select2-container--default .select2-selection--single .select2-selection__arrow {
-    color: @theme-color-blue;
+    color: @theme-color-primary;
     font-size: 21px;
     top: -3px;
 }
@@ -1218,11 +1173,11 @@ span.select2.select2-container.select2-container--default {
                 box-shadow: 8px 8px #0c0652;
                 background-color: #fff;
                 h2{
-                    color: @theme-color-blue;
+                    color: @theme-color-primary;
                     font-size: 42px;
                 }
                 .featured {
-                    color: @theme-color-green;
+                    color: @theme-color-secondary;
                     margin-top: 15px;
                     margin-bottom: 15px;
                     font-weight: bold;
@@ -1231,7 +1186,7 @@ span.select2.select2-container.select2-container--default {
             }
             .btn-round:hover {
                 background-color: #fff;
-                color: @theme-color-blue;
+                color: @theme-color-primary;
             }
         }
     }
@@ -1245,47 +1200,31 @@ span.select2.select2-container.select2-container--default {
 
 /* Footer Styling */
 .main-footer{
-    background-image: url('../images/time-lapse-car.jpg');
-    background-size: cover;
-    background-position-y: 80%;
-    position: relative;
-    .overlay-effect {
-        background-image: linear-gradient(to right, rgba(21,23,51,1) 35%, rgba(21,23,51,0.5));
-        .footer-content{
-            width: 75%;
-            .footer-logo {
-                padding: 0px 35px;
-                margin-top: auto;
-                margin-bottom: auto;
-                img {
-                    max-width: 100%;
-                }
+    background: #EFFAFF;
+    .footer-content{
+        .footer-logo {
+            padding: 0px 35px;
+            margin-top: auto;
+            margin-bottom: auto;
+            img {
+                max-width: 100%;
             }
         }
-        .footer-menu-list {
-            border-left: 4px solid #43b280;
-            list-style: none;
-            @media (max-width: 768px) {
-                border-left: none;
-                padding-left: 0px;
-                margin-top: 10px;
-            }
-            .footer-menu-item {
-                font-size: 16px;
-                padding: 7px 20px;
-                font-weight: 700;
-            }
+    }
+    .footer-menu-list {
+        list-style: none;
+        padding-left:0px;
+        @media (max-width: 768px) {
+            border-left: none;
+            padding-left: 0px;
+            margin-top: 10px;
         }
-        .footer-social-icons {
-            list-style: none;
-            display: inline-flex;
-            padding-left: 5px;
-            li{
-                padding-right: 5px;
-                font-size: 13px;
-                a {
-                    color: @theme-color-green;
-                }
+        .footer-menu-item {
+            font-size: 16px;
+            padding: 7px 10px 7px 0;
+            font-weight: 700;
+            a{
+                color:#000000;
             }
         }
     }
@@ -1435,6 +1374,99 @@ span.select2.select2-container.select2-container--default {
         visibility: visible;
     }
 }
-  
-  
-  
+
+#navbarResponsiveAccount {
+    margin-left: auto;
+}
+
+.category-collection {
+    height: 300px;
+    & > .col-sm-2,& > .col-sm-3,& > .col-sm-4 {
+        padding: 0 5px !important;
+    }
+    .category-item {
+        display: flex;
+        align-items: flex-end;
+        border-radius: 15px;
+        .category-item-content {
+            padding-left: 10px;
+            padding-bottom: 10px;
+            color: #fff;
+        }
+    }
+}
+
+.featured-ads-image {
+    border-radius: 15px;
+    .featured-ads-image-content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        .featured-ads-image-title {
+            padding-top: 10px;
+            color: #fff;
+        }
+        .featured-ads-image-cta{
+            margin-top:auto;
+            display:flex;
+            .cateogory-item-button {
+                padding-bottom: 10px;
+                margin-top: -5px;
+                margin-left: auto;
+            }
+            .fas.fa-chevron-right {
+                padding: 10px 12px;
+                background: #fff;
+                border-radius: 50%;
+            }
+        }
+    }
+}
+
+.featured-ads-item {
+    margin-bottom: 10px;
+    h6 {
+        color: #1A1B16;
+    }
+    .ads-item-price {
+        color: #F3626B;
+    }
+}
+.footer-menu h4 {
+    letter-spacing: 2.27px;
+    color: #000000;
+    text-transform: uppercase;
+    opacity: 0.35;
+}
+
+.search-sec form {
+    background: #E3E3E3;
+    padding: 10px;
+    border-radius: 30px;
+    .select2-container--default .select2-selection--single {
+        background-color: none !important;
+    }
+    .form-control {
+        background: none;
+        border: none;
+    }
+    .btn.btn-search {
+        background: #2ABC57;
+        border-radius: 50%;
+        color: #fff;
+        padding: 5px 10px;
+    }
+}
+
+#navbarResponsive .nav-item:last-child {
+    background: #3E79CB;
+    border-radius: 20px;
+    padding-left: 10px;
+    .nav-text {
+        color: #fff;
+    }
+}
+
+.header-divs > div {
+    margin: auto;
+}

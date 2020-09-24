@@ -4,7 +4,6 @@
     @else
     <a href= "{{ route('ads.show',$ad->id ) }}" class="card ad">
     @endif
-        <div class="card-header">{{$ad->title}}</div>
         <div class="card-body">
             <div class= "row">
                 <div class= "col-12 col-sm-5 ad-image-wrapper">
