@@ -15,11 +15,11 @@ class CreateWishlistsTable extends Migration
     {
         Schema::create('wishlists', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('ad_id')->nullable();
+            $table->unsignedBigInteger('classified_ad_id')->nullable();
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('ad_id')->references('id')->on('ads');
-            $table->unique(['user_id', 'ad_id']);
+            $table->foreign('classified_ad_id')->references('id')->on('classified_ads');
+            $table->unique(['user_id', 'classified_ad_id']);
         });
     }
 

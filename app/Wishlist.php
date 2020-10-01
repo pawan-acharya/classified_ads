@@ -11,7 +11,7 @@ class Wishlist extends Model
     
     protected $fillable = [
         'user_id',
-        'ad_id'
+        'classified_ad_id'
     ];
 
     public function user()
@@ -21,6 +21,6 @@ class Wishlist extends Model
 
     public function ad()
     {
-        return $this->hasMany('App\Ad');
+        return $this->hasMany('App\ClassifiedAd');
     }
 }

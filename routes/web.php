@@ -14,13 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 //Static Pages
-Route::get('/', function () {
-    $payment_options = collect(range(1, 20))->mapWithKeys(function ($item) {
-        $amount = $item*50;
-        return [$amount => $amount];
-    });
-    return view('welcome', compact('payment_options'));
-});
+Route::get('/', 'HomeController@homepage');
+   
 Route::get('/faq', function () {
     return view('/pages/faq');
 });
@@ -43,8 +38,8 @@ Route::post('/my-account/edit', 'HomeController@update')->name('home.update');
 Route::post('/action/invite', 'HomeController@invite')->name('home.invite');
 
 Route::get('/wishlists', 'WishlistController@index')->name('wishlists');
-Route::post('/wishlists/{ad_id}', 'WishlistController@create')->name('wishlists.create');
-Route::delete('/wishlists/{ad_id}', 'WishlistController@delete')->name('wishlists.create');
+Route::post('/wishlists/{classified_ad_id}', 'WishlistController@create')->name('wishlists.create');
+Route::delete('/wishlists/{classified_ad_id}', 'WishlistController@delete')->name('wishlists.create');
 
 Route::get('ads', 'AdController@index')->name('ads.index');
 Route::post('ads', 'AdController@store')->name('ads.store')->middleware('auth');
@@ -61,7 +56,8 @@ Route::delete('files/{id}', 'AdController@deleteFile')->name('ads.files.delete')
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/payment/{id?}', 'PaymentController@plans')->name('payment.plans');
-    Route::post('/payment/{id?}', 'PaymentController@charge')->name('payment.charge');
+    Route::get('/payment-form/{id?}', 'PaymentController@plansForm')->name('payment.plans_form');
+    Route::post('/charge/{id}', 'PaymentController@charge')->name('payment.charge');
     Route::post('/payment/action/applyvoucher/{voucher}', 'PaymentController@voucher')->name('payment.voucher');
 
     Route::get('/partners/create', 'PartnerController@create')->name('partners.create');
@@ -76,24 +72,40 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('classified_ads', 'ClassifiedAdController')->except([
             'create', 'store', 'create'
         ]);
+        Route::get('/classified_ads/review/{classified_ad}', 'ClassifiedAdController@review')->name('classified_ads.review');
 
         Route::post('/feedback/create/{classified_ad}', 'FeedbackController@create')->name('feedbacks.create');
         Route::get('/messages', 'ChatRoomController@index')->name('chatrooms.index');
         Route::get('/messages/{chat_room_id}', 'FeedbackController@show')->name('feedbacks.show');
         Route::post('/feedback/reply/{chat_room_id}', 'FeedbackController@reply')->name('feedbacks.reply');
     /** end of ads section**/
+
+
+    /** membership for month and multi add pay **/
+        Route::get('/become_member', 'PaymentController@become_member')->name('become_member');
+        Route::post('/membership/charge', 'PaymentController@membership_charge')->name('membership.charge');
+
+        // Route::get('/classified_ads_list', 'ClassifiedAdController@ads_list')->name('ads_list');
+        Route::get('/bulk/payment', 'PaymentController@bulk_pay')->name('bulk_pay');
+        Route::get('/bulk_payment_form/{type}', 'PaymentController@bulk_payment_form')->name('bulk_payment_form');
+        Route::post('/bulk_payment/charge/{type}', 'PaymentController@bulk_payment_charge')->name('bulk_payment.charge');
+
+        Route::get('/edit/payment/{id}', 'PaymentController@edit_pay')->name('edit_pay');
+        Route::get('/edit_payment_form/{id}', 'PaymentController@edit_payment_form')->name('edit_payment_form');
+        Route::post('/edit_payment/charge/{id}', 'PaymentController@edit_payment_charge')->name('edit_payment.charge');
+    /** membership for month and multi add pay **/
 });
 
 Route::middleware(['auth','admin'])->prefix('admin')->group(function () {
     Route::get('/', 'AdminController@index');
-    Route::get('/partners', 'AdminController@partners')->name('admin.partners');
-    Route::get('/partnersales', 'AdminController@partnerSales')->name('admin.partnersales');
-    Route::get('/history', 'AdminController@history')->name('admin.history');
+    // Route::get('/partners', 'AdminController@partners')->name('admin.partners');
+    Route::get('/featured', 'AdminController@featured')->name('admin.featured');
+    Route::get('/validation', 'AdminController@validation')->name('admin.validation');
 
     /** Category and  formItems section**/
         Route::resource('categories', 'CategoryController');
         Route::get('/classified_ads/toggle/{classified_ad}', 'ClassifiedAdController@toggle')->name('classified_ads.toggle');
-
+        Route::get('/classified_ads/toggle_featured/{classified_ad}', 'ClassifiedAdController@toggle_featured')->name('classified_ads.toggle_featured');
         // Route::get('/add_field_items_to_form/{id}', 'FormItemController@add')->name('form_items.add');
         // Route::post('/store_field_items_to_form/{id}', 'FormItemController@store')->name('form_items.store');
         // Route::get('/edit_field_items_to_form/{id}', 'FormItemController@edit')->name('form_items.edit');

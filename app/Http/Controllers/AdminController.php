@@ -63,11 +63,14 @@ class AdminController extends Controller
         return view('admin.index', compact('usersCount', 'adsCount', 'monthlySalesCount', 'totalSalesData', 'categoriesCount'));
     }
 
-
-
-    public function history(Request $request) {
+    public function validation(Request $request) {
         if($request->ajax()){
-            $data = ClassifiedAd::latest('created_at')->get();
+            $data = ClassifiedAd::latest('classified_ads.created_at')
+                    ->whereNotNull('classified_ads.plan_id')
+                    ->join('plans', 'plans.id', '=', 'classified_ads.plan_id')
+                    ->whereDate('plans.ends_at','>=' ,date('Y-m-d'))
+                    ->select('classified_ads.*')
+                ->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('category_name', function($row){
@@ -76,10 +79,46 @@ class AdminController extends Controller
                     ->addColumn('actions', function($row){
                         $url= route("classified_ads.toggle", ["classified_ad"=>$row->id]);
                         if ($row->approved === 1) {
-                            $btns = '<a href="'.$url.'" class="btn btn-success btn-sm">'.Lang::get('admin.approved').'</a>';
+                            $btns = '<a href="javascript:void(0)" class="btn btn-success btn-sm" >'.Lang::get('admin.approved').'</a>';
                             return $btns;
                         } elseif ($row->approved === 0) {
-                            $btns = '<a href="'.$url.'" class="btn btn-danger btn-sm">'.Lang::get('admin.rejected').'</a>';
+                            $btns = '<a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="toggleVerification('.$row->id.', $(this))">'.Lang::get('admin.rejected').'</a>';
+                            return $btns;
+                        }
+                    })
+                    ->rawColumns(['actions'])
+                    ->make(true);
+        }
+    }
+
+     public function featured(Request $request) {
+        if($request->ajax()){
+            $data = ClassifiedAd::where('approved', 1)->latest('created_at')->get();
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('category_name', function($row){
+                         return $row->category->category_name;
+                     })
+                    ->addColumn('plan_status', function($row){
+                        if(!$row->plan){
+                            return 'Not Paid';
+                        }
+                        else{
+                            if($row->plan->ends_at>= date('Y-m-d')){
+                                return 'On going';
+                            }else{
+                                return 'expired';
+                            }
+                        }
+                    })
+                    ->rawColumns(['plan_status'])
+                    ->addColumn('actions', function($row){
+                        $url= route("classified_ads.toggle", ["classified_ad"=>$row->id]);
+                        if ($row->is_featured === 1) {
+                            $btns = '<a href="javascript:void(0)" class="btn btn-success btn-sm" onclick="toggleFeatured('.$row->id.', $(this))">'.Lang::get('admin.featured').'</a>';
+                            return $btns;
+                        } elseif ($row->is_featured === 0) {
+                            $btns = '<a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="toggleFeatured('.$row->id.', $(this))">'.Lang::get('admin.not_featured').'</a>';
                             return $btns;
                         }
                     })

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Wishlist;
 use App\Ad;
+use App\ClassifiedAd;
 
 class WishlistController extends Controller
 {
@@ -17,18 +18,18 @@ class WishlistController extends Controller
     public function index() {
         $wishlists = Wishlist::where('user_id', Auth::user()->id)->get();
         $ads = $wishlists->map(function ($wishlist) {
-            return Ad::find($wishlist->ad_id);
+            return ClassifiedAd::find($wishlist->classified_ad_id);
         });
 
         return view('wishlists', compact('ads'));
     }
 
-    public function create(Request $request, $ad_id) {
+    public function create(Request $request, $classified_ad_id) {
         if($request->ajax()){
             try {
                 $wishlist = Wishlist::firstOrCreate([
                     'user_id' => Auth::user()->id,
-                    'ad_id' =>$ad_id
+                    'classified_ad_id' =>$classified_ad_id
                 ]);
 
                 return response()->json($wishlist);
@@ -38,11 +39,11 @@ class WishlistController extends Controller
         }
     }
 
-    public function delete(Request $request, $ad_id) {
+    public function delete(Request $request, $classified_ad_id) {
         if($request->ajax()){
             try {
                 Wishlist::where( 'user_id', Auth::user()->id)
-                                    ->where('ad_id', $ad_id)
+                                    ->where('classified_ad_id', $classified_ad_id)
                                     ->delete();
  
                 return response()->json(['success' => 'true']);

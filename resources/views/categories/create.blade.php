@@ -22,7 +22,15 @@
 						    <label for="exampleInputEmail1">Category Poster Image:</label>
 						    <input type="file" class="form-control" id="fname" name="image" required>
 					  	</div>
-					  	<div class="form-group col-12">
+					  	<div class="form-group col-6">
+						    <label for="cat-type">Category Description:</label>
+						    <select class="form-control" id="cat-type" name="type" >
+						    	<option value="none"></option>
+						    	<option value="rental">Rentals package</option>
+						    	<option value="sales">Sales package</option>
+						    </select> 
+					  	</div>
+					  	<div class="form-group col-6">
 						    <label for="exampleInputEmail1">Category Description:</label>
 						    <textarea class="form-control" id="fname" name="description" ></textarea> 
 					  	</div>
@@ -215,6 +223,7 @@
 			event.preventDefault();
 			var url= "{{ route('categories.store') }}";
 			var category_name= $(this).find("input[name='category_name']").val();
+			var type= $(this).find("select[name='type']").val();
 			var description= $(this).find("textarea[name='description']").val();
 			var image= $(this).find("input[name='image']").val();
 			var big_array= new Array();
@@ -253,6 +262,7 @@
 			var formData = new FormData();
 		  	formData.append('_token', "{{ csrf_token() }}");
 		  	formData.append('category_name', category_name);
+		  	formData.append('type', type);
 		  	formData.append('description', description);
 			formData.append('image', $(this).find("input[name='image']")[0].files[0]);
 		  	formData.append('big_array', JSON.stringify(big_array));

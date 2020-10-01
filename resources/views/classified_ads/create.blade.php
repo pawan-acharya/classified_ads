@@ -40,6 +40,10 @@
 			url= url.replace(':cat_id', cat_id);
 			$.get(url, function(response){
 				$('#category_form_here').html(response);
+				  // var input = document.getElementById('pac-input');
+				  var input = $('#category_form_here #pac-input')[0];
+				  // debugger;
+				  new google.maps.places.Autocomplete(input);
 			});
 		}
 

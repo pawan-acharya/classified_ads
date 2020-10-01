@@ -100,6 +100,34 @@
                     </div>
                 </div>
 
+
+                 <div class="mb-4">
+                    <h5 class="row-head">{{ __('auth.my_information') }}<img src="{{ asset('images/icon/arrow-down.png') }}" alt="Arrow Down" /></h5>
+                    <div class= "row info-block">
+                        <div class= "col-md-6">
+                            @if (Auth::user()->checkIfAdmin())
+                                <a type="button" class="btn btn-secondary" data-dismiss="modal">Alreay a member</a>
+                            @else
+                                <a type="button" href="{{route('become_member')}}" class="btn btn-secondary" data-dismiss="modal">Become a member for a month</a>
+                            @endif
+                        </div>
+                        
+                        <div class= "col-md-6">
+                            @if (!Auth::user()->checkIfAdmin())
+                                @if (Auth::user()->getLeftAds() > 0)
+                                    <a type="button"  class="btn btn-secondary" data-dismiss="modal">
+                                        Remaining Ads :- {{Auth::user()->getLeftAds()}}
+                                    </a>
+                                @else
+                                <a type="button" href="{{route('bulk_pay')}}" class="btn btn-secondary" data-dismiss="modal">
+                                    Pay for Bulk Ads
+                                </a>
+                                @endif
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
                 <div class="ad-container">
                     <div class="row-head">{{ __('auth.my_ads') }}<img src="{{ asset('images/icon/arrow-down.png') }}" alt="Arrow Down" /></div>
                     <div class="card-body">

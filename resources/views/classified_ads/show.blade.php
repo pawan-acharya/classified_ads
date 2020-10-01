@@ -6,6 +6,17 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                <a href="{{ Str::contains(url()->previous(), 'ads')? url()->previous() : route('home') }}" class="return-button no-print">
+                    <i class="fa fa-angle-left"></i>
+                    {{ Str::contains(url()->previous(), 'ads')?  __('ads.return_results') : __('ads.return_to_my_account') }}
+                </a>
+                <h1 class="text-center section-head">{{$classified_ad->title}}</h1>
+                @if ($classified_ad->user->id == Auth::id())
+                     <a href="{{ route('classified_ads.review', ['classified_ad'=>$classified_ad->id]) }}" class=" no-print" style="float: right;">
+                        <i class="fa fa-angle-left"></i>
+                        Review Page
+                    </a>
+                @endif
                 <div class="row ad-single mb-4">
                     <div class="col-md-8 col-12">
                         @include('classified_ads.partials.main')
@@ -28,7 +39,7 @@
                                 @if($classified_ad->is_wishlisted)
                                 <a href="javascript:void()" class="ad-sharing-tool-link"><i class="fab fa-gratipay"></i> {{ __('ads.added_to_favorites') }}</a>
                                 @else 
-                                <a href="javascript:void()" id="add-to-wishlist" class="ad-sharing-tool-link" data-ad_id="{{ $classified_ad->id }}"><i class="fab fa-gratipay"></i> {{ __('ads.add_to_favorites') }}</a>
+                                <a href="javascript:void()" id="add-to-wishlist" class="ad-sharing-tool-link" onclick="addToFavoutires({{$classified_ad->id}})"><i class="fab fa-gratipay"></i> {{ __('ads.add_to_favorites') }}</a>
                                 @endif
                             </div>  
                             <div class="col-md-4 ad-sharing-tool">
@@ -45,6 +56,21 @@
 </section>
 
 @push('js')
+<script type="text/javascript">
+    function addToFavoutires(id){
+            url= "{{route('wishlists.create', ':classified_ad_id')}}";
+            url= url.replace(':classified_ad_id', id);
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                },
+            })
+            .done(function( data ) {
+            });
+    }
+</script>
 
 @endpush
 

@@ -8,6 +8,9 @@ use Auth,Mail,Lang;
 use App\Ad;
 use App\User;
 use App\Mail\CreateAccount;
+use App\Category;
+use App\ClassifiedAd;
+use Carbon\Carbon; 
 
 
 class HomeController extends Controller
@@ -41,7 +44,7 @@ class HomeController extends Controller
         $referrals = User::where('referred_by', $user->id)->get();
         $totalAdsReferred = 0;
         foreach($referrals as $referral) {
-            $referredAdsCount = Ad::where('user_id', $referral->id)->count();
+            $referredAdsCount = ClassifiedAd::where('user_id', $referral->id)->count();
             $totalAdsReferred = $totalAdsReferred + $referredAdsCount;
         }
         
@@ -115,5 +118,22 @@ class HomeController extends Controller
         } catch(\Exception $e) {
             abort(500, Lang::get('auth.'.$e->getMessage()));
         } 
+    }
+
+    public function homepage(){
+        $payment_options = collect(range(1, 20))->mapWithKeys(function ($item) {
+            $amount = $item*50;
+            return [$amount => $amount];
+        });
+        $categories= Category::all();
+        $featured_ads=  ClassifiedAd::with('file')
+            ->where('classified_ads.approved', 1)
+            ->where('classified_ads.is_featured', 1)
+            ->whereNotNull('classified_ads.plan_id')
+            ->join('plans', 'plans.id', '=', 'classified_ads.plan_id')
+            ->whereDate('plans.ends_at','>=' ,date('Y-m-d'))
+            ->get();
+
+        return view('welcome', compact('payment_options', 'categories', 'featured_ads'));
     }
 }
