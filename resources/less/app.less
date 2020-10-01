@@ -1,10 +1,10 @@
 @theme-color-primary: #2ABC57;
 @theme-color-secondary: #3E79CB;
 @theme-font-family: 'Montserrat Alternates', sans-serif;
-@theme-linear-grad: linear-gradient(to right, #43b280 40%, #0c0652);
+@theme-color-heading: #1A1B16;
 
 body {
-    color: @theme-color-primary;
+    color: @theme-color-heading;
 }
 
 a:hover{
@@ -41,7 +41,8 @@ input[type=number] {
     font-size: 40px;
     font-style: italic;
     margin: 24px 0;
-    color: @theme-color-primary;
+    color: @theme-color-heading;
+    text-align: center;
 }
 
 .section-header {
@@ -125,16 +126,15 @@ form {
         padding: 0px;
         font-size: 12px;
         font-weight: 700;
-        color: white;
+        color: #000000;
     }
     label.checkbox-inline {
         font-size: 10px;
-        color: white;
+        color: #000000;
     }
     .form-wrapper {
         padding: 30px 30px;
         border-radius: 10px;
-        background: linear-gradient(45deg, rgba(73,176,130,1) 40%,rgba(73,176,130,0.8) 60%, rgba(21,25,50,0.8) 75%, rgba(21,25,50,1));
     }
       
     .form-wrapper .form-group input::placeholder, .form-wrapper .form-group textarea::placeholder {
@@ -347,7 +347,7 @@ div.carousel-item{
 
 #blog-articles{
     .heading-text span {
-        border-color: @theme-color-primary;
+        border-color: @theme-color-heading;
     }
     .initial-line {
         border-color: #0c0652;
@@ -355,13 +355,13 @@ div.carousel-item{
     .blog-list-wrapper div{
         max-width: 100%;
         & a h6{
-                color: @theme-color-primary;
+                color: @theme-color-heading;
                 font-weight: 700;
         }
         & p {
             font-size: 13px;
             a {
-                color: @theme-color-secondary;
+                color: @theme-color-heading;
             }
         }
     }
@@ -413,14 +413,11 @@ div.carousel-item{
 
 section {
     .main-search{
-        background: @theme-linear-grad;
         margin-top: 16px 0;
         padding: 24px 30px 48px;
         border-radius: 10px;
     }
     &#my-account{
-        background: linear-gradient(to right, rgba(255,255,255,1) 30%, transparent 80%),linear-gradient(to bottom, transparent 50% , rgba(255,255,255,1) 80%),url('../images/car-blur.jpg') no-repeat center center; 
-        background-size:cover;
         .ad-container {
             & > .card-body {
                 background-color: #b8e5da;
@@ -472,16 +469,19 @@ section {
             width: 85%;
         }
         a{
-            color: @theme-color-primary;
+            color: @theme-color-heading;
         }
     }
     .ad {
-        margin: 30px -30px 30px 0px;
+        margin: 15px 0 0 0;
         & .ad-image-wrapper {
             padding: 0;
         }
         & .ad-desc-wrapper{
-            padding-right: 0;
+            padding-top:10px;
+            padding-bottom: 10px;
+            display: flex;
+            flex-direction: column;
         }
         .card-header {
             padding: 0px;
@@ -591,7 +591,6 @@ section {
 .search-sidebar{
     & > .card {
         padding: 15px;
-        background: @theme-linear-grad;
         border-radius: 10px;
     }
     .card-body{
@@ -617,29 +616,30 @@ section {
 }
 
 ul.pagination{
+    margin-top: 10px;
     .page-item{
+        padding: 0 2.5px;
         .page-link{
-            padding: 2px 8px;
-            font-size: 12px;
-            background-color: transparent;
-            border:none;
+            padding: 6px 13px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #fff;
+            border-radius: 50%;
         }
         &.active{
             .page-link{
-                background-color: @theme-color-secondary;
+                background-color: #2ABC57;
                 border: @theme-color-secondary;
-                border-radius: 50%;
             }
         }
     }
 }
 
 .search-body-head {
-    background: #b8e5da;
     margin: 0 15px;
-    border-radius: 10px;
+    background-color: white;
     label.col-form-label{
-        color: @theme-color-primary;
+        color: @theme-color-heading;
     }
 }
 
@@ -686,7 +686,6 @@ ul.pagination{
             border-radius: 10px;
         }
         .single-ad-description{
-            background: @theme-linear-grad;
             border-radius: 10px;
             margin:20px 0;
             padding:20px 0;
@@ -773,7 +772,7 @@ ul.pagination{
     position: relative;
     overflow: hidden;
     padding: 75% 0 0 0;
-    border-radius: 15px;
+    border-radius: 10px;
     img {
         display: block;
         width: 100%;
@@ -786,12 +785,7 @@ ul.pagination{
     }  
 }
 
-.ad-image-wrapper .aspect-ratio-box {
-    padding: 65% 0 0 0;
-}
-
 .single-ad-tools {
-    background: linear-gradient(to right, #43b280, #0c0652);
     border-radius: 10px;
     padding: 20px;
     .btn-round{
@@ -888,7 +882,7 @@ span.select2-selection.select2-selection--single {
     padding: 3px 13px;
 }
 .select2-container--default .select2-selection--single .select2-selection__arrow {
-    color: @theme-color-primary;
+    color: @theme-color-heading;
     font-size: 30px;
     padding: 0px 25px;
     height: 27px;
@@ -941,7 +935,7 @@ span.select2.select2-container.select2-container--default {
 }
 
 .search-sidebar .select2-container--default .select2-selection--single .select2-selection__arrow {
-    color: @theme-color-primary;
+    color: @theme-color-heading;
     font-size: 27px;
     top: -3px;
 }
@@ -956,7 +950,7 @@ span.select2.select2-container.select2-container--default {
 }
 
 .search-body-head .select2-container--default .select2-selection--single .select2-selection__arrow {
-    color: @theme-color-primary;
+    color: @theme-color-heading;
     font-size: 21px;
     top: -3px;
 }
@@ -967,96 +961,10 @@ span.select2.select2-container.select2-container--default {
 
 /* End Select2 custom styling */
 
-/* FAQ Page Styling  */
-
-#faq-intro {
-    background: linear-gradient(to top, rgba(255,255,255,1) 50%, rgba(255,255,255,0)),url('../images/auto-automobile.jpg') center center no-repeat ;
-    background-size: cover;
-    .faq-question {
-        position: relative;
-        img {
-            position: absolute;
-            right: 15px;
-            top:40%;
-        }
-        p {
-        padding: 10px 15px;
-        border: 1px solid;
-        border-radius: 5px;
-        font-size: 13px;
-        font-weight: 600;
-        color: #000;
-      }
-    }
-    .faq-response-wrapper{
-        background-color: #D4EADE;
-        font-size: 12px;
-        border-radius: 4px;
-        font-weight: 600;
-        padding: 30px;
-        color: #000;
-        h6{
-            font-size: 13px;
-            font-weight: 700;
-        }
-    }
-    @media (min-width: 768px) {
-        padding: 300px 0 60px 0; 
-    }
-}  
-  /* End FAQ Page Styling  */
-
-  /* Articles Page Stylling  */
-#articles-intro {
-    background: linear-gradient(to top, rgba(255,255,255,1) 50%, rgba(255,255,255,0)),url('../images/iphone-notebook.jpg') no-repeat center center;
-    background-size: cover;
-    font-size: 12px;
-    font-weight: 500;
-    .article-image img{
-        box-shadow: 15px 15px #e3e3e5;
-        border-radius: 10px;
-    }
-    .image-text-wrapper {
-        background: linear-gradient(to right, #43b280 40%, #0c0652);
-        border-radius: 10px;
-        color: #fff;
-        .image-wrapper-auto {
-            position: absolute;
-            right: 0;
-            margin-right: 15px;
-            @media (min-width: 992px) { 
-                margin-top: -30px;
-            }
-            @media (max-width: 992px) and (min-width: 768px) {
-                margin-top: 20px;
-            }
-            @media (max-width: 768px) {
-                padding-bottom: 20px;
-                position: relative;
-            }
-            img {
-            border: 2px solid;
-            border-radius: 10px;
-          }
-        }
-    }
-    .btn-round {
-        padding: 5px 20px;
-        font-size: 11px;
-    }
-    @media (min-width: 768px) {
-        padding: 300px 0 60px 0; 
-    }
-}
-
-
 /* Contact Page Styling */
 
 #contact-intro {
-    background: linear-gradient(to top, rgba(255,255,255,1) 50%, rgba(255,255,255,0)),url('../images/man-using-phone.jpg') no-repeat bottom center;
-    background-size: cover;
     .container {
-        background: linear-gradient(210deg, rgba(12, 6, 82, 0.8) 10%, rgba(12, 6, 82, 0.7) 15%, rgba(12, 6, 82, 0) 80%), linear-gradient(210deg, rgba(0, 212, 136, 0.8) 20%,  rgba(0, 212, 136)),url('../images/car.png') no-repeat ~"110%/47%";
         border-radius: 10px;
     }
     .contact-page-logo img{
@@ -1111,7 +1019,6 @@ span.select2.select2-container.select2-container--default {
 /* Plan Selection Styling */
 
 #plan-intro {
-    background: linear-gradient(to top, rgba(255,255,255,1) 20%, rgba(255,255,255,0.8) 60%, rgba(255,255,255,0)),url('../images/car-blur.jpg') no-repeat center center;
     background-size: cover;
     .plan-item {
         padding-left: 48px;
@@ -1162,7 +1069,6 @@ span.select2.select2-container.select2-container--default {
             }
         }
         &.featured{
-            background: linear-gradient(45deg, rgba(73,176,130,1) 50%, rgba(21,25,50,1) 75%, rgba(21,25,50,1));
             border-radius: 10px;
             color: #fff;
             h2 {
@@ -1173,7 +1079,7 @@ span.select2.select2-container.select2-container--default {
                 box-shadow: 8px 8px #0c0652;
                 background-color: #fff;
                 h2{
-                    color: @theme-color-primary;
+                    color: @theme-color-heading;
                     font-size: 42px;
                 }
                 .featured {
@@ -1186,7 +1092,7 @@ span.select2.select2-container.select2-container--default {
             }
             .btn-round:hover {
                 background-color: #fff;
-                color: @theme-color-primary;
+                color: @theme-color-heading;
             }
         }
     }
@@ -1439,25 +1345,31 @@ span.select2.select2-container.select2-container--default {
     opacity: 0.35;
 }
 
-.search-sec form {
-    background: #E3E3E3;
-    padding: 10px;
-    border-radius: 30px;
-    .select2-container--default .select2-selection--single {
-        background-color: none !important;
-    }
-    .form-control {
-        background: none;
-        border: none;
-    }
-    .btn.btn-search {
-        background: #2ABC57;
-        border-radius: 50%;
-        color: #fff;
-        padding: 5px 10px;
+.search-sec {
+    width: 100%;
+    form {
+        background: #E3E3E3;
+        padding: 10px;
+        border-radius: 30px;
+        .select2-container--default .select2-selection--single {
+            background-color: transparent !important;
+            border:none !important;
+        }
+        .form-control {
+            background: none;
+            border: none;
+        }
+        .btn.btn-search {
+            background: #2ABC57;
+            border-radius: 50%;
+            color: #fff;
+            padding: 5px 10px;
+        }
+        .search-slt {
+            border-right: 1px solid #2ABC57;
+        }
     }
 }
-
 #navbarResponsive .nav-item:last-child {
     background: #3E79CB;
     border-radius: 20px;
@@ -1469,4 +1381,245 @@ span.select2.select2-container.select2-container--default {
 
 .header-divs > div {
     margin: auto;
+}
+
+.price-list {
+    list-style: none;
+    padding-left: 0px;
+}
+
+.header {
+    box-shadow: 0px 0px 5px 0px #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+.listing-ad-wrapper {
+    background: white;
+    border-radius: 10px;
+    .price-list{
+        margin-bottom: 0px;
+    }
+    .listing-ad-title {
+        color: #000;
+    }
+    .pricings {
+        margin-top: auto;
+    }
+    .aspect-ratio-box {
+        border-radius: 15px 0 0 15px;
+        img{
+            border:none !important;
+            border-radius: 10px 0 0 10px !important;
+        }
+    }
+}
+
+.ad-description-wrapper {
+    background: #fff;
+    border-radius: 20px;
+    padding: 15px 0 15px 15px;
+    .ad-description-text {
+        max-height: 400px;
+        overflow: scroll;
+        padding-right: 20px;
+        text-align: justify;
+    }
+}
+
+.details.features > ul {
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 10px;
+}
+
+.contact-div {
+    background: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    .btn-message {
+        background-color:#277C41;
+        border-radius: 10px;
+        width: 100%;
+    }
+    textarea#message-host {
+        width: 100%;
+    }
+}
+
+.owl-nav{ 
+    position: absolute;
+    top: -50px;
+    right: 0px;
+    button {
+        &:last-child {
+            margin-left: 10px;
+        }
+        i {
+            padding: 10px;
+            background: #fff;
+            border-radius: 50%;
+            color: #2ABC57;
+        }
+    }
+}
+
+.single-page-featured .owl-carousel .owl-item {
+    background: white;
+    .aspect-ratio-box {
+        border-radius: 15px 15px 0 0;
+    }
+}
+
+// Lightbox Gallery
+    /* The Modal (background) */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        padding-top: 100px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: black;
+    }
+    
+    /* Modal Content */
+    .modal-content {
+        position: relative;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 0;
+        width: 90%;
+        max-width: 1200px;
+    }
+    
+    /* The Close Button */
+    .close {
+        color: white;
+        position: absolute;
+        top: 10px;
+        right: 25px;
+        font-size: 35px;
+        font-weight: bold;
+    }
+    
+    .close:hover,
+    .close:focus {
+        color: #999;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    
+    .mySlides {
+        display: none;
+    }
+    
+    .cursor {
+        cursor: pointer;
+    }
+    
+    /* Next & previous buttons */
+    .prev,
+    .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        width: auto;
+        padding: 16px;
+        margin-top: -50px;
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+    
+    /* Position the "next button" to the right */
+    .next {
+        right: 0;
+        border-radius: 3px 0 0 3px;
+    }
+    
+    /* On hover, add a black background color with a little bit see-through */
+    .prev:hover,
+    .next:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+    
+    /* Number text (1/3 etc) */
+    .numbertext {
+        color: #f2f2f2;
+        font-size: 12px;
+        padding: 8px 12px;
+        position: absolute;
+        top: 0;
+    }
+    
+    img {
+        margin-bottom: -4px;
+    }
+    
+    .caption-container {
+        text-align: center;
+        background-color: black;
+        padding: 2px 16px;
+        color: white;
+    }
+    
+    .demo {
+        opacity: 0.6;
+    }
+    
+    .active,
+    .demo:hover {
+        opacity: 1;
+    }
+    
+    img.hover-shadow {
+        transition: 0.3s;
+    }
+    
+    .hover-shadow:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+// End lightbox
+
+.gallery {
+    & >  div {
+        padding:0px;
+        &.featured-image {
+            padding: 5px 10px 0px 10px !important;
+        }
+    }
+    .thumbnails .thumbnail {
+        width: 50%;
+        float: left;
+        padding: 0 8px 2px 0;
+    }
+}
+
+.show-all-gallery {
+    position: absolute;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    right: 20px;
+    bottom: 0px;
+    cursor: pointer;
+}
+
+.detail-head {
+    font-weight: 700;
+    font-size: 35px;
+    color: #1A1B16;
+}
+
+.modal {
+    z-index: 99999;
 }

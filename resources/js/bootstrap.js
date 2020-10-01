@@ -14,6 +14,7 @@ try {
     require('bootstrap-datepicker');
     require('select2');
     require('jQuery.print');
+    require('owl.carousel');
     
 } catch (e) {}
 

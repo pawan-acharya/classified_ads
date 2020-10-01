@@ -21,9 +21,9 @@ class ClassifiedAdController extends Controller
         define('PER_PAGE', 9);
         $classified_ads= ClassifiedAd::with(['category', 'file'])
                     ->where('classified_ads.approved', 1)
-                    ->whereNotNull('classified_ads.plan_id')
-                    ->join('plans', 'plans.id', '=', 'classified_ads.plan_id')
-                    ->whereDate('plans.ends_at','>=' ,date('Y-m-d'))
+                    // ->whereNotNull('classified_ads.plan_id')
+                    // ->join('plans', 'plans.id', '=', 'classified_ads.plan_id')
+                    // ->whereDate('plans.ends_at','>=' ,date('Y-m-d'))
                     ->orderBy('classified_ads.created_at', $request->query('order')?:'desc');
                     
         if($request->query('category')){
@@ -128,7 +128,15 @@ class ClassifiedAdController extends Controller
     {
         $classified_ad= ClassifiedAd::with('category')->find($id);
         $form_items_collection= Category::find($classified_ad->category->id)->form_items()->whereNull('parent')->get();
-        return view('classified_ads.show', compact('classified_ad', 'form_items_collection'));
+        $featured_ads=  ClassifiedAd::with('file')
+        ->where('classified_ads.approved', 1)
+        ->where('classified_ads.is_featured', 1)
+        // ->whereNotNull('classified_ads.plan_id')
+        // ->join('plans', 'plans.id', '=', 'classified_ads.plan_id')
+        // ->whereDate('plans.ends_at','>=' ,date('Y-m-d'))
+        ->get();
+
+        return view('classified_ads.show', compact('classified_ad', 'form_items_collection', 'featured_ads'));
     }
 
     /**

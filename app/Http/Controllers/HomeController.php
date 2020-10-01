@@ -129,9 +129,9 @@ class HomeController extends Controller
         $featured_ads=  ClassifiedAd::with('file')
             ->where('classified_ads.approved', 1)
             ->where('classified_ads.is_featured', 1)
-            ->whereNotNull('classified_ads.plan_id')
-            ->join('plans', 'plans.id', '=', 'classified_ads.plan_id')
-            ->whereDate('plans.ends_at','>=' ,date('Y-m-d'))
+            // ->whereNotNull('classified_ads.plan_id')
+            // ->join('plans', 'plans.id', '=', 'classified_ads.plan_id')
+            // ->whereDate('plans.ends_at','>=' ,date('Y-m-d'))
             ->get();
 
         return view('welcome', compact('payment_options', 'categories', 'featured_ads'));

@@ -2,57 +2,56 @@
 @extends('layouts.app')
 
 @section('content')
-<section id="single-ad-page">
+<section id="long-ad-section" class="ads-display mt-2">
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <a href="{{ Str::contains(url()->previous(), 'ads')? url()->previous() : route('home') }}" class="return-button no-print">
-                    <i class="fa fa-angle-left"></i>
-                    {{ Str::contains(url()->previous(), 'ads')?  __('ads.return_results') : __('ads.return_to_my_account') }}
-                </a>
-                <h1 class="text-center section-head">{{$classified_ad->title}}</h1>
-                @if ($classified_ad->user->id == Auth::id())
-                     <a href="{{ route('classified_ads.review', ['classified_ad'=>$classified_ad->id]) }}" class=" no-print" style="float: right;">
-                        <i class="fa fa-angle-left"></i>
-                        Review Page
-                    </a>
+        <img src="{{ asset('images/long-ad.png') }}" width="100%" />
+    </div>
+</section>
+<section id="single-ad-page" class="my-1">
+    <div class="container">
+        <div class="row ad-single mb-4">
+            <div class="col-md-9 col-12">
+                @include('classified_ads.partials.main')
+                @include('classified_ads.partials.description')
+            </div>
+            <div class="col-md-3">
+                <div class="contact-div">
+                    <h2>{{$classified_ad->user->first_name}}{{$classified_ad->user->name}}</h2>
+                    <div class="reveal-number">
+                        <p class="phonenumber">{{$classified_ad->user->home_phone}}</p>
+                        <a class="revealphone">Reveal Host Contact</a>
+                    </div>
+                    <form>
+                        <textarea id="message-host" name="message-host" rows="4">Your Message to the Host.</textarea>
+                        <button type="submit" class="btn btn-primary btn-message">
+                            <i class="fas fa-comment-alt"></i>{{ __('ads.contact_announcer') }}
+                        </button>   
+                    </form>
+                </div>
+                <img src="{{ asset('images/sidebar-ad.png') }}" width="100%" class="mt-2"/>
+            </div>
+        </div>
+        <div class="single-page-featured">
+            <h3>Featured Listing</h3>
+            <h5>Best quarter list of ad’s for your choice</h5>
+            <div class="owl-carousel">
+            @foreach ($featured_ads as $classified_ad)
+            <a class="item featured-ads-item" href="/classified_ads/{{$classified_ad->id}}">
+                <div class="aspect-ratio-box">
+                @if (!empty($classified_ad->file))
+                    <img src="{{ $classified_ad->file->getPathAttribute() }}" style="max-width: 100%;" />
+                @else
+                    <img src="{{ asset('images/placeholder_car.png') }}" style="max-width: 100%;" />
                 @endif
-                <div class="row ad-single mb-4">
-                    <div class="col-md-8 col-12">
-                        @include('classified_ads.partials.main')
-                        @include('classified_ads.partials.description')
-                    </div>
                 </div>
-                
-                <div class="row justify-content-center no-print">
-                    <div class="row col-md-8 single-ad-tools ">
-                        <div class="col-md-4"> 
-                            <a @if(Auth::check()) data-toggle="modal" data-target="#user-modal" @else href="{{ route('login') }}" @endif class="btn btn-primary btn-round text-white">
-                                {{ __('ads.contact_announcer') }}
-                            </a>    
-                        </div>
-                        <div class="row col-md-8"> 
-                            <div class="col-md-4 ad-sharing-tool">
-                                <a href="javascript:void();" id="print-ad" class="ad-sharing-tool-link"><i class="fas fa-print"></i> {{ __('ads.print') }}</a>
-                            </div>  
-                            <div class="col-md-4 ad-sharing-tool">
-                                @if($classified_ad->is_wishlisted)
-                                <a href="javascript:void()" class="ad-sharing-tool-link"><i class="fab fa-gratipay"></i> {{ __('ads.added_to_favorites') }}</a>
-                                @else 
-                                <a href="javascript:void()" id="add-to-wishlist" class="ad-sharing-tool-link" onclick="addToFavoutires({{$classified_ad->id}})"><i class="fab fa-gratipay"></i> {{ __('ads.add_to_favorites') }}</a>
-                                @endif
-                            </div>  
-                            <div class="col-md-4 ad-sharing-tool">
-                                <a href="https://www.facebook.com/sharer/sharer.php?u={{Request::url()}}" class="ad-sharing-tool-link"><i class="fas fa-share-alt"></i> {{ __('ads.send_friend') }}</a>
-                            </div>  
-                        </div>
-                    </div>
-                </div>
-                
+                <h6>{{$classified_ad->title}}</h6>
+                <h6 class="ads-item-price">${{$classified_ad->price}}/ night</h6>
+                <h6>{{$classified_ad->location?? ''}}</h6>
+            </a>
+            @endforeach
+            </div>
         </div>
     </div>
-
-    
 </section>
 
 @push('js')

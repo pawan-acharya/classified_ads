@@ -1,5 +1,5 @@
 body {
-  color: #2ABC57;
+  color: #1A1B16;
 }
 a:hover {
   text-decoration: none;
@@ -31,7 +31,8 @@ input[type=number] {
   font-size: 40px;
   font-style: italic;
   margin: 24px 0;
-  color: #2ABC57;
+  color: #1A1B16;
+  text-align: center;
 }
 .section-header {
   padding: 50px 0 30px 0;
@@ -106,16 +107,15 @@ form label.col-form-label {
   padding: 0px;
   font-size: 12px;
   font-weight: 700;
-  color: white;
+  color: #000000;
 }
 form label.checkbox-inline {
   font-size: 10px;
-  color: white;
+  color: #000000;
 }
 form .form-wrapper {
   padding: 30px 30px;
   border-radius: 10px;
-  background: linear-gradient(45deg, #49b082 40%, rgba(73, 176, 130, 0.8) 60%, rgba(21, 25, 50, 0.8) 75%, #151932);
 }
 form .form-wrapper .form-group input::-webkit-input-placeholder, form .form-wrapper .form-group textarea::-webkit-input-placeholder {
   color: #1A1919;
@@ -340,7 +340,7 @@ div.carousel-item .btn-round:hover {
   right: 30%;
 }
 #blog-articles .heading-text span {
-  border-color: #2ABC57;
+  border-color: #1A1B16;
 }
 #blog-articles .initial-line {
   border-color: #0c0652;
@@ -349,14 +349,14 @@ div.carousel-item .btn-round:hover {
   max-width: 100%;
 }
 #blog-articles .blog-list-wrapper div a h6 {
-  color: #2ABC57;
+  color: #1A1B16;
   font-weight: 700;
 }
 #blog-articles .blog-list-wrapper div p {
   font-size: 13px;
 }
 #blog-articles .blog-list-wrapper div p a {
-  color: #3E79CB;
+  color: #1A1B16;
 }
 #blog-articles .blog-list img {
   border-radius: 15px;
@@ -399,14 +399,9 @@ div.carousel-item .btn-round:hover {
   border: 2px solid;
 }
 section .main-search {
-  background: linear-gradient(to right, #43b280 40%, #0c0652);
   margin-top: 16px 0;
   padding: 24px 30px 48px;
   border-radius: 10px;
-}
-section#my-account {
-  background: linear-gradient(to right, #ffffff 30%, transparent 80%), linear-gradient(to bottom, transparent 50%, #ffffff 80%), url(/images/car-blur.jpg?3f5d75237deda7982deabfb9b81eeef0) no-repeat center center;
-  background-size: cover;
 }
 section#my-account .ad-container > .card-body {
   background-color: #b8e5da;
@@ -456,16 +451,19 @@ section .card-header.filter-header {
   width: 85%;
 }
 section .card-header a {
-  color: #2ABC57;
+  color: #1A1B16;
 }
 section .ad {
-  margin: 30px -30px 30px 0px;
+  margin: 15px 0 0 0;
 }
 section .ad .ad-image-wrapper {
   padding: 0;
 }
 section .ad .ad-desc-wrapper {
-  padding-right: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: column;
 }
 section .ad .card-header {
   padding: 0px;
@@ -564,7 +562,6 @@ section#search-page {
 }
 .search-sidebar > .card {
   padding: 15px;
-  background: linear-gradient(to right, #43b280 40%, #0c0652);
   border-radius: 10px;
 }
 .search-sidebar .card-body {
@@ -586,24 +583,29 @@ section#search-page {
   border-radius: 10px;
   padding: 25px 10px;
 }
-ul.pagination .page-item .page-link {
-  padding: 2px 8px;
-  font-size: 12px;
-  background-color: transparent;
-  border: none;
+ul.pagination {
+  margin-top: 10px;
 }
-ul.pagination .page-item.active .page-link {
-  background-color: #3E79CB;
-  border: #3E79CB;
+ul.pagination .page-item {
+  padding: 0 2.5px;
+}
+ul.pagination .page-item .page-link {
+  padding: 6px 13px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #fff;
   border-radius: 50%;
 }
+ul.pagination .page-item.active .page-link {
+  background-color: #2ABC57;
+  border: #3E79CB;
+}
 .search-body-head {
-  background: #b8e5da;
   margin: 0 15px;
-  border-radius: 10px;
+  background-color: white;
 }
 .search-body-head label.col-form-label {
-  color: #2ABC57;
+  color: #1A1B16;
 }
 #single-ad-page .return-button {
   width: 120px;
@@ -645,7 +647,6 @@ ul.pagination .page-item.active .page-link {
   border-radius: 10px;
 }
 #single-ad-page .ad-single .single-ad-description {
-  background: linear-gradient(to right, #43b280 40%, #0c0652);
   border-radius: 10px;
   margin: 20px 0;
   padding: 20px 0;
@@ -727,7 +728,7 @@ ul.pagination .page-item.active .page-link {
   position: relative;
   overflow: hidden;
   padding: 75% 0 0 0;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 .aspect-ratio-box img {
   display: block;
@@ -739,11 +740,7 @@ ul.pagination .page-item.active .page-link {
   left: 0;
   right: 0;
 }
-.ad-image-wrapper .aspect-ratio-box {
-  padding: 65% 0 0 0;
-}
 .single-ad-tools {
-  background: linear-gradient(to right, #43b280, #0c0652);
   border-radius: 10px;
   padding: 20px;
 }
@@ -834,7 +831,7 @@ span.select2-selection.select2-selection--single {
   padding: 3px 13px;
 }
 .select2-container--default .select2-selection--single .select2-selection__arrow {
-  color: #2ABC57;
+  color: #1A1B16;
   font-size: 30px;
   padding: 0px 25px;
   height: 27px;
@@ -881,7 +878,7 @@ span.select2.select2-container.select2-container--default {
   font-size: 13px;
 }
 .search-sidebar .select2-container--default .select2-selection--single .select2-selection__arrow {
-  color: #2ABC57;
+  color: #1A1B16;
   font-size: 27px;
   top: -3px;
 }
@@ -894,7 +891,7 @@ span.select2.select2-container.select2-container--default {
   font-size: 10px;
 }
 .search-body-head .select2-container--default .select2-selection--single .select2-selection__arrow {
-  color: #2ABC57;
+  color: #1A1B16;
   font-size: 21px;
   top: -3px;
 }
@@ -903,102 +900,8 @@ span.select2.select2-container.select2-container--default {
   height: 25px;
 }
 /* End Select2 custom styling */
-/* FAQ Page Styling  */
-#faq-intro {
-  background: linear-gradient(to top, #ffffff 50%, rgba(255, 255, 255, 0)), url(/images/auto-automobile.jpg?5f03cd4d409ab98203aec6fdad84db5e) center center no-repeat;
-  background-size: cover;
-}
-#faq-intro .faq-question {
-  position: relative;
-}
-#faq-intro .faq-question img {
-  position: absolute;
-  right: 15px;
-  top: 40%;
-}
-#faq-intro .faq-question p {
-  padding: 10px 15px;
-  border: 1px solid;
-  border-radius: 5px;
-  font-size: 13px;
-  font-weight: 600;
-  color: #000;
-}
-#faq-intro .faq-response-wrapper {
-  background-color: #D4EADE;
-  font-size: 12px;
-  border-radius: 4px;
-  font-weight: 600;
-  padding: 30px;
-  color: #000;
-}
-#faq-intro .faq-response-wrapper h6 {
-  font-size: 13px;
-  font-weight: 700;
-}
-@media (min-width: 768px) {
-  #faq-intro {
-    padding: 300px 0 60px 0;
-  }
-}
-/* End FAQ Page Styling  */
-/* Articles Page Stylling  */
-#articles-intro {
-  background: linear-gradient(to top, #ffffff 50%, rgba(255, 255, 255, 0)), url(/images/iphone-notebook.jpg?9e5f3f6b0570581176995547ed1664f6) no-repeat center center;
-  background-size: cover;
-  font-size: 12px;
-  font-weight: 500;
-}
-#articles-intro .article-image img {
-  box-shadow: 15px 15px #e3e3e5;
-  border-radius: 10px;
-}
-#articles-intro .image-text-wrapper {
-  background: linear-gradient(to right, #43b280 40%, #0c0652);
-  border-radius: 10px;
-  color: #fff;
-}
-#articles-intro .image-text-wrapper .image-wrapper-auto {
-  position: absolute;
-  right: 0;
-  margin-right: 15px;
-}
-@media (min-width: 992px) {
-  #articles-intro .image-text-wrapper .image-wrapper-auto {
-    margin-top: -30px;
-  }
-}
-@media (max-width: 992px) and (min-width: 768px) {
-  #articles-intro .image-text-wrapper .image-wrapper-auto {
-    margin-top: 20px;
-  }
-}
-@media (max-width: 768px) {
-  #articles-intro .image-text-wrapper .image-wrapper-auto {
-    padding-bottom: 20px;
-    position: relative;
-  }
-}
-#articles-intro .image-text-wrapper .image-wrapper-auto img {
-  border: 2px solid;
-  border-radius: 10px;
-}
-#articles-intro .btn-round {
-  padding: 5px 20px;
-  font-size: 11px;
-}
-@media (min-width: 768px) {
-  #articles-intro {
-    padding: 300px 0 60px 0;
-  }
-}
 /* Contact Page Styling */
-#contact-intro {
-  background: linear-gradient(to top, #ffffff 50%, rgba(255, 255, 255, 0)), url(/images/man-using-phone.jpg?1bec4150c33cfd869645f7c62f2e5bbb) no-repeat bottom center;
-  background-size: cover;
-}
 #contact-intro .container {
-  background: linear-gradient(210deg, rgba(12, 6, 82, 0.8) 10%, rgba(12, 6, 82, 0.7) 15%, rgba(12, 6, 82, 0) 80%), linear-gradient(210deg, rgba(0, 212, 136, 0.8) 20%, rgba(0, 212, 136)), url(/images/car.png?b3daab557e0183e0037decf68d2c6f51) no-repeat 110%/47%;
   border-radius: 10px;
 }
 #contact-intro .contact-page-logo img {
@@ -1070,7 +973,6 @@ span.select2.select2-container.select2-container--default {
 /* End Contact Page Styling */
 /* Plan Selection Styling */
 #plan-intro {
-  background: linear-gradient(to top, #ffffff 20%, rgba(255, 255, 255, 0.8) 60%, rgba(255, 255, 255, 0)), url(/images/car-blur.jpg?3f5d75237deda7982deabfb9b81eeef0) no-repeat center center;
   background-size: cover;
 }
 #plan-intro .plan-item {
@@ -1122,7 +1024,6 @@ span.select2.select2-container.select2-container--default {
   background-color: #43b280;
 }
 #plan-intro .plan-item.featured {
-  background: linear-gradient(45deg, #49b082 50%, #151932 75%, #151932);
   border-radius: 10px;
   color: #fff;
 }
@@ -1135,7 +1036,7 @@ span.select2.select2-container.select2-container--default {
   background-color: #fff;
 }
 #plan-intro .plan-item.featured .exceptional-box h2 {
-  color: #2ABC57;
+  color: #1A1B16;
   font-size: 42px;
 }
 #plan-intro .plan-item.featured .exceptional-box .featured {
@@ -1147,7 +1048,7 @@ span.select2.select2-container.select2-container--default {
 }
 #plan-intro .plan-item.featured .btn-round:hover {
   background-color: #fff;
-  color: #2ABC57;
+  color: #1A1B16;
 }
 @media (min-width: 768px) {
   #plan-intro {
@@ -1384,13 +1285,17 @@ span.select2.select2-container.select2-container--default {
   text-transform: uppercase;
   opacity: 0.35;
 }
+.search-sec {
+  width: 100%;
+}
 .search-sec form {
   background: #E3E3E3;
   padding: 10px;
   border-radius: 30px;
 }
 .search-sec form .select2-container--default .select2-selection--single {
-  background-color: none !important;
+  background-color: transparent !important;
+  border: none !important;
 }
 .search-sec form .form-control {
   background: none;
@@ -1402,6 +1307,9 @@ span.select2.select2-container.select2-container--default {
   color: #fff;
   padding: 5px 10px;
 }
+.search-sec form .search-slt {
+  border-right: 1px solid #2ABC57;
+}
 #navbarResponsive .nav-item:last-child {
   background: #3E79CB;
   border-radius: 20px;
@@ -1412,4 +1320,213 @@ span.select2.select2-container.select2-container--default {
 }
 .header-divs > div {
   margin: auto;
+}
+.price-list {
+  list-style: none;
+  padding-left: 0px;
+}
+.header {
+  box-shadow: 0px 0px 5px 0px #ccc;
+  border-bottom: 1px solid #ccc;
+}
+.listing-ad-wrapper {
+  background: white;
+  border-radius: 10px;
+}
+.listing-ad-wrapper .price-list {
+  margin-bottom: 0px;
+}
+.listing-ad-wrapper .listing-ad-title {
+  color: #000;
+}
+.listing-ad-wrapper .pricings {
+  margin-top: auto;
+}
+.listing-ad-wrapper .aspect-ratio-box {
+  border-radius: 15px 0 0 15px;
+}
+.listing-ad-wrapper .aspect-ratio-box img {
+  border: none !important;
+  border-radius: 10px 0 0 10px !important;
+}
+.ad-description-wrapper {
+  background: #fff;
+  border-radius: 20px;
+  padding: 15px 0 15px 15px;
+}
+.ad-description-wrapper .ad-description-text {
+  max-height: 400px;
+  overflow: scroll;
+  padding-right: 20px;
+  text-align: justify;
+}
+.details.features > ul {
+  padding: 10px;
+  border: 1px solid;
+  border-radius: 10px;
+}
+.contact-div {
+  background: #fff;
+  padding: 10px;
+  border-radius: 10px;
+}
+.contact-div .btn-message {
+  background-color: #277C41;
+  border-radius: 10px;
+  width: 100%;
+}
+.contact-div textarea#message-host {
+  width: 100%;
+}
+.owl-nav {
+  position: absolute;
+  top: -50px;
+  right: 0px;
+}
+.owl-nav button:last-child {
+  margin-left: 10px;
+}
+.owl-nav button i {
+  padding: 10px;
+  background: #fff;
+  border-radius: 50%;
+  color: #2ABC57;
+}
+.single-page-featured .owl-carousel .owl-item {
+  background: white;
+}
+.single-page-featured .owl-carousel .owl-item .aspect-ratio-box {
+  border-radius: 15px 15px 0 0;
+}
+/* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: black;
+}
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  width: 90%;
+  max-width: 1200px;
+}
+/* The Close Button */
+.close {
+  color: white;
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  font-size: 35px;
+  font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color: #999;
+  text-decoration: none;
+  cursor: pointer;
+}
+.mySlides {
+  display: none;
+}
+.cursor {
+  cursor: pointer;
+}
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
+  -webkit-user-select: none;
+}
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+img {
+  margin-bottom: -4px;
+}
+.caption-container {
+  text-align: center;
+  background-color: black;
+  padding: 2px 16px;
+  color: white;
+}
+.demo {
+  opacity: 0.6;
+}
+.active,
+.demo:hover {
+  opacity: 1;
+}
+img.hover-shadow {
+  transition: 0.3s;
+}
+.hover-shadow:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.gallery > div {
+  padding: 0px;
+}
+.gallery > div.featured-image {
+  padding: 5px 10px 0px 10px !important;
+}
+.gallery .thumbnails .thumbnail {
+  width: 50%;
+  float: left;
+  padding: 0 8px 2px 0;
+}
+.show-all-gallery {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 600;
+  right: 20px;
+  bottom: 0px;
+  cursor: pointer;
+}
+.detail-head {
+  font-weight: 700;
+  font-size: 35px;
+  color: #1A1B16;
+}
+.modal {
+  z-index: 99999;
 }
