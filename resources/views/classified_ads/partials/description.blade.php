@@ -13,8 +13,8 @@
             <a href="javascript:void()" id="add-to-wishlist" class="ad-sharing-tool-link" onclick="addToFavoutires({{$classified_ad->id}})"><i class="fab fa-gratipay"></i> {{ __('ads.add_to_favorites') }}</a>
             @endif
         </div>  
-        <div class="ad-sharing-tool">
-            <a href="https://www.facebook.com/sharer/sharer.php?u={{Request::url()}}" class="ad-sharing-tool-link"><i class="fas fa-share-alt"></i> {{ __('ads.send_friend') }}</a>
+        <div class="ad-sharing-tool ml-auto">
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{Request::url()}}" class="ad-sharing-tool-link"><i class="fas fa-share-square"></i> {{ __('ads.send_friend') }}</a>
         </div>
     </div>
     

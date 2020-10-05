@@ -21,11 +21,14 @@
                         <p class="phonenumber">{{$classified_ad->user->home_phone}}</p>
                         <a class="revealphone">Reveal Host Contact</a>
                     </div>
-                    <form>
-                        <textarea id="message-host" name="message-host" rows="4">Your Message to the Host.</textarea>
+                    <form action="{{route('feedbacks.create',['classified_ad'=> $classified_ad->id])}}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <textarea id="message-host" name="message" rows="4">Your Message to the Host.</textarea>
+                        </div>
                         <button type="submit" class="btn btn-primary btn-message">
                             <i class="fas fa-comment-alt"></i>{{ __('ads.contact_announcer') }}
-                        </button>   
+                        </button> 
                     </form>
                 </div>
                 <img src="{{ asset('images/sidebar-ad.png') }}" width="100%" class="mt-2"/>

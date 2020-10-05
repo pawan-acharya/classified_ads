@@ -42,7 +42,7 @@
                         @endif
                     @else
                         <li class="nav-item">
-                            <a class="dropdown-item" href="{{ route('home') }}"><i class="fas fa-comment-alt"></i></a>
+                            <a class="dropdown-item" href="{{ route('chatrooms.index') }}"><i class="fas fa-comment-alt"></i></a>
                         </li>
                         <li class="nav-item">
                             <a class="dropdown-item" href="{{ route('wishlists') }}"><i class="fas fa-heart"></i></a>
@@ -98,8 +98,8 @@
                         <span class="nav-text">{{ __('welcome.services') }}</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/ads/create') }}">
+                    <li class="nav-item btn-main">
+                        <a class="nav-link" href="{{ url('/classified_ads/create') }}">
                         <span class="nav-text">Post an Ad <i class="fas fa-chevron-right"></i></span>
                         </a>
                     </li>

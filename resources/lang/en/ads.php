@@ -165,7 +165,7 @@ return [
     'print' => 'Print',
     'add_to_favorites' => 'Add to favorites',
     'remove_from_favorites' => 'Remove from favorites',
-    'send_friend' => 'Send to a friend',
+    'send_friend' => 'Share',
     'added_to_favorites' => 'Added to favorites',
     'edit' => 'Edit',
     'wishlist' => 'My wishlist',

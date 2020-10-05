@@ -163,7 +163,7 @@ return [
     'contact_announcer' => 'Message',
     'print' => 'Faire imprimer',
     'add_to_favorites' => 'Ajouter aux favoris',
-    'send_friend' => 'Envoyer à un ami',
+    'send_friend' => 'Partager',
     'added_to_favorites' => 'Ajouté aux favoris',
     'remove_from_favorites' => 'Retirer des favoris',
     'edit' => 'Modifier',
