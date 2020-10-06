@@ -18,16 +18,17 @@
                 <div class="contact-div">
                     <h2>{{$classified_ad->user->first_name}}{{$classified_ad->user->name}}</h2>
                     <div class="reveal-number">
+                        <span>Phone Number</span>
                         <p class="phonenumber">{{$classified_ad->user->home_phone}}</p>
                         <a class="revealphone">Reveal Host Contact</a>
                     </div>
                     <form action="{{route('feedbacks.create',['classified_ad'=> $classified_ad->id])}}" method="POST">
                         @csrf
                         <div class="form-group">
-                            <textarea id="message-host" name="message" rows="4">Your Message to the Host.</textarea>
+                            <textarea id="message-host" name="message" rows="4">Your Message to the Host...</textarea>
                         </div>
                         <button type="submit" class="btn btn-primary btn-message">
-                            <i class="fas fa-comment-alt"></i>{{ __('ads.contact_announcer') }}
+                            <i class="fas fa-comment-alt"></i><span>{{ __('ads.contact_announcer') }}</span>
                         </button> 
                     </form>
                 </div>

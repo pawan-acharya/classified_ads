@@ -352,7 +352,6 @@ section .card-header a {
 }
 section .ad {
   margin: 15px 0 0 0;
-  background-color: #F2F2F2;
   padding: 7px 5px 2px 5px;
 }
 section .ad .ad-image-wrapper {
@@ -360,6 +359,7 @@ section .ad .ad-image-wrapper {
 }
 section .ad .ad-desc-wrapper {
   padding-bottom: 10px;
+  padding-top: 10px;
   display: flex;
   flex-direction: column;
 }
@@ -504,106 +504,6 @@ ul.pagination .page-item.active .page-link {
 .search-body-head label.col-form-label {
   color: #1A1B16;
 }
-#single-ad-page .return-button {
-  width: 120px;
-  position: absolute;
-  top: 35px;
-  left: 30px;
-  display: flex;
-  line-height: 15px;
-  font-size: 12px;
-  font-weight: 700;
-  text-decoration: none;
-}
-#single-ad-page .return-button i {
-  background-color: #43b280;
-  border: 2px solid #0c0652;
-  color: #fff;
-  border-radius: 50%;
-  font-size: 32px;
-  line-height: 26px;
-  padding: 0 5px 0px 4px;
-  margin-right: 8px;
-  -webkit-text-stroke: 3px #43b280;
-}
-#single-ad-page .info-block {
-  background: #fff;
-  padding: 0px 20px;
-  font-size: 12px;
-}
-#single-ad-page .info-block span {
-  font-weight: 600;
-  min-width: 170px;
-  display: inline-block;
-}
-#single-ad-page .ad-single .thumbnail {
-  margin-top: 5px;
-}
-#single-ad-page .ad-single img {
-  border: 2px solid;
-  border-radius: 10px;
-}
-#single-ad-page .ad-single .single-ad-description {
-  border-radius: 10px;
-  margin: 20px 0;
-  padding: 20px 0;
-}
-#single-ad-page .ad-single .single-ad-description img {
-  padding: 30px 0 0 0;
-  border: none;
-  max-width: 100%;
-}
-#single-ad-page .ad-single .single-ad-description .card {
-  padding: 15px 0;
-}
-#single-ad-page .ad-single .single-ad-description .card-body {
-  border-left: 2px solid #fff;
-  font-size: 16px;
-}
-#single-ad-page .ad-single .single-ad-description .card-body .col-md-7 {
-  font-weight: 600;
-}
-#single-ad-page .ad-single .single-ad-description .card-body span.price {
-  font-size: 16px;
-}
-@media (max-width: 768px) {
-  #single-ad-page .ad-single .single-ad-description .card-body {
-    border-left: none;
-  }
-}
-#single-ad-page .ad-description-title {
-  font-weight: 800;
-}
-#single-ad-page .ad-description-text {
-  font-size: 12px;
-}
-#single-ad-page .detail-wrapper {
-  border-radius: 5px;
-  padding: 30px 15px;
-}
-#single-ad-page .detail-wrapper .details {
-  padding: 0 15px;
-  border-radius: 5px;
-}
-#single-ad-page .detail-wrapper .details h5 {
-  font-weight: 800;
-}
-#single-ad-page .detail-wrapper .details .detail-item p {
-  display: inline-block;
-  font-size: 13px;
-  line-height: 24px;
-}
-#single-ad-page .detail-wrapper .details .property-list {
-  padding-left: 15px !important;
-}
-#single-ad-page .detail-wrapper .details .property-list li,
-#single-ad-page .detail-wrapper .details .property-list strong {
-  font-size: 13px;
-}
-#single-ad-page .detail-wrapper .details hr.solid {
-  border-top: 3px solid #fff;
-  width: 95%;
-}
 #single-ad-page ul {
   list-style: none;
 }
@@ -646,6 +546,8 @@ ul.pagination .page-item.active .page-link {
 }
 .single-ad-tools .ad-sharing-tool {
   color: #fff;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 .single-ad-tools .ad-sharing-tool .ad-sharing-tool-link {
   font-size: 14px;
@@ -1222,8 +1124,13 @@ span.select2.select2-container.select2-container--default {
 .listing-ad-wrapper .price-list {
   margin-bottom: 0px;
 }
+.listing-ad-wrapper .price-list .price-list-item h5 {
+  color: #F3626B;
+  font-size: 25px !important;
+}
 .listing-ad-wrapper .listing-ad-title {
   color: #000;
+  font-size: 28px;
 }
 .listing-ad-wrapper .pricings {
   margin-top: auto;
@@ -1238,13 +1145,23 @@ span.select2.select2-container.select2-container--default {
 .ad-description-wrapper {
   background: #fff;
   border-radius: 20px;
-  padding: 15px 0 15px 15px;
 }
 .ad-description-wrapper .ad-description-text {
   max-height: 400px;
   overflow: scroll;
   padding-right: 20px;
   text-align: justify;
+  font-size: 14px;
+  line-height: 18px;
+  color: #656662 !important;
+}
+.ad-description-wrapper .ad-description-text .ad-listed-date {
+  font-size: 14px !important;
+  color: #656662 !important;
+}
+.ad-description-wrapper .ad-description-text .ad-listed-location {
+  font-size: 14px !important;
+  color: #000000 !important;
 }
 .details.features > ul {
   padding: 10px;
@@ -1256,13 +1173,24 @@ span.select2.select2-container.select2-container--default {
   padding: 10px;
   border-radius: 10px;
 }
+.contact-div h2 {
+  margin-bottom: 15px;
+}
 .contact-div .btn-message {
   background-color: #277C41;
   border-radius: 10px;
   width: 100%;
 }
+.contact-div .btn-message .fas.fa-comment-alt {
+  padding-right: 5px;
+}
 .contact-div textarea#message-host {
   width: 100%;
+  background: #F5F5F5;
+  border: none;
+  color: #8597B2;
+  padding-left: 7px;
+  border-radius: 6px;
 }
 .owl-nav {
   position: absolute;
@@ -1411,6 +1339,7 @@ img.hover-shadow {
 .detail-head {
   color: #1A1B16;
   font: normal normal bold 35px/46px Bilo;
+  padding-right: 15px ;
 }
 .modal {
   z-index: 99999;
@@ -1504,6 +1433,7 @@ img.hover-shadow {
 .message.message-sent span {
   background: #EBEBEB;
   border-radius: 16px 16px 2px 16px;
+  float: right;
 }
 .message.message-received span {
   border: 1px solid #EBEBEB;
@@ -1520,6 +1450,9 @@ img.hover-shadow {
 }
 #main_col table tr {
   margin-bottom: 5px;
+}
+#main_col table tr td {
+  width: 50% !important;
 }
 form#feed_back_form {
   position: relative;
@@ -1538,4 +1471,30 @@ form#feed_back_form button {
   color: #3E79CB;
   background: transparent;
   border: none;
+}
+.ad-sharing-tool {
+  color: #4B8AF5;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.reveal-number {
+  position: relative;
+  border: 2px solid #E6EAEF;
+  margin-bottom: 7.5px;
+}
+.reveal-number span {
+  position: absolute;
+  margin-top: -15px;
+  margin-left: 5px;
+  background: #fff;
+}
+.reveal-number .phonenumber {
+  margin-top: 10px;
+  margin-left: 5px;
+}
+.reveal-number .revealphone {
+  position: absolute;
+  top: 10px;
+  right: 8px;
+  color: #F3626B;
 }

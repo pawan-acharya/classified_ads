@@ -8,9 +8,9 @@
         <h1 class="detail-head">{{$classified_ad->title}}</h1>
         <div class="ad-sharing-tool">
             @if($classified_ad->is_wishlisted)
-            <a href="javascript:void()" class="ad-sharing-tool-link"><i class="fab fa-gratipay"></i> {{ __('ads.added_to_favorites') }}</a>
+            <a href="javascript:void()" class="ad-sharing-tool-link"><i class="far fa-heart"></i>{{ __('ads.added_to_favorites') }}</a>
             @else 
-            <a href="javascript:void()" id="add-to-wishlist" class="ad-sharing-tool-link" onclick="addToFavoutires({{$classified_ad->id}})"><i class="fab fa-gratipay"></i> {{ __('ads.add_to_favorites') }}</a>
+            <a href="javascript:void()" id="add-to-wishlist" class="ad-sharing-tool-link" onclick="addToFavoutires({{$classified_ad->id}})"><i class="far fa-heart"></i>{{ __('ads.add_to_favorites') }}</a>
             @endif
         </div>  
         <div class="ad-sharing-tool ml-auto">

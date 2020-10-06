@@ -331,9 +331,7 @@ section {
                     }
                 }
             }
-        }        
-        .ad {}
-        
+        }                
     }
     .info-block {
         padding: 20px 30px;
@@ -362,13 +360,13 @@ section {
     }
     .ad {
         margin: 15px 0 0 0;
-        background-color: #F2F2F2;
         padding: 7px 5px 2px 5px;
         & .ad-image-wrapper {
             padding: 0;
         }
         & .ad-desc-wrapper{
             padding-bottom: 10px;
+            padding-top: 10px;
             display: flex;
             flex-direction: column;
         }
@@ -532,108 +530,7 @@ ul.pagination{
 }
 
 #single-ad-page {
-    .return-button 
-    {
-        width: 120px;
-        position: absolute;
-        top: 35px;
-        left: 30px;
-        display: flex;
-        line-height: 15px;
-        font-size: 12px;
-        font-weight: 700;
-        text-decoration: none;
-        i{
-            background-color: #43b280;
-            border: 2px solid #0c0652;
-            color:#fff;
-            border-radius: 50%;
-            font-size: 32px;
-            line-height: 26px;
-            padding: 0 5px 0px 4px;
-            margin-right: 8px;
-            -webkit-text-stroke: 3px #43b280;
-        }
-    }
-    .info-block {
-        background: #fff;
-        padding: 0px 20px;
-        font-size:12px;
-        span {
-            font-weight: 600;
-            min-width: 170px;
-            display: inline-block;
-        } 
-    }
-    .ad-single{
-        .thumbnail{
-            margin-top:5px;
-        }
-        img{
-            border:2px solid;
-            border-radius: 10px;
-        }
-        .single-ad-description{
-            border-radius: 10px;
-            margin:20px 0;
-            padding:20px 0;
-            img{
-                padding:30px 0 0 0;
-                border: none;
-                max-width: 100%;
-            }
-            .card {
-                padding: 15px 0;
-            }
-            .card-body {
-                border-left: 2px solid #fff;
-                font-size: 16px;
-                .col-md-7{
-                    font-weight: 600;
-                }
-                span.price{
-                    font-size: 16px;
-                }
-                @media (max-width:768px) {
-                    border-left: none;
-                }
-            }
-        }
-    }
-    .ad-description-title {
-        font-weight: 800;
-    }
-    .ad-description-text {
-        font-size: 12px;
-    }
-    .detail-wrapper {
-        border-radius: 5px;
-        padding: 30px 15px;
-        .details {
-            padding: 0 15px;
-            border-radius: 5px;
-            h5{
-                font-weight: 800;
-            }
-            .detail-item{
-                p{
-                    display: inline-block;
-                    font-size: 13px;
-                    line-height: 24px;
-                }
-            }
-            .property-list {
-                padding-left: 15px !important;
-                li, strong {
-                    font-size: 13px;
-                }
-            }
-            hr.solid {
-                border-top: 3px solid #fff;
-                width: 95%;
-            }
-        }
-    }
+    
     ul {
         list-style: none;
     }
@@ -681,6 +578,8 @@ ul.pagination{
     }
     .ad-sharing-tool {
         color: #fff;
+        margin-top: auto;
+        margin-bottom: auto;
         .ad-sharing-tool-link {
             font-size: 14px;
             color: #fff;
@@ -1277,9 +1176,14 @@ span.select2.select2-container.select2-container--default {
     border-radius: 10px;
     .price-list{
         margin-bottom: 0px;
+        .price-list-item h5{
+            color: #F3626B;
+            font-size: 25px !important;
+        }
     }
     .listing-ad-title {
         color: #000;
+        font-size: 28px;
     }
     .pricings {
         margin-top: auto;
@@ -1296,12 +1200,22 @@ span.select2.select2-container.select2-container--default {
 .ad-description-wrapper {
     background: #fff;
     border-radius: 20px;
-    padding: 15px 0 15px 15px;
     .ad-description-text {
         max-height: 400px;
         overflow: scroll;
         padding-right: 20px;
         text-align: justify;
+        font-size: 14px;
+        line-height: 18px;
+        color: #656662 !important;
+        .ad-listed-date {
+            font-size: 14px !important;
+            color: #656662 !important;
+        }
+        .ad-listed-location {
+            font-size: 14px !important;
+            color: #000000 !important;
+        }
     }
 }
 
@@ -1315,13 +1229,24 @@ span.select2.select2-container.select2-container--default {
     background: #fff;
     padding: 10px;
     border-radius: 10px;
+    h2 {
+        margin-bottom: 15px;
+    }
     .btn-message {
         background-color:#277C41;
         border-radius: 10px;
         width: 100%;
+        .fas.fa-comment-alt {
+            padding-right: 5px;
+        }
     }
     textarea#message-host {
         width: 100%;
+        background: #F5F5F5;
+        border: none;
+        color: #8597B2;
+        padding-left: 7px;
+        border-radius: 6px;
     }
 }
 
@@ -1496,6 +1421,7 @@ span.select2.select2-container.select2-container--default {
 .detail-head {
     color: #1A1B16;
     font: normal normal bold 35px/46px Bilo;
+    padding-right: 15px ;
 }
 
 .modal {
@@ -1600,6 +1526,7 @@ span.select2.select2-container.select2-container--default {
     &.message-sent span{
         background: #EBEBEB;
         border-radius: 16px 16px 2px 16px;
+        float: right;
     }
     &.message-received span {
         border: 1px solid #EBEBEB;
@@ -1617,6 +1544,9 @@ span.select2.select2-container.select2-container--default {
     border-radius: 10px;
     table tr {
         margin-bottom: 5px;
+        td {
+            width:50% !important;
+        }
     }
 }
 
@@ -1636,5 +1566,33 @@ form#feed_back_form {
         color: #3E79CB;
         background: transparent;
         border: none;
+    }
+}
+
+.ad-sharing-tool {
+    color: #4B8AF5;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.reveal-number {
+    position: relative;
+    border: 2px solid #E6EAEF;
+    margin-bottom: 7.5px;
+    span {
+        position: absolute;
+        margin-top: -15px;
+        margin-left: 5px;
+        background: #fff;
+    }
+    .phonenumber {
+        margin-top: 10px;
+        margin-left: 5px;
+    }
+    .revealphone {
+        position: absolute;
+        top:10px;
+        right: 8px;
+        color: #F3626B;
     }
 }

@@ -31,9 +31,9 @@
 					    	<tr>
 					    	@if ($feedback->user->id== Auth::id())
 					    		<td></td>
-					    		<td class="message message-sent" style="width: 100%;" data-feeback-id="{{$feedback->id}}"><span>{{$feedback->message}}</span></td>
+					    		<td class="message message-sent" data-feeback-id="{{$feedback->id}}"><span>{{$feedback->message}}</span></td>
 				    		@else
-				    			<td class="message message-received" style="width: 100%;" data-feeback-id="{{$feedback->id}}"><span>{{$feedback->message}}</span></td>
+				    			<td class="message message-received" data-feeback-id="{{$feedback->id}}"><span>{{$feedback->message}}</span></td>
 				    			<td></td>
 					    	@endif
 					    	</tr>
