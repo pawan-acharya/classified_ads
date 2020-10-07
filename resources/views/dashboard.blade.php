@@ -2,7 +2,7 @@
 
 @section('content')
 
-<section id="my-account" class="padding-top-300">
+<section id="my-account">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
@@ -11,11 +11,54 @@
                         {{ session('status') }}
                     </div>
                 @endif
-                <h1 class="section-head"> {{ __('auth.my_account') }} </h1>
+
+                <div class="mb-4 bg-white mt-4">
+                    <h5 class="row-head">{{ __('auth.my_information') }}<a type="submit" href="{{ route('home.edit') }}" class="edit-account">{{ __('auth.edit') }}</a></h5>
+                    <div class= "row info-block">
+                        <div class= "col-md-4">
+                            <div class= "row"> <div class= "col-md-12"><span>{{ __('auth.first_name') }}:</span> {{$user->partner?$user->partner->first_name:$user->first_name}} </div></div>
+                            <div class= "row"> <div class= "col-md-12"><span>{{ __('auth.name') }}:</span> {{$user->partner?$user->partner->name:$user->name}} </div></div>
+                            <div class= "row"> <div class= "col-md-12"><span>{{ __('auth.home_phone') }}:</span> {{$user->partner?$user->partner->home_phone:$user->home_phone}} </div></div>
+                            <div class= "row"> <div class= "col-md-12"><span>{{ __('auth.mobile_phone') }}:</span> {{$user->partner?$user->partner->mobile_phone:$user->mobile_phone}} </div></div>
+                        </div>
+                        <div class= "col-md-4">
+                            @php($province = $user->partner?$user->partner->province:$user->province)
+                            @php($province_langkey = 'auth.province_options.'.$province)
+                            <div class= "row"> <div class= "col-md-12"><span>{{ __('auth.province') }}:</span> {{ __($province_langkey)}} </div></div>
+                            <div class= "row"> <div class= "col-md-12"><span>{{ __('auth.postal_code') }}:</span> {{$user->partner?$user->partner->postal_code:$user->postal_code}}</div></div>
+                            @php($correspondence_language = $user->partner?$user->partner->correspondence_language:$user->correspondence_language)
+                            @php($correspondence_language_langkey = 'auth.'.$correspondence_language)
+                            <div class= "row"> <div class= "col-md-12"><span>{{ __('auth.correspondence_language') }}:</span> {{ __($correspondence_language_langkey) }}</div></div>
+                            <div class= "row"> <div class= "col-md-12"><span>{{ __('auth.email') }}:</span> {{$user->partner?$user->partner->email:$user->email}} </div></div>
+                        </div>
+                        <div class="col-md-4 text-right">
+                            @if (Auth::user()->checkIfAdmin())
+                                <a type="button" class="btn btn-secondary mb-2" data-dismiss="modal">Alreay a member</a>
+                            @else
+                                <a type="button" href="{{route('become_member')}}" class="btn btn-secondary mb-2" data-dismiss="modal">Become a member for a month</a>
+                            @endif
+                        
+                        
+                        
+                            @if (!Auth::user()->checkIfAdmin())
+                                @if (Auth::user()->getLeftAds() > 0)
+                                    <a type="button"  class="btn btn-secondary" data-dismiss="modal">
+                                        Remaining Ads :- {{Auth::user()->getLeftAds()}}
+                                    </a>
+                                @else
+                                <a type="button" href="{{route('bulk_pay')}}" class="btn btn-secondary" data-dismiss="modal">
+                                    Pay for Bulk Ads
+                                </a>
+                                @endif
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
                 @if($user->partner)
                     @if($user->partner->status=='approved')
-                    <div class="mb-4">
-                        <div class="row-head">{{ __('auth.my_partnership') }}<img src="{{ asset('images/icon/arrow-down.png') }}" alt="Arrow Down" /></div>
+                    <div class="mb-4 bg-white">
+                        <div class="row-head">{{ __('auth.refer_a_friend') }}</div>
                         <div class= "row info-block">
                             <div class="card col-md-6">
                                 <div class="card-body">
@@ -78,77 +121,10 @@
                     @endif
                 @endif
 
-                <div class="mb-4">
-                    <h5 class="row-head">{{ __('auth.my_information') }}<img src="{{ asset('images/icon/arrow-down.png') }}" alt="Arrow Down" /></h5>
-                    <div class= "row info-block">
-                        <div class= "col-md-6">
-                            <div class= "row"> <div class= "col-md-12"><span>{{ __('auth.first_name') }}:</span> {{$user->partner?$user->partner->first_name:$user->first_name}} </div></div>
-                            <div class= "row"> <div class= "col-md-12"><span>{{ __('auth.name') }}:</span> {{$user->partner?$user->partner->name:$user->name}} </div></div>
-                            <div class= "row"> <div class= "col-md-12"><span>{{ __('auth.home_phone') }}:</span> {{$user->partner?$user->partner->home_phone:$user->home_phone}} </div></div>
-                            <div class= "row"> <div class= "col-md-12"><span>{{ __('auth.mobile_phone') }}:</span> {{$user->partner?$user->partner->mobile_phone:$user->mobile_phone}} </div></div>
-                        </div>
-                        <div class= "col-md-6">
-                            @php($province = $user->partner?$user->partner->province:$user->province)
-                            @php($province_langkey = 'auth.province_options.'.$province)
-                            <div class= "row"> <div class= "col-md-12"><span>{{ __('auth.province') }}:</span> {{ __($province_langkey)}} </div></div>
-                            <div class= "row"> <div class= "col-md-12"><span>{{ __('auth.postal_code') }}:</span> {{$user->partner?$user->partner->postal_code:$user->postal_code}}</div></div>
-                            @php($correspondence_language = $user->partner?$user->partner->correspondence_language:$user->correspondence_language)
-                            @php($correspondence_language_langkey = 'auth.'.$correspondence_language)
-                            <div class= "row"> <div class= "col-md-12"><span>{{ __('auth.correspondence_language') }}:</span> {{ __($correspondence_language_langkey) }}</div></div>
-                            <div class= "row"> <div class= "col-md-12"><span>{{ __('auth.email') }}:</span> {{$user->partner?$user->partner->email:$user->email}} </div></div>
-                        </div>
-                    </div>
-                </div>
-
-
-                 <div class="mb-4">
-                    <h5 class="row-head">{{ __('auth.my_information') }}<img src="{{ asset('images/icon/arrow-down.png') }}" alt="Arrow Down" /></h5>
-                    <div class= "row info-block">
-                        <div class= "col-md-6">
-                            @if (Auth::user()->checkIfAdmin())
-                                <a type="button" class="btn btn-secondary" data-dismiss="modal">Alreay a member</a>
-                            @else
-                                <a type="button" href="{{route('become_member')}}" class="btn btn-secondary" data-dismiss="modal">Become a member for a month</a>
-                            @endif
-                        </div>
-                        
-                        <div class= "col-md-6">
-                            @if (!Auth::user()->checkIfAdmin())
-                                @if (Auth::user()->getLeftAds() > 0)
-                                    <a type="button"  class="btn btn-secondary" data-dismiss="modal">
-                                        Remaining Ads :- {{Auth::user()->getLeftAds()}}
-                                    </a>
-                                @else
-                                <a type="button" href="{{route('bulk_pay')}}" class="btn btn-secondary" data-dismiss="modal">
-                                    Pay for Bulk Ads
-                                </a>
-                                @endif
-                            @endif
-                        </div>
-                    </div>
-                </div>
-
                 <div class="ad-container">
-                    <div class="row-head">{{ __('auth.my_ads') }}<img src="{{ asset('images/icon/arrow-down.png') }}" alt="Arrow Down" /></div>
+                    <div class="row-head">{{ __('auth.my_ads') }}<a href="{{ route('classified_ads.create') }}" class= "btn btn-main"> {{ __('auth.create_ad') }}</a></div>
                     <div class="card-body">
                         <div class= "row">
-                            <div class= "col-md-6">
-                                <div class="card create-ad-card">
-                                    <div class="card-body">
-                                        <div class= "row">
-                                            <div class= "col-md-6 create-ad-image">
-                                                <a href="{{ route('ads.create') }}" class="img-shadow">
-                                                    <img src="{{ asset('images/aston-martin-dbc-concept-cars-wallpaper-preview.jpg') }}" width="100%"/>
-                                                    <i class="fa fa-plus"></i>
-                                                </a>
-                                            </div>
-                                            <a href="{{ route('ads.create') }}" class= "col-md-6 card-header"> 
-                                                {{ __('auth.create_ad') }}
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         @foreach ($ads as $index => $ad)
                             @include('ads.partials.ad',['parent' => 'edit'])
                         @endforeach
@@ -168,12 +144,6 @@
                     </div>
                 </div>
                 @endif
-                
-                <div class="text-center bg-theme-light py-4"> 
-                    <a type="submit" href="{{ route('home.edit') }}" class="btn btn-primary btn-bg-theme-dark btn-round">
-                        {{ __('auth.edit') }}
-                    </a>    
-                </div>
 
                 @if(!$user->partner) 
                     <div class="col-md-12">

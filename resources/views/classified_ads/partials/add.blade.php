@@ -104,23 +104,3 @@
 	        <br> </br>
 	@endforeach
 @endif
-
-@if ($category->form_items()->where('type', 'activity')->where('parent', null)->first())
-	@foreach ($category->form_items()->where('type', 'activity')->where('parent', null)->get() as $form_item)
-	        <div class="col-md-12">
-	            <h5>{{$form_item->name}} </h5>
-	            <div class="row">
-	                @foreach ($form_item->children as $child)
-	                    <div class="col-md-6">
-	                    	<img src="{{asset('storage')}}/{{$child->logo}}" style="height: 15px;">
-	                        <div class="custom-control custom-checkbox">
-	                            <input type="checkbox" class="custom-control-input" id="option_{{$child->name}}" value="{{$child->id}}"  name="{{$child->id}}-{{$child->name}}">
-	                            <label class="custom-control-label" for="option_{{$child->name}}">{{$child->name}}</label>
-	                        </div>
-	                    </div>
-	                @endforeach
-	            </div>
-	        </div>
-	        <br> </br>
-	@endforeach
-@endif

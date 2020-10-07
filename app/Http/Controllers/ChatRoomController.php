@@ -19,8 +19,12 @@ class ChatRoomController extends Controller
             ->get();
             return view('chatrooms.partials.chat_room_lists', compact('chat_rooms'));
         }
-
-		return view('chatrooms.index');
+        $chat_room_id= ChatRoom::where('advertiser', Auth::id())
+            ->orWhere('visitor', Auth::id())
+            ->orderByDesc('updated_at')
+            ->first()
+            ->id;
+        return redirect()->route('feedbacks.show', ['chat_room_id'=> $chat_room_id]);
 	}
 
     public function create($classified_ad){

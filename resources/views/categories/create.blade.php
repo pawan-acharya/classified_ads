@@ -179,28 +179,7 @@
 			    </div>
 	  	</div>` ;
 
-	  	var html_activity= `<div class="form-group row divRow">
-				<input type="hidden" name="ids[]" value="0">
-				<div class="form-group   col-sm-2">
-			    </div>
-			    	<div class="form-group   col-sm-3">
-				    <input type="text" class="form-control " placeholder="Enter name for the form" name="child_names[]" required>
-				    </div>
-				    <div class="form-group   col-sm-3">
-				    	<select  class="form-control types"  name="logos[]">`;
-				    	for (var key in js_logos) {
-						  html_activity+=`<option value= `+js_logos[key]+`> `+js_logos[key]+`</option>`;
-						}
-				    html_activity+=`</select>
-				    </div>
-				    <div class="form-group   col-sm-2">
-				   
-				    </div>
-				    <div class="form-group  col-sm-2">
-				    <button type="button" class="btn btn-success " onclick="addNewActivityBody($(this))">+</button>
-				    <button type="button" class="btn btn-danger" onclick="removeThisItem($(this))">X</button>
-				    </div>
-		  	</div>` ;
+
 
 
 		function addNewColumn(){
@@ -212,10 +191,6 @@
 		}
 		function addNewSelectBody(item){
 			item.closest('.divRow').parent().append(html_select) ;
-			item.remove();
-		}
-		function addNewActivityBody(item){
-			item.closest('.divRow').parent().append(html_activity) ;
 			item.remove();
 		}
 
@@ -234,9 +209,6 @@
 			}
 			else if(item.closest('.divRow').find('.types').first().val() =='secondary_price'){
 				item.closest('.divRow').append(html_secondary_price) ;
-			}
-			else if(item.closest('.divRow').find('.types').first().val() =='activity'){
-				item.closest('.divRow').append(html_activity) ;
 			}	
 		}
 
@@ -279,15 +251,6 @@
 							'type': 'None',
 							'name': $(value).find("input[name='child_names[]']").first().val(),
 							'mandatory': 'yes',
-						});
-				 	});
-				 	small_array['box_array']= tiny_array;
-				}else if($(value).find("select[name='types[]']").first().val()== 'activity'){
-					var tiny_array =new Array();
-			 		$.each( $(value).find('.divRow'), function( key, value ) {
-			 			tiny_array.push({
-							'name': $(value).find("input[name='child_names[]']").first().val(),
-							'logo': $(value).find("select[name='logos[]']").first().val(),
 						});
 				 	});
 				 	small_array['box_array']= tiny_array;

@@ -104,6 +104,8 @@ function addNumberValidation() {
     }
 }
 
+
+
 try {
     addValidation();
     addNumberValidation();
@@ -128,27 +130,24 @@ try {
         // End Select2 dropdown
         // End Select2 Code
 
-        // Line with the title
-        var width = $(window).width();
-        var initialLine = document.querySelectorAll('.initial-line');
-        var childOffset = $("footer .initial-line").offset();
-        var parentOffset = $("footer .heading-text").offset();
-        var lengthLine = parentOffset.left - childOffset.left;
-        initialLine.forEach(el => {
-            el.style.width = lengthLine + 'px';
+        var phonenumbers = [];
+        $(".phonenumber").each(function(i) {
+            phonenumbers.push($(this).text());
+            var newcontent = $(this).text().substr(0, $(this).text().length - 4)
+            $(this).text(newcontent);
+            $(".revealphone").bind("click", function() {
+                if ($(".phonenumber").text() == phonenumbers[i]) {
+                    $(".phonenumber").text(phonenumbers[i].substr(0, phonenumbers[i].length - 4));
+                } else {
+                $(".phonenumber").each(function(x) {
+                    if ($(".phonenumber").text() == phonenumbers[x]) {
+                        $(".phonenumber").text(phonenumbers[x].substr(0, phonenumbers[x].length - 4));
+                    }
+                });            
+                $(".phonenumber").text(phonenumbers[i]);
+                }
+            });
         });
-    
-        $(window).on('resize', function () {
-            if ($(this).width() !== width) {
-                var childOffset = $("footer .initial-line").offset();
-                var parentOffset = $("footer .heading-text").offset();
-                var lengthLine = parentOffset.left - childOffset.left;
-                initialLine.forEach(el => {
-                    el.style.width = lengthLine + 'px';
-                });
-            }
-        });
-        // Line with the title
     });
 
     /*
@@ -173,5 +172,23 @@ try {
             }
         }
     });
+
+    $('.owl-carousel').owlCarousel({
+        loop:true,
+        margin:10,
+        nav:true,
+        navText : ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"],
+        dots: false,
+        responsive:{
+            0:{
+                items:1.5
+            },
+            600:{
+                items:2.5
+            },
+            1000:{
+                items:3.5
+            }
+        }
+    });
 })(jQuery); // End of use strict
-    

@@ -38,7 +38,7 @@
                                 @endif
                             </div>  
                             <div class="col-md-4 ad-sharing-tool">
-                                <a href="https://www.facebook.com/sharer/sharer.php?u={{Request::url()}}" class="ad-sharing-tool-link"><i class="fas fa-share-alt"></i> {{ __('ads.send_friend') }}</a>
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{Request::url()}}" class="ad-sharing-tool-link"><i class="fas fa-share-square"></i> {{ __('ads.send_friend') }}</a>
                             </div>  
                         </div>
                     </div>

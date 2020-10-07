@@ -22,7 +22,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -132,6 +132,7 @@ class HomeController extends Controller
             ->whereNotNull('classified_ads.plan_id')
             ->join('plans', 'plans.id', '=', 'classified_ads.plan_id')
             ->whereDate('plans.ends_at','>=' ,date('Y-m-d'))
+            ->select('classified_ads.*')
             ->get();
 
         return view('welcome', compact('payment_options', 'categories', 'featured_ads'));

@@ -16,8 +16,7 @@
     {{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAXfPt8Ul2g0-2RU70lgvbIZW_5ZKSf4-I&callback=initMap" async  defer></script> --}}
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDR6v2elDctrDptLyvTjpTBEs6z7CLSfW8&libraries=places"></script>
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.typekit.net/wcl0int.css">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">

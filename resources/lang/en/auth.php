@@ -31,7 +31,7 @@ return [
     'password_confirm' => 'Enter your password again',
     'security_question' => 'Security question',
     'security_answer' => 'Your answer',
-    'heard_about' => 'How did you hear about Transfertlocation.ca?',
+    'heard_about' => 'How did you hear about Wanderdorfer?',
     'heard_about_options' => [
         'internet_search' => 'Internet search',
         'social_media' => 'Social Media',
@@ -44,9 +44,16 @@ return [
         'email' => 'Email',
         'other' => 'Other'
     ],
+    'email_text' => 'Sign in with your email address',
+    'social_account' => 'Sign in with your Social Account',
+    'no_account' => 'Don’t have an account yet?',
+    'personal_detail' =>'Personal Info',
+    'register_address' =>'Address',
+    'register_security' => 'Security',
+    'refer_a_friend' =>  'Refer a friend',
 
     'my_ads' => 'My ads',
-    'my_information' => 'My information',
+    'my_information' => 'Profile information',
     'my_account' => 'My account',
     'my_completed_ads' => 'My completed ads',
 
@@ -72,7 +79,8 @@ return [
 
     'create_ad' => 'Create a new ad',
     'completed_ads' => 'My completed ads',
-    'edit' => 'Modify my account',
+    'edit' => 'Edit',
+    'my_messages' => 'Messages',
 
     'my_partnership' => 'My partnership', 
     'send_invitation' => 'Send Invitation',

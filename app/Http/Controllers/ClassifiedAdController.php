@@ -16,7 +16,7 @@ class ClassifiedAdController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, $category_name=null)
     {
         define('PER_PAGE', 9);
         $classified_ads= ClassifiedAd::with(['category', 'file'])
@@ -24,10 +24,11 @@ class ClassifiedAdController extends Controller
                     ->whereNotNull('classified_ads.plan_id')
                     ->join('plans', 'plans.id', '=', 'classified_ads.plan_id')
                     ->whereDate('plans.ends_at','>=' ,date('Y-m-d'))
-                    ->orderBy('classified_ads.created_at', $request->query('order')?:'desc');
+                    ->orderBy('classified_ads.created_at', $request->query('order')?:'desc')
+                    ->select('classified_ads.*');
                     
         if($request->query('category')){
-            $classified_ads->where('category_id', $request->query('category'));
+            $classified_ads->where('category_id', Category::where('category_name', $request->query('category'))->first()->id);
         }
         if($request->query('ad_name')){
             $classified_ads->where('title', 'like',  '%'.$request->query('ad_name').'%');

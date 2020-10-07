@@ -2,7 +2,7 @@
 
 @section('content')
 
-<section id="my-account" class="padding-top-300">
+<section id="my-account">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">

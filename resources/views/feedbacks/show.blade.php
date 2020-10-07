@@ -1,27 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-<body>
+@extends('layouts.app')
 
+@section('content')
 	<div class="card card-primary">
       <div class="card-body">
         <div class="row">
-        	<div class="col-sm">
-        		<a type="button" class="btn btn-warning d-flex justify-content-center" href="{{route('chatrooms.index')}}">Go Back</a>
+        	<div class="col-sm-3">
+				<div class="tab" id="main-tab">
+					@foreach ($chat_rooms as $chat_room)
+					<a href="{{route('feedbacks.show', ['chat_room_id'=> $chat_room->id])}}">
+						<div class="user-card {{$chat_room->id ==$feedbacks->first()->chat_room->id?'active-chat':''}}">
+							<div class="user-avatar"><img src="{{ asset('images/avatar.png') }}"/></div>
+							<div class="user-content">
+								<p class="user-name">
+									{{($chat_room->advertiser == Auth::id())?$chat_room->visitor_user->name:$chat_room->advertiser_user->name}}
+								</p>
+								<p>{{$chat_room->feedbacks()->latest()->first()->message}}</p>
+								{{-- <span class="message-time">{{$chat_room->feedbacks()->latest()->first()->created_at}}<span> --}}
+							</div>
+						</div>
+					</a>
+					@endforeach
+				</div>
         	</div>
-        	<div class="col-sm" id="main_col">
-				<table class="table " >
+        	<div class="col-sm-6" id="main_col">
+				<table class="table">
 					  <tbody>
 					  	@foreach ($feedbacks as $feedback)
 					    	<tr>
-					    	@if ($feedback->user->id== Auth::id())
+					    	@if ($feedback->user->id == Auth::id())
 					    		<td></td>
-					    		<td class="badge badge-primary text-wrap" style="width: 10rem;" data-feeback-id="{{$feedback->id}}">{{$feedback->message}}</td>
+					    		<td class="message message-sent" data-feeback-id="{{$feedback->id}}"><span>{{$feedback->message}}</span></td>
 				    		@else
-				    			<td class="badge badge-light text-wrap" style="width: 10rem;" data-feeback-id="{{$feedback->id}}">{{$feedback->message}}</td>
+				    			<td class="message message-received" data-feeback-id="{{$feedback->id}}"><span>{{$feedback->message}}</span></td>
 				    			<td></td>
 					    	@endif
 					    	</tr>
@@ -30,56 +40,81 @@
 				</table>
 				@include('feedbacks.partials.chatbox')	
 			</div>
-			<div class="col-sm">
-				<table class="table table-striped">
-				  <thead>
-				    <tr>
-				      <th scope="col">Field Name</th>
-				      <th scope="col">Value</th>
-				    </tr>
-				  </thead>
-				  <tbody>
-				  	@foreach (json_decode($feedbacks->first()->chat_room->classified_ad->form_values) as $key=>$value)
-				    <tr>
-				      	<td>{{$form_items_collection->find($key)->name}}</td>
-				      	<td>{{$value}}</td>
-				    </tr>
-				    @endforeach
-				  </tbody>
-				</table>
+			<div class="col-sm-3">
+				<div class="members-setting">
+					<div class="user-card">
+						<div class="user-avatar"><img src="{{ asset('images/avatar.png') }}"/></div>
+						<div class="user-content">
+							<p class="user-name">{{ $feedback->user->first_name }}</p>
+							<p>Member since {{ date('d F, Y', strtotime($feedback->user->created_at)) }}</p>
+						</div>
+					</div>
+					<div class="sidebar-similar-ads">
+						<div class="featured-ads-items">
+							<h5>Similar Ads</h5>
+							@for ($i = 0; $i < 5; $i++)
+								<div class="featured-ads-item d-flex">
+									<div class="aspect-ratio-box-wrap" style="width:20%;">
+										<div class="aspect-ratio-box">
+											<img src="{{ asset('images/tree-snow.jpg') }}" width="100%">
+										</div>
+									</div>
+									<div class="pl-2" width="70%">
+										<h6>Real estate Broker</h6>
+										<h6 class="ads-item-price">$40 / night</h6>
+									</div>
+								</div>
+							@endfor
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	  </div>
 	</div>
-<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+@push('js')
 <script type="text/javascript">
- 	$("#main_col #feed_back_form").submit(function(){
-	    var $form = $(this);
-	    $(this).find("#last_feedback_id").val($("#main_col").find("tr ").last().find("td.badge").data("feeback-id"));
-	    var serializedData = $form.serialize();
-	    url = $form.data( "url" );
 	
-	    request = $.ajax({
-	        url: url,
-	        type: "post",
-	        data: serializedData
-	    });
-	    request.done(function (html){
-    	    $("#feed_back_form")[0].reset();
-	      	$("#main_col").find("tbody").append(html);
-	    });
-  	});
+	window.addEventListener('DOMContentLoaded', function() {
+		(function($) {
+			var active_chatroom= {!!$feedbacks->first()->chat_room->id!!};
+			$("#main_col #feed_back_form").submit(function(){
+				var $form = $(this);
+				$(this).find("#last_feedback_id").val($("#main_col").find("tr ").last().find("td.badge").data("feeback-id"));
+				var serializedData = $form.serialize();
+				url = $form.data( "url" );
+			
+				request = $.ajax({
+					url: url,
+					type: "post",
+					data: serializedData
+				});
+				request.done(function (html){
+					$("#feed_back_form")[0].reset();
+					$("#main_col").find("tbody").append(html);
+					getChatRooms();
+				});
+			});
 
-  	function refreshFeedbacks(){
-  		var url= "{{route('feedbacks.show', ':chat_room_id')}}";
-  		url= url.replace(':chat_room_id', {!! $feedbacks->first()->chat_room_id !!});
-  		// debugger;
-  		$.get(url, function(html){
-	        $("#main_col").find("tbody").append(html);
-	    });
-  	}
-  	setInterval( refreshFeedbacks, 10000 );
+			function refreshFeedbacks(){
+				var url= "{{route('feedbacks.show', ':chat_room_id')}}";
+				url= url.replace(':chat_room_id', {!! $feedbacks->first()->chat_room_id !!});
+				$.get(url, function(html){
+					$("#main_col").find("tbody").html(html);
+				});
+			}
+			setInterval( refreshFeedbacks, 10000 );
+			
+			function getChatRooms(){
+				$.get("{{route('chatrooms.index')}}", function(html){
+					$("#main-tab").html(html);
+					$("#main-tab .user-card[data-id=" + active_chatroom + "]").addClass("active-chat");
+				});
+			}
+			setInterval(getChatRooms, 10000);
+		})(jQuery);
+	});
 </script>
-</body>
-</html>
+@endpush
+
+@endsection

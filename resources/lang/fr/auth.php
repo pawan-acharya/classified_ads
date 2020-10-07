@@ -32,7 +32,7 @@ return [
     'password_confirm' => 'Entrez de nouveau votre mot de passe',
     'security_question' => 'Question de sécurité',
     'security_answer' => 'Votre réponse',
-    'heard_about' => 'Comment avez-vous connu Transfertlocation.ca?',
+    'heard_about' => 'Comment avez-vous connu Wanderdorfer?',
     'heard_about_options' => [
         'internet_search' => 'Recherche sur internet',
         'social_media' => 'Médias Sociaux',
@@ -45,9 +45,16 @@ return [
         'email' => 'Courriel',
         'other' => 'Autre'
     ],
+    'email_text' => 'Connectez-vous avec votre adresse e-mail',
+    'social_account' => 'Connectez-vous avec votre compte social',
+    'no_account' => 'Vous n\'avez pas encore de compte?',
+    'personal_detail' =>'Informations personnelles',
+    'register_address' =>'Adresse',
+    'register_security' => 'Sécurité',
+    'refer_a_friend' =>  'Référez un ami',
 
     'my_ads' => 'Mes annonces',
-    'my_information' => 'Mes informations',
+    'my_information' => 'Informations sur le profil',
     'my_account' => 'Mon compte',
     'my_completed_ads' => 'Mes annonces terminées',
 
@@ -73,7 +80,8 @@ return [
 
     'create_ad' => 'Créer une nouvelle annonce',
     'completed_ads' => 'Mes annonces terminées',
-    'edit' => 'Modifier mon compte',
+    'edit' => 'Éditer',
+    'my_messages' => 'Messages',
 
     'my_partnership' => 'Mon partenariat', 
     'send_invitation' => 'Envoyer une invitation',
