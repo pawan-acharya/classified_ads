@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 //Static Pages
 Route::get('/', 'HomeController@homepage');
-   
 Route::get('/faq', function () {
     return view('/pages/faq');
 });
@@ -71,7 +70,10 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/classified_ads/store/{cat_id}', 'ClassifiedAdController@store')->name('classified_ads.store');
         Route::resource('classified_ads', 'ClassifiedAdController')->except([
             'create', 'store', 'create'
+            , 'index'
         ]);
+        Route::get('/classified_ads', 'ClassifiedAdController@index')->name('classified_ads.index');
+
         Route::get('/classified_ads/review/{classified_ad}', 'ClassifiedAdController@review')->name('classified_ads.review');
 
         Route::post('/feedback/create/{classified_ad}', 'FeedbackController@create')->name('feedbacks.create');

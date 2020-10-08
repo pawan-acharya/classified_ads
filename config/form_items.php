@@ -10,6 +10,7 @@ return array(
 	'secondary_price'=> 'Secondary price',
 	// 'descount'=> 'Discount',
 	'select'=> 'Select One',
-	'box'=> 'BOX'
+	'box'=> 'BOX',
+	'activity'=> 'Activities'
 );
     

@@ -1,4 +1,3 @@
-
 <div>
 	<form action="javascript:void(0)" method="POST"  id="feed_back_form" data-url="{{route('feedbacks.reply',['chat_room_id'=> $feedbacks->first()->chat_room->id])}}">
 		@csrf

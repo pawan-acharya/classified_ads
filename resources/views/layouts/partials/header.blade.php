@@ -83,7 +83,7 @@
                     @foreach (\App\Category::all() as $category)
                     <li class="nav-item">
                         <a class="nav-link {{ (Request::segment(1) == 'classified_ads' && Request::segment(2) == '') ? 'active' : '' }}" 
-                        href="{{ route('classified_ads.index', ['category'=> $category->id]) }}">
+                        href="{{ route('classified_ads.index', ['category'=> $category->category_name]) }}">
                         <span class="nav-text">{{ $category->category_name }}</span>
                         </a>
                     </li>
