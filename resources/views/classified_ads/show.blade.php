@@ -13,6 +13,20 @@
             <div class="col-md-9 col-12">
                 @include('classified_ads.partials.main')
                 @include('classified_ads.partials.description')
+                <div class="featured-ads-items">
+                    <h2>Ad's Recently Visited</h2>
+                    <div class="row">
+                    @for ($i = 0; $i < 6; $i++)
+                        <div class="col-sm-2 featured-ads-item">
+                            <div class="aspect-ratio-box">
+                                <img src="{{ asset('images/tree-snow.jpg') }}" width="100%">
+                            </div>
+                            <h6>Real estate Broker</h6>
+                            <h6 class="ads-item-price">$40 / night</h6>
+                        </div>
+                    @endfor
+                    </div>
+                </div>
             </div>
             <div class="col-md-3">
                 <div class="contact-div">

@@ -9,4 +9,3 @@
 		<button type="submit" class="send-button"><i class="fas fa-paper-plane"></i></button>
 	</form>
 </div>
-{{-- {{route('feedbacks.reply',['chat_room_id'=> $feedbacks->first()->chat_room->id])}} --}}

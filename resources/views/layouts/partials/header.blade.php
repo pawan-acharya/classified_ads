@@ -6,16 +6,16 @@
                     <img class="nav-logo" src="{{ asset('images/logo.png') }}" width="100" />
                 </a>
                 <div class="search-sec">
-                    <form action="#" method="post" novalidate="novalidate">
+                    <form method="GET" action="{{ route('classified_ads.index') }}">
                         <div class="d-flex">
                             <div class="p-0">
-                                <input type="text" class="form-control search-slt" placeholder="Enter Pickup City">
+                                <input type="text" id="search-ad-location" class="form-control search-slt  @error('location') is-invalid @enderror" name="location" value="{{request()->get('location')}}" placeholder="Enter Pickup City">
                             </div>
                             <div class="p-0 flex-fill">
-                                <input type="text" class="form-control search-slt" placeholder="Search by Locations,Type of camping & More">
+                                <input type="text" class="form-control search-slt  @error('brand') is-invalid @enderror" name="ad_name" value="{{request()->get('ad_name')}}" placeholder="Search by Locations,Type of camping & More">
                             </div>
                             <div class="p-0 flex-fill">
-                                <select class="form-control search-slt" id="exampleFormControlSelect1">
+                                <select class="form-control search-slt @error('category') is-invalid @enderror" name="category" id="search-category" >
                                     <option value=""> {{ __('ads.all') }}</option>
                                     @foreach (\App\Category::all() as $category)
                                     <option value="{{$category->id}}" @if (request()->get('category') === $category->id) selected @endif> {{$category->category_name}}</option>
@@ -23,7 +23,7 @@
                                 </select>
                             </div>
                             <div class="p-0">
-                                <button type="button" class="btn btn-search"><i class="fas fa-search"></i></button>
+                                <button type="submit" class="btn btn-search"><i class="fas fa-search"></i></button>
                             </div>
                         </div>
                     </form>

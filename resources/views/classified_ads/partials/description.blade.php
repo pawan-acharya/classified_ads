@@ -14,7 +14,7 @@
             @endif
         </div>  
         <div class="ad-sharing-tool ml-auto">
-            <a href="https://www.facebook.com/sharer/sharer.php?u={{Request::url()}}" class="ad-sharing-tool-link"><i class="fas fa-share-square"></i> {{ __('ads.send_friend') }}</a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{Request::url()}}" class="ad-sharing-tool-link share-tool"><i class="fas fa-share-square"></i> {{ __('ads.send_friend') }}</a>
         </div>
     </div>
     
@@ -25,7 +25,7 @@
         <ul class="d-flex price-list">
             <li class="price-list-item">
                 <h5>
-                    {{$classified_ad->price}}  {{$classified_ad->price_for?'PER: ':''}} {{$classified_ad->price_for}}
+                    ${{$classified_ad->price}}  <span class="per-price">{{$classified_ad->price_for?'Per: ':''}} {{$classified_ad->price_for}} </span>
                 </h5>
             </li>
             @foreach ($form_items_collection->where('type', '=', 'secondary_price') as $form_item)
@@ -47,17 +47,17 @@
     </div>
     @endif
     <div class="row">
-        <div class="details features">
+        <div class="col details features">
         @foreach ( $form_items_collection->whereNotIn('type', ['select', 'check_box', 'box', 'secondary_price']) as $form_item ) 
             <div class="detail-item d-flex">
-                <p class="detail-item-text font-weight-bold">{{$form_item->name}}</hp>
+                <p class="detail-item-text font-weight-bold">{{$form_item->name}}: </p>
                 <p class="detail-item-value mb-0">{{json_decode($classified_ad->form_values, TRUE)[$form_item->id]}}</p>
             </div>
         @endforeach
         </div>
 
         @foreach ($form_items_collection->where('type', '=', 'check_box') as $form_item)
-        <div class="details features">
+        <div class="col details features">
             <h5>{{$form_item->name}}</h5>
             <ul class="property-list">
                 @foreach($form_item->children as $child)
@@ -68,7 +68,7 @@
         @endforeach
     
         @foreach ($form_items_collection->where('type', '=', 'select') as $form_item)
-        <div class="details features">
+        <div class="col details features">
             <h5>{{$form_item->name}}</h5>
             <ul class="property-list">
                 @foreach($form_item->children as $child)
@@ -79,7 +79,7 @@
         @endforeach
    
         @foreach ($form_items_collection->where('type', '=', 'box') as $form_item)
-        <div class="details features">
+        <div class="col details features">
             <h5>{{$form_item->name}}</h5>
             <div class="card-body">
                 @foreach ($form_item->children as $child)

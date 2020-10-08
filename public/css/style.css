@@ -504,6 +504,12 @@ ul.pagination .page-item.active .page-link {
 .search-body-head label.col-form-label {
   color: #1A1B16;
 }
+#single-ad-page .price-list-item h5 {
+  font-size: 40px !important;
+}
+#single-ad-page .ad-description-wrapper {
+  padding: 15px;
+}
 #single-ad-page ul {
   list-style: none;
 }
@@ -537,39 +543,35 @@ ul.pagination .page-item.active .page-link {
   left: 0;
   right: 0;
 }
-.single-ad-tools {
-  border-radius: 10px;
-  padding: 20px;
-}
-.single-ad-tools .btn-round {
-  padding: 6px 15px;
-}
-.single-ad-tools .ad-sharing-tool {
+.ad-sharing-tool {
   color: #fff;
   margin-top: auto;
   margin-bottom: auto;
 }
-.single-ad-tools .ad-sharing-tool .ad-sharing-tool-link {
+.ad-sharing-tool .ad-sharing-tool-link {
   font-size: 14px;
-  color: #fff;
+  color: #2ABC57;
   line-height: 15px;
   font-weight: bold;
   display: flex;
 }
-.single-ad-tools .ad-sharing-tool .ad-sharing-tool-link i {
-  font-size: 30px;
-  padding-right: 10px;
+.ad-sharing-tool .ad-sharing-tool-link i {
+  font-size: 14px;
+  padding-right: 5px;
 }
-.single-ad-tools .ad-sharing-tool:hover .ad-sharing-tool-link {
+.ad-sharing-tool .ad-sharing-tool-link.share-tool {
+  color: #4B8AF5;
+}
+.ad-sharing-tool:hover .ad-sharing-tool-link {
   color: #3E79CB;
 }
 @media (min-width: 768px) {
-  .single-ad-tools .ad-sharing-tool:first-child {
+  .ad-sharing-tool:first-child {
     border-left: 2px solid rgba(243, 243, 243);
   }
 }
 @media (max-width: 768px) {
-  .single-ad-tools .ad-sharing-tool {
+  .ad-sharing-tool {
     padding: 15px;
   }
 }
@@ -1113,6 +1115,14 @@ span.select2.select2-container.select2-container--default {
   list-style: none;
   padding-left: 0px;
 }
+.price-list .price-list-item h5 {
+  color: #F3626B;
+  font-size: 25px !important;
+}
+.price-list .price-list-item h5 span {
+  font-size: 20px !important;
+  color: #868686;
+}
 .header {
   box-shadow: 0px 0px 5px 0px #ccc;
   border-bottom: 1px solid #ccc;
@@ -1313,6 +1323,9 @@ img.hover-shadow {
 }
 .hover-shadow:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.gallery {
+  margin-bottom: 15px;
 }
 .gallery > div {
   padding: 0px;
