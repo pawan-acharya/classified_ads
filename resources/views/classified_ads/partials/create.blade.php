@@ -1,11 +1,23 @@
 <form method="POST" action="{{ route('classified_ads.store', ['cat_id'=> $category->id]) }}" id="add_new_classified_ad" class="row" enctype="multipart/form-data">
 	@csrf
+	@if ($category->sub_category)
+	  	<div class="form-group col-sm-6" >
+		    <label for="" class="col-form-label text-md-right">#Sub-Category</label>
+		    <select class="form-control @error('sub_category') is-invalid @enderror" name="sub_category">
+		    	<option></option>
+		    	@foreach (config('sub_category')[$category->sub_category] as $element)
+		    		<option value="{{$element}}">{{$element}}</option>
+		    	@endforeach
+		    </select>
+		    {{-- <input type="text" class="form-control  @error('sub_category') is-invalid @enderror" name="sub_category" required> --}}
+	  	</div>
+	@endif
 	<div class="form-group col-sm-6">
-	    <label for="exampleInputEmail1" class="col-form-label text-md-right">Title</label>
+	    <label for="" class="col-form-label text-md-right">Title</label>
 	    <input type="text" class="form-control  @error('title') is-invalid @enderror"  name="title" required>
   	</div> 
   	<div class="form-group col-sm-6" >
-	    <label for="exampleInputEmail1" class="col-form-label text-md-right">#CITQ</label>
+	    <label for="" class="col-form-label text-md-right">#CITQ</label>
 	    <input type="text" class="form-control  @error('citq') is-invalid @enderror" name="citq" required>
   	</div>
   	<div class="form-group col-sm-6">

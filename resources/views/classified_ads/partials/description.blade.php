@@ -25,14 +25,14 @@
         <ul class="d-flex price-list">
             <li class="price-list-item">
                 <h5>
-                    {{$classified_ad->price}}  {{$classified_ad->price_for?'PER: ':''}} {{$classified_ad->price_for}}
+                    ${{$classified_ad->price}}  {{$classified_ad->price_for?'PER: ':''}} {{$classified_ad->price_for}}
                 </h5>
             </li>
             @foreach ($form_items_collection->where('type', '=', 'secondary_price') as $form_item)
             @foreach($form_item->children as $child)
             <li class="price-list-item"> 
                 <h5 class="col-12">
-                    {{json_decode($classified_ad->form_values, TRUE)[$form_item->id]}} : Per {{$form_item->children()->first()->name}}
+                    ${{json_decode($classified_ad->form_values, TRUE)[$form_item->id]}} : Per {{$form_item->children()->first()->name}}
                 </h5> 
             </li>
             @endforeach
@@ -48,7 +48,7 @@
     @endif
     <div class="row">
         <div class="col details features">
-        @foreach ( $form_items_collection->whereNotIn('type', ['select', 'check_box', 'box', 'secondary_price']) as $form_item ) 
+        @foreach ( $form_items_collection->whereNotIn('type', ['select', 'check_box', 'box', 'secondary_price', 'activity']) as $form_item ) 
             <div class="detail-item d-flex">
                 <p class="detail-item-text font-weight-bold">{{$form_item->name}}</hp>
                 <p class="detail-item-value mb-0">{{json_decode($classified_ad->form_values, TRUE)[$form_item->id]}}</p>
@@ -61,7 +61,12 @@
             <h5>{{$form_item->name}}</h5>
             <ul class="property-list">
                 @foreach($form_item->children as $child)
-                <li>{{array_key_exists($child->id, json_decode($classified_ad->form_values, TRUE))?$child->name:''}}</li>
+                @if (array_key_exists($child->id, json_decode($classified_ad->form_values, TRUE)))
+                <li>
+                    {{$child->name}}
+                    <i class="fas {{$child->logo}}"></i>
+                </li>
+                @endif
                 @endforeach
             </ul>
         </div>
@@ -72,7 +77,12 @@
             <h5>{{$form_item->name}}</h5>
             <ul class="property-list">
                 @foreach($form_item->children as $child)
-                <li>{{json_decode($classified_ad->form_values, TRUE)[$form_item->id]== $child->id?$child->name:""}}</li>
+                @if (json_decode($classified_ad->form_values, TRUE)[$form_item->id]== $child->id)
+                    <li>
+                        {{$child->name}}
+                        <i class="fas {{$child->logo}}"></i>
+                    </li>
+                @endif
                 @endforeach
             </ul>
         </div>
@@ -89,6 +99,22 @@
             </div>
         </div>
         @endforeach 
+
+
+        @foreach ($form_items_collection->where('type', '=', 'activity') as $form_item)
+        <div class="col details features">
+            <h5>{{$form_item->name}}</h5>
+            <div class="card-body">
+                @foreach ($form_item->children as $child)
+                    @if (array_key_exists($child->id, json_decode($classified_ad->form_values, TRUE)))
+                        <img src="{{asset('storage')}}/{{$child->logo}}" style="height: 15px;">
+                        {{$child->name}}<br>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+        @endforeach 
+        
     </div>
 </div>
 

@@ -17,7 +17,7 @@
                             <div class="p-0 flex-fill">
                                 <select class="form-control search-slt @error('category') is-invalid @enderror" name="category" id="search-category" >
                                     <option value=""> {{ __('ads.all') }}</option>
-                                    @foreach (\App\Category::all() as $category)
+                                    @foreach (\App\Category::latest('id')->get() as $category)
                                     <option value="{{$category->id}}" @if (request()->get('category') === $category->id) selected @endif> {{$category->category_name}}</option>
                                     @endforeach
                                 </select>
@@ -80,24 +80,26 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav mr-auto">
-                    @foreach (\App\Category::all() as $category)
+                    @foreach (\App\Category::latest('id')->get() as $category)
                     <li class="nav-item">
                         <a class="nav-link {{ (Request::segment(1) == 'classified_ads' && Request::segment(2) == '') ? 'active' : '' }}" 
                         href="{{ route('classified_ads.index', ['category'=> $category->category_name]) }}">
-                        <span class="nav-text">{{ $category->category_name }}</span>
+                        <span class="nav-text">{{ $category->category_name}} 
+                            {{-- {{request()->category == $category->category_name}}  --}}
+                        </span>
                         </a>
                     </li>
                     @endforeach
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link {{ Request::segment(1) == 'articles' ? 'active' : '' }}" href="{{ url('/classified_ads') }}">
                         <span class="nav-text">{{ __('welcome.itemsforsale') }}</span>
                         </a>
-                    </li>
-                    <li class="nav-item">
+                    </li> --}}
+                    {{-- <li class="nav-item">
                         <a class="nav-link {{ Request::segment(1) == 'contact' ? 'active' : '' }}" href="{{ url('/classified_ads') }}">
                         <span class="nav-text">{{ __('welcome.services') }}</span>
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="nav-item btn-main">
                         <a class="nav-link" href="{{ url('/classified_ads/create') }}">
                         <span class="nav-text">Post an Ad <i class="fas fa-chevron-right"></i></span>

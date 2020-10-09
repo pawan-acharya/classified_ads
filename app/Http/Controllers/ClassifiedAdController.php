@@ -79,7 +79,8 @@ class ClassifiedAdController extends Controller
                 'location'=> 'required',
                 'url'=> 'nullable',
                 'is_featured' => 'nullable',
-                'feature_type'=> 'nullable'
+                'feature_type'=> 'nullable',
+                'sub_category'=> 'nullable',
             ]);
             
             $form_values_array=[];
@@ -100,7 +101,8 @@ class ClassifiedAdController extends Controller
                 'location'=> $validatedData['location'],
                 'url'=>  array_key_exists('url', $validatedData)?$validatedData['url']:null, 
                 'is_featured'=> array_key_exists('is_featured', $validatedData)?1:0,
-                'feature_type'=> $validatedData['feature_type']
+                'feature_type'=> $validatedData['feature_type'],
+                'sub_category'=> $validatedData['sub_category']
             ]);
             $classified_ad= Category::findOrFail($cat_id)->classified_ads()->save($classified_ad);
             if(array_key_exists('title_images', $validatedData)){
@@ -125,9 +127,9 @@ class ClassifiedAdController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($title)
     {
-        $classified_ad= ClassifiedAd::with('category')->find($id);
+        $classified_ad= ClassifiedAd::with('category')->where('title', $title)->first();
         $form_items_collection= Category::find($classified_ad->category->id)->form_items()->whereNull('parent')->get();
         return view('classified_ads.show', compact('classified_ad', 'form_items_collection'));
     }

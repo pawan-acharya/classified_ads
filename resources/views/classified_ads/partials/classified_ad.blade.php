@@ -1,5 +1,5 @@
 <div class= "col-md-12">
-    <a href= "{{ route('classified_ads.show',$classified_ad->id ) }}" class="card ad">
+    <a href= "{{ route('classified_ads.show',$classified_ad->title ) }}" class="card ad">
         <div class="card-body">
             <div class= "row listing-ad-wrapper">
                 <div class= "col-12 col-sm-4 ad-image-wrapper">

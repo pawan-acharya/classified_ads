@@ -12,7 +12,6 @@ class FeedbackController extends Controller
 {
     public function create(Request $request, $classified_ad= null){
     	$chat_room= app()->call('App\Http\Controllers\ChatRoomController@create', ['classified_ad'=>$classified_ad] );
-        dd($chat_room);
         
     	$feedback= $chat_room->feedbacks()->create([
     		'message'=> $request->message,

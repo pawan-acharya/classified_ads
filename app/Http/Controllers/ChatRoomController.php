@@ -19,11 +19,14 @@ class ChatRoomController extends Controller
             ->get();
             return view('chatrooms.partials.chat_room_lists', compact('chat_rooms'));
         }
-        $chat_room_id= ChatRoom::where('advertiser', Auth::id())
+        
+        $chat_room_query= ChatRoom::where('advertiser', Auth::id())
             ->orWhere('visitor', Auth::id())
-            ->orderByDesc('updated_at')
-            ->first()
-            ->id;
+            ->orderByDesc('updated_at');
+        if(!$chat_room_query->exists()){
+            return redirect()->back();
+        }
+        $chat_room_id=$chat_room_query->first()->id;
         return redirect()->route('feedbacks.show', ['chat_room_id'=> $chat_room_id]);
 	}
 

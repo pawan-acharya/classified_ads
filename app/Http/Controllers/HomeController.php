@@ -22,7 +22,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['homepage']]);
     }
 
     /**
@@ -33,7 +33,7 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $allAds = $user->ads()->orderBy('created_at', 'desc')->get();
+        $allAds = $user->ads;
         $expiredAds = $allAds->filter(function ($ad, $key) {
             return $ad->has_expired == true;
         });

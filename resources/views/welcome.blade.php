@@ -76,7 +76,7 @@
       <div class="col-sm-9 featured-ads-items">
         <div class="row">
         @foreach ($featured_ads as $classified_ad)
-          <a class="col-sm-3 featured-ads-item" href="/classified_ads/{{$classified_ad->id}}">
+          <a class="col-sm-3 featured-ads-item" href="{{ route('classified_ads.show', $classified_ad->title) }}">
             <div class="aspect-ratio-box">
             @if (!empty($classified_ad->file))
                 <img src="{{ $classified_ad->file->getPathAttribute() }}" style="max-width: 100%;" />

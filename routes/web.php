@@ -53,6 +53,8 @@ Route::put('ads/nextupdate/{id}', 'AdController@nextUpdate')->name('ads.nextupda
 
 Route::delete('files/{id}', 'AdController@deleteFile')->name('ads.files.delete');
 
+Route::get('/classified_ads', 'ClassifiedAdController@index')->name('classified_ads.index');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/payment/{id?}', 'PaymentController@plans')->name('payment.plans');
     Route::get('/payment-form/{id?}', 'PaymentController@plansForm')->name('payment.plans_form');
@@ -72,7 +74,7 @@ Route::middleware(['auth'])->group(function () {
             'create', 'store', 'create'
             , 'index'
         ]);
-        Route::get('/classified_ads', 'ClassifiedAdController@index')->name('classified_ads.index');
+        
 
         Route::get('/classified_ads/review/{classified_ad}', 'ClassifiedAdController@review')->name('classified_ads.review');
 
