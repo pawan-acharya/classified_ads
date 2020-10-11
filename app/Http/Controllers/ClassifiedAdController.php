@@ -36,6 +36,9 @@ class ClassifiedAdController extends Controller
         if($request->query('location')){
             $classified_ads->where('location', 'like',  '%'.$request->query('location').'%');
         }
+        if($request->query('sub_category')){
+            $classified_ads->where('sub_category', '=',  $request->query('sub_category'));
+        }
         $classified_ads_count= $classified_ads->count();
         $classified_ads= $classified_ads->paginate(PER_PAGE);
 
@@ -102,7 +105,7 @@ class ClassifiedAdController extends Controller
                 'url'=>  array_key_exists('url', $validatedData)?$validatedData['url']:null, 
                 'is_featured'=> array_key_exists('is_featured', $validatedData)?1:0,
                 'feature_type'=> $validatedData['feature_type'],
-                'sub_category'=> $validatedData['sub_category']
+                'sub_category'=> array_key_exists('sub_category', $validatedData)?$validatedData['sub_category']: null,
             ]);
             $classified_ad= Category::findOrFail($cat_id)->classified_ads()->save($classified_ad);
             if(array_key_exists('title_images', $validatedData)){

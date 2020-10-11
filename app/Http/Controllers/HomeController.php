@@ -99,6 +99,15 @@ class HomeController extends Controller
         return redirect()->route('home')->with('status', Lang::get('auth.edit_successful'));
     }
 
+    public function displayImage(Request $request){
+        $validatedData = $request->validate([
+            'image'=>'file|image|mimes:jpeg,png,gif,webp|max:2048',
+        ]);
+        Auth::user()->files()->delete();
+        Auth::user()->file()->create(Auth::user()->upload($validatedData['image']));
+        return redirect()->back();
+    }
+
     public function invite(Request $request)
     {
        

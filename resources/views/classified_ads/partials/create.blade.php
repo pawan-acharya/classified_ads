@@ -145,7 +145,7 @@
   	}
 	function calculateTotalAmount(number){
 		totalamount+= number;
-		alert('total amount= '+totalamount+ '$');
+		// alert('total amount= '+totalamount+ '$');
 	}
 
 	function makeFeatured(item){

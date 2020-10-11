@@ -15,13 +15,13 @@
                 <div class="mb-4 bg-white mt-4">
                     <h5 class="row-head">{{ __('auth.my_information') }}<a type="submit" href="{{ route('home.edit') }}" class="edit-account">{{ __('auth.edit') }}</a></h5>
                     <div class= "row info-block">
-                        <div class= "col-md-4">
+                        <div class= "col-md-3">
                             <div class= "row"> <div class= "col-md-12"><span>{{ __('auth.first_name') }}:</span> {{$user->partner?$user->partner->first_name:$user->first_name}} </div></div>
                             <div class= "row"> <div class= "col-md-12"><span>{{ __('auth.name') }}:</span> {{$user->partner?$user->partner->name:$user->name}} </div></div>
                             <div class= "row"> <div class= "col-md-12"><span>{{ __('auth.home_phone') }}:</span> {{$user->partner?$user->partner->home_phone:$user->home_phone}} </div></div>
                             <div class= "row"> <div class= "col-md-12"><span>{{ __('auth.mobile_phone') }}:</span> {{$user->partner?$user->partner->mobile_phone:$user->mobile_phone}} </div></div>
                         </div>
-                        <div class= "col-md-4">
+                        <div class= "col-md-3">
                             @php($province = $user->partner?$user->partner->province:$user->province)
                             @php($province_langkey = 'auth.province_options.'.$province)
                             <div class= "row"> <div class= "col-md-12"><span>{{ __('auth.province') }}:</span> {{ __($province_langkey)}} </div></div>
@@ -31,7 +31,19 @@
                             <div class= "row"> <div class= "col-md-12"><span>{{ __('auth.correspondence_language') }}:</span> {{ __($correspondence_language_langkey) }}</div></div>
                             <div class= "row"> <div class= "col-md-12"><span>{{ __('auth.email') }}:</span> {{$user->partner?$user->partner->email:$user->email}} </div></div>
                         </div>
-                        <div class="col-md-4 text-right">
+                        <div class= "col-md-3">
+                            @if (Auth::user()->file)
+                                <img src="{{ Auth::user()->file->getPathAttribute() }}" width="100%"/>
+                            @else
+                                <img src="{{ asset('images/avatar.png') }}"/>
+                            @endif
+                            <form id="profile-pic" action="{{route('home.displayImage')}}" method="POST" enctype="multipart/form-data">
+                                @method('PUT')
+                                @csrf
+                                <input type="file" name="image" onchange="$('#profile-pic').submit();">
+                            </form>
+                        </div>
+                        <div class="col-md-3 text-right">
                             @if (Auth::user()->checkIfAdmin())
                                 <a type="button" class="btn btn-secondary mb-2" data-dismiss="modal">Alreay a member</a>
                             @else
