@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-   <section id="ad-create" class="primary-background">
-    <h1 class="section-head">{{ Session::has('ad-edit') ? __('ads.lease_details') : __('ads.details') }}</h1>
-    <div class="container">
+   <section id="ad-create">
+    <div class="container bg-white">
+    	<h1 class="section-head">{{ Session::has('ad-edit') ? __('ads.lease_details') : __('ads.details') }}</h1>
         <div class="row justify-content-center">
             <div class="col-md-8 my-5">
 		    	<div class=" card">

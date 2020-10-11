@@ -4,7 +4,8 @@
 <section id="plan-intro">
     <div class="container">
         @if($plan_list)
-            <h1 class="section-head mb-3">{{ __('payments.payment_title') }}</h1>
+            <h1 class="mb-1">{{ __('payments.payment_title') }}</h1>
+            <h4 class="mb-3">{{ __('payments.payment_subtitle') }}</h4>
             @if (session('status'))
                 <div class="alert alert-success" role="alert">
                     {{ session('status') }}

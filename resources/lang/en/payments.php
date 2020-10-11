@@ -1,30 +1,32 @@
 <?php
 
 return [
-    'payment_title' => 'Choose a package',
+    'payment_title' => 'Choose an AD package',
+    'payment_subtitle' => 'Select your AD Category',
     'payment_plans' => [
-        'standard' => [
-            'title' => 'The standard',
-            'feature1' => 'Your ad on the website for 3 months',
-            'feature2' => 'Modification of images, description of your ad, current mileage, incentive amount, deposit amount and unlimited transfer fees.',
+        'rental' => [
+            'title' => 'Rentals package',
+            'subtitle' => 'Ads for property to rent',
+            'pictures' => 'Unlimited pictures',
+            'url' => 'Unlimited URL',
+            'featured' => 'Featured ADs',
         ],
-        'best' => [
-            'title' => 'The best',
-            'feature1' => 'Your ad on the website for 4 months',
-            'feature2' => 'Modification of images, description of your ad, current mileage, incentive amount, deposit amount and unlimited transfer fees.',
-            'feature3_title' => 'Featured section for 2 weeks:',
-            'feature3_body' => 'Alternating ads on the website home page and at the top of searches that match your ad’s features.',
+        'sales' => [
+            'title' => 'Sales package',
+            'subtitle' => 'Ads for items or property on sale',
+            'pictures' => 'Unlimited pictures',
+            'url' => 'Unlimited URL',
+            'featured' => 'Featured ADs',
         ],
-        'exceptional' => [
-            'title' => 'The exceptional',
-            'feature1' => 'Your ad on the website for 6 months',
-            'feature2' => 'Modification of images, description of your ad, current mileage, incentive amount, deposit amount and unlimited transfer fees.',
-            'feature3_title' => 'Featured section for 4 weeks:',
-            'feature3_body' => 'Alternating ads on the website home page and at the top of searches that match your ad’s features',
-            'feature4' => 'Your ad with a turquoise colored background to stand out',
-        ]
+        'premium' => [
+            'title' => 'Premium Membership',
+            'subtitle' => 'Post Unlimited of ads',
+        ],
     ],
-    'payment_link' => 'Buy',
+    'payment_link' => 'Continue to Payment',
+    'payment_link_premium' => 'Go Premium',
+
+    'valid_month' => 'valid for 1 month',
 
     'billing_details' => 'Billing details',
     'payment_details' => 'Payment details',

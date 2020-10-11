@@ -1,30 +1,32 @@
 <?php
 
 return [
-    'payment_title' => 'Choisissez un forfait',
+    'payment_title' => 'Choisissez un package AD',
+    'payment_subtitle' => 'Sélectionnez votre catégorie d\'annonce',
     'payment_plans' => [
-        'standard' => [
-            'title' => 'Le Standard', 
-            'feature1' => 'Votre annonce sur le site Web pendant 3 mois',
-            'feature2' => 'Modification des images, description de votre annonce, kilométrage actuel, montant incitatif, montant d’acompte et frais de transfert illimités.',
+        'rental' => [
+            'title' => 'Forfait de location',
+            'subtitle' => 'Annonces immobilières à louer',
+            'pictures' => 'Images illimitées',
+            'url' => 'URL illimitée',
+            'featured' => 'Annonces en vedette',
         ],
-        'best' => [
-            'title' => 'Le Meilleur',
-            'feature1' => 'Votre annonce sur le site Web pendant 4 mois',
-            'feature2' => 'Modification des images, description de votre annonce, kilométrage actuel, montant incitatif, montant d’acompte et frais de transfert illimités.',
-            'feature3_title' => 'Section vedette pour 2 semaines :',
-            'feature3_body' => 'Annonces en alternance sur la page d’accueil du site Web et dans le haut des recherches qui correspondent aux caractéristiques de votre annonce.',
+        'sales' => [
+            'title' => 'Paquet de vente',
+            'subtitle' => 'Annonces d\'articles ou de biens en vente',
+            'pictures' => 'Images illimitées',
+            'url' => 'URL illimitée',
+            'featured' => 'Annonces en vedette',
         ],
-        'exceptional' => [
-            'title' => 'L’exceptionnel',
-            'feature1' => 'Votre annonce sur le site Web pendant 6 mois',
-            'feature2' => 'Modification des images, description de votre annonce, kilométrage actuel, montant incitatif, montant d’acompte et frais de transfert illimités.',
-            'feature3_title' => 'Section vedette pour 4 semaines :',
-            'feature3_body' => 'Annonces en alternance sur la page d’accueil du site Web et dans le haut des recherches qui correspondent aux caractéristiques de votre annonce.',
-            'feature4' => 'Votre annonce avec un fond coloré pour sortir du lot',
-        ]
+        'premium' => [
+            'title' => 'Adhésion Premium',
+            'subtitle' => 'Publier un nombre illimité d\'annonces',
+        ],
     ],
-    'payment_link' => 'Acheter',
+    'payment_link' => 'Continuer au paiement',
+    'payment_link_premium' => 'Passer en Premium',
+
+    'valid_month' => 'valable 1 mois',
 
     'billing_details' => 'Détails de la facturation',
     'payment_details' => 'Détails de paiement',

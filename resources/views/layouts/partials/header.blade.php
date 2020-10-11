@@ -49,7 +49,7 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                Good morning, {{ Auth::user()->name }} 
+                                {{ Auth::user()->name }} 
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -88,16 +88,6 @@
                         </a>
                     </li>
                     @endforeach
-                    <li class="nav-item">
-                        <a class="nav-link {{ Request::segment(1) == 'articles' ? 'active' : '' }}" href="{{ url('/classified_ads') }}">
-                        <span class="nav-text">{{ __('welcome.itemsforsale') }}</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ Request::segment(1) == 'contact' ? 'active' : '' }}" href="{{ url('/classified_ads') }}">
-                        <span class="nav-text">{{ __('welcome.services') }}</span>
-                        </a>
-                    </li>
                     <li class="nav-item btn-main">
                         <a class="nav-link" href="{{ url('/classified_ads/create') }}">
                         <span class="nav-text">Post an Ad <i class="fas fa-chevron-right"></i></span>

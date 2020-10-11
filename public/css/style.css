@@ -774,84 +774,65 @@ span.select2.select2-container.select2-container--default {
 /* End Contact Page Styling */
 /* Plan Selection Styling */
 #plan-intro .plan-item {
-  padding-left: 48px;
-  padding-right: 48px;
-  border-right: 1px solid #c9c9c9;
   flex-direction: column;
   align-items: center;
   display: flex;
   font-size: 11px;
+  background: #fff;
+  margin: 10px;
+  text-align: center;
 }
 #plan-intro .plan-item ul {
-  list-style: disc;
-  list-style-position: inside;
+  list-style: none;
   padding-left: 0px;
 }
-#plan-intro .plan-item ul li::before {
-  content: "";
-  margin-left: -5px;
+#plan-intro .plan-item ul li {
+  background: #2774F0;
+  padding: 7px 20px;
+  color: #fff;
+  margin-bottom: 15px !important;
+  border-radius: 20px;
+  font-size: 16px;
 }
-#plan-intro .plan-item .plan-image {
-  position: relative;
-  margin-bottom: 16px;
+#plan-intro .plan-item ul li i {
+  margin-right: 7.5px;
+  color: #E2B90E;
 }
-#plan-intro .plan-item .plan-image img {
+#plan-intro .plan-item ul li i.fa-star {
+  border-radius: 50%;
+  color: #fff;
+  background: #E2B90E;
+  padding: 3px;
+}
+#plan-intro .plan-item .price-box {
   width: 100%;
+  display: flex;
+  border-top: 1px solid #707070;
+  padding: 20px 5px 0px 5px;
 }
-#plan-intro .plan-item .plan-image h2 {
-  position: absolute;
-  top: 46%;
-  width: 95%;
-  color: #000;
-  text-align: center;
-  font-weight: bold;
-}
-#plan-intro .plan-item .plan-image h2 span.price {
-  display: flow-root;
-}
-#plan-intro .plan-item p {
-  font-weight: 500;
-}
-#plan-intro .plan-item .btn-round {
-  padding: 5px 40px;
-  font-size: 12px;
-  margin-bottom: 24px;
-  margin-top: 24px;
-}
-#plan-intro .plan-item .btn-round:hover {
-  background-color: #43b280;
-}
-#plan-intro .plan-item.featured {
-  border-radius: 10px;
-  color: #1A1B16;
-}
-#plan-intro .plan-item.featured h2 {
-  color: #1A1B16;
-}
-#plan-intro .plan-item.featured .exceptional-box {
-  border-radius: 5px;
-  box-shadow: 8px 8px #0c0652;
-  background-color: #fff;
-}
-#plan-intro .plan-item.featured .exceptional-box h2 {
-  color: #1A1B16;
-  font-size: 42px;
-}
-#plan-intro .plan-item.featured .exceptional-box .featured {
-  color: #3E79CB;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  font-weight: bold;
+#plan-intro .plan-item .price-box select#package_month {
   font-size: 18px;
+  color: #000;
+  background: #F4F4F4;
+  font-weight: 500;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 10px;
 }
-#plan-intro .plan-item.featured .btn-round:hover {
-  background-color: #fff;
-  color: #1A1B16;
+#plan-intro .plan-item .price-box .plan-price {
+  font-size: 26px;
+  font-weight: 500;
+  margin-bottom: 0px;
 }
-@media (min-width: 768px) {
-  #plan-intro {
-    padding: 30px 0 60px 0;
-  }
+#plan-intro .plan-item .valid-month {
+  width: 100%;
+  font-size: 16px;
+  color: #3D4853;
+  padding-left: 5px;
+  padding-bottom: 20px;
+}
+#plan-intro .plan-item.premium {
+  background: #F0E6E4;
 }
 /* End Plan Selection Styling */
 /* Footer Styling */
@@ -1461,11 +1442,18 @@ img.hover-shadow {
   background: #fff;
   border-radius: 10px;
 }
+#main_col .chat-section {
+  max-height: 500px;
+  overflow: scroll;
+}
 #main_col table tr {
   margin-bottom: 5px;
 }
 #main_col table tr td {
   width: 50% !important;
+}
+#main_col table tr:last-child {
+  margin-bottom: 10px;
 }
 form#feed_back_form {
   position: relative;

@@ -810,83 +810,65 @@ span.select2.select2-container.select2-container--default {
 
 #plan-intro {
     .plan-item {
-        padding-left: 48px;
-        padding-right: 48px;
-        border-right: 1px solid #c9c9c9;
         flex-direction: column;
         align-items: center;
         display: flex;
         font-size:11px;
+        background: #fff;
+        margin: 10px;
+        text-align: center;
         ul{
-            list-style: disc;
-            list-style-position: inside;
+            list-style: none;
             padding-left: 0px;
-            li::before {
-                content: "";
-                margin-left: -5px;
+            li {
+                background: #2774F0;
+                padding: 7px 20px;
+                color: #fff;
+                margin-bottom: 15px !important;
+                border-radius: 20px;
+                font-size: 16px;
+                i {
+                    margin-right: 7.5px;
+                    color: #E2B90E;
+                    &.fa-star {
+                        border-radius: 50%;
+                        color: #fff;
+                        background: #E2B90E;
+                        padding: 3px;
+                    }
+                }
             }
         }
-        .plan-image {
-            position: relative;
-            margin-bottom: 16px;
-            img {
-                width: 100%;
-            }
-            h2 {
-                position: absolute;
-                top: 46%;
-                width: 95%;
+        .price-box {
+            width: 100%;
+            display: flex;
+            border-top: 1px solid rgb(112, 112, 112,0.25);
+            padding: 20px 5px 0px 5px;
+            select#package_month {
+                font-size: 18px;
                 color: #000;
-                text-align: center;
-                font-weight: bold;
-                span.price {
-                    display: flow-root;
-                }
+                background: #F4F4F4;
+                font-weight: 500;
+                border: none;
+                padding: 5px 10px;
+                border-radius: 10px;
+            }
+            .plan-price {
+                font-size: 26px;
+                font-weight: 500;
+                margin-bottom: 0px;
             }
         }
-        
-        p {
-            font-weight: 500;
+        .valid-month {
+            width: 100%;
+            font-size: 16px;
+            color: #3D4853;
+            padding-left: 5px;
+            padding-bottom: 20px;
         }
-        .btn-round {
-            padding: 5px 40px;
-            font-size: 12px;
-            margin-bottom: 24px;
-            margin-top: 24px;
-            &:hover {
-                background-color: #43b280;
-            }
+        &.premium {
+            background:#F0E6E4;
         }
-        &.featured{
-            border-radius: 10px;
-            color: #1A1B16;
-            h2 {
-                color:#1A1B16;
-            }
-            .exceptional-box{
-                border-radius: 5px;
-                box-shadow: 8px 8px #0c0652;
-                background-color: #fff;
-                h2{
-                    color: @theme-color-heading;
-                    font-size: 42px;
-                }
-                .featured {
-                    color: @theme-color-secondary;
-                    margin-top: 15px;
-                    margin-bottom: 15px;
-                    font-weight: bold;
-                    font-size: 18px;
-                }
-            }
-            .btn-round:hover {
-                background-color: #fff;
-                color: @theme-color-heading;
-            }
-        }
-    }
-    @media (min-width: 768px) {
-        padding: 30px 0 60px 0; 
     }
 }
   
@@ -1554,10 +1536,17 @@ span.select2.select2-container.select2-container--default {
     padding: 10px;
     background: #fff;
     border-radius: 10px;
+    .chat-section {
+        max-height: 500px;
+        overflow: scroll;
+    }
     table tr {
         margin-bottom: 5px;
         td {
             width:50% !important;
+        }
+        &:last-child {
+            margin-bottom: 10px;
         }
     }
 }

@@ -23,23 +23,26 @@
 				</div>
         	</div>
         	<div class="col-sm-6" id="main_col">
-				<table class="table">
-					  <tbody>
-					  	@foreach ($feedbacks as $feedback)
-					    	<tr>
-					    	@if ($feedback->user->id == Auth::id())
-					    		<td></td>
-					    		<td class="message message-sent" data-feeback-id="{{$feedback->id}}"><span>{{$feedback->message}}</span></td>
-				    		@else
-				    			<td class="message message-received" data-feeback-id="{{$feedback->id}}"><span>{{$feedback->message}}</span></td>
-				    			<td></td>
-					    	@endif
-					    	</tr>
-					    @endforeach
-					  </tbody>
-				</table>
+				<div class="chat-section">
+					<table class="table">
+						<tbody>
+							@foreach ($feedbacks as $feedback)
+								<tr>
+								@if ($feedback->user->id == Auth::id())
+									<td></td>
+									<td class="message message-sent" data-feeback-id="{{$feedback->id}}"><span>{{$feedback->message}}</span></td>
+								@else
+									<td class="message message-received" data-feeback-id="{{$feedback->id}}"><span>{{$feedback->message}}</span></td>
+									<td></td>
+								@endif
+								</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
 				@include('feedbacks.partials.chatbox')	
 			</div>
+			
 			<div class="col-sm-3">
 				<div class="members-setting">
 					<div class="user-card">
@@ -47,6 +50,25 @@
 						<div class="user-content">
 							<p class="user-name">{{ $feedback->user->first_name }}</p>
 							<p>Member since {{ date('d F, Y', strtotime($feedback->user->created_at)) }}</p>
+						</div>
+					</div>
+					<div class="sidebar-similar-ads">
+						<div class="featured-ads-items">
+							<h5>Ads</h5>
+							<a class="featured-ads-item d-flex" href="/classified_ads/{{$chat_room->classified_ad->id}}">
+								<div class="aspect-ratio-box-wrap" style="width:20%;">
+									<div class="aspect-ratio-box">
+										<img src="{{ $chat_room->classified_ad->file->getPathAttribute() }}" width="100%">
+									</div>
+								</div>
+								<div class="pl-2" width="70%">
+									<h6>{{$chat_room->classified_ad->title}}</h6>
+									<h6 class="ads-item-price">
+										${{$chat_room->classified_ad->price}} 
+										{{$chat_room->classified_ad->price_for?'/':''}} {{$chat_room->classified_ad->price_for}}
+									</h6>
+								</div>
+							</a>
 						</div>
 					</div>
 					<div class="sidebar-similar-ads">
