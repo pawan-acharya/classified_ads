@@ -53,12 +53,14 @@ class CategoryController extends Controller
             'image'=>'file|image|mimes:jpeg,png,gif,webp|max:2048',
             'type'=> 'required|in:rental,sales,none',
             'sub_category'=> 'nullable',
+            'display_order'=> 'required'
         ]);
         $category = Category::create([
             'category_name'=>$validatedData['category_name'],
             'description'=> $validatedData['description'],
             'type'=> $validatedData['type'],
-            'sub_category'=> $validatedData['sub_category']
+            'sub_category'=> $validatedData['sub_category'],
+            'display_order'=> $validatedData['display_order']
         ]);
         $category->file()->create($category->upload($validatedData['image']));
         foreach (json_decode($request->big_array, TRUE) as $key => $value) {

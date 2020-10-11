@@ -27,7 +27,8 @@
 						    <label for="exampleInputEmail1">Category Poster Image:</label>
 						    <input type="file" class="form-control" id="fname" name="image" required>
 					  	</div>
-					  	<div class="form-group col-6">
+					  	
+					  	<div class="form-group col-4">
 						    <label for="cat-type">Category Description:</label>
 						    <select class="form-control" id="cat-type" name="type" >
 						    	<option value="none"></option>
@@ -35,7 +36,7 @@
 						    	<option value="sales">Sales package</option>
 						    </select> 
 					  	</div>
-					  	<div class="form-group col-6">
+					  	<div class="form-group col-4">
 						    <label for="cat-sub-category">Will contain sub-category?</label>
 						    <select class="form-control" id="cat-sub-category" name="sub_category" >
 						    	<option value="none"></option>
@@ -43,6 +44,23 @@
 						    	<option value="packages">Packages & activities</option>
 						    </select> 
 					  	</div>
+					  	<div class="form-group col-4">
+						    <label for="cat-sub-category">Display Order</label>
+						    <select class="form-control" id="cat-sub-category" name="display_order" >
+						    	@php($total=0)
+						    	@for ($i = 1; $total <= 6; $i++)
+							    	@if (\App\Category::where('display_order', '=', $i)->exists())
+							    		<option value="{{ $i }}" disabled="">
+							    			{{ $i }}- {{App\Category::where('display_order', '=', $i)->first()->category_name}}
+							    		</option>
+						    		@else
+						    			@php($total++)
+							        	<option value="{{ $i }}">{{ $i }}</option>
+							    	@endif
+							    @endfor
+						    </select> 
+					  	</div>
+
 					  	<div class="form-group col-12">
 						    <label for="exampleInputEmail1">Category Description:</label>
 						    <textarea class="form-control" id="fname" name="description" ></textarea> 

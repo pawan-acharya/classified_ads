@@ -17,8 +17,8 @@
                             <div class="p-0 flex-fill">
                                 <select class="form-control search-slt @error('category') is-invalid @enderror" name="category" id="search-category" >
                                     <option value=""> {{ __('ads.all') }}</option>
-                                    @foreach (\App\Category::latest('id')->get() as $category)
-                                    <option value="{{$category->id}}" @if (request()->get('category') === $category->id) selected @endif> {{$category->category_name}}</option>
+                                    @foreach (\App\Category::oldest('display_order')->get() as $category)
+                                        <option value="{{$category->id}}" @if (request()->get('category') === $category->id) selected @endif> {{$category->category_name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -80,7 +80,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav mr-auto">
-                    @foreach (\App\Category::latest('id')->get() as $category)
+                    @foreach (\App\Category::oldest('display_order')->get() as $category)
                     <li class="nav-item">
                         <a class="nav-link {{ (Request::segment(1) == 'classified_ads' && Request::segment(2) == '') ? 'active' : '' }}" 
                         href="{{ route('classified_ads.index', ['category'=> $category->category_name]) }}">
