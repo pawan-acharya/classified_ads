@@ -7,10 +7,12 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
 use Gabievi\Promocodes\Traits\Rewardable;
 use App\Notifications\ResetPassword;
+use App\Traits\WithFiles;
+use App\Traits\Uploader;
 
 class User extends Authenticatable
 {
-    use Notifiable, Billable, Rewardable;
+    use Notifiable, Billable, Rewardable, WithFiles, Uploader;
 
     /**
      * The attributes that are mass assignable.

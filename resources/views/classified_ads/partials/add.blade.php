@@ -74,7 +74,10 @@
 	                    <div class="col-md-6">
 	                        <div class="custom-control custom-checkbox">
 	                            <input type="radio" class="custom-control-input" id="option_{{$child->name}}" value="{{$child->id}}"  name="{{$form_item->id}}-{{$form_item->name}}" >
-	                            <label class="custom-control-label" for="option_{{$child->name}}">{{$child->name}}</label>
+	                            <label class="custom-control-label" for="option_{{$child->name}}">
+	                            	{{$child->name}}
+	                            	<i class="fas {{$child->logo}}"></i>
+	                            </label>
 	                        </div>
 	                    </div>
 	                @endforeach
@@ -95,7 +98,10 @@
 	                    <div class="col-md-6">
 	                        <div class="custom-control custom-checkbox">
 	                            <input type="checkbox" class="custom-control-input" id="option_{{$child->name}}" value="{{$child->id}}"  name="{{$child->id}}-{{$child->name}}">
-	                            <label class="custom-control-label" for="option_{{$child->name}}">{{$child->name}}</label>
+	                            <label class="custom-control-label" for="option_{{$child->name}}">
+	                            	{{$child->name}} 
+	                            	<i class="fas {{$child->logo}}"></i>
+	                            </label>
 	                        </div>
 	                    </div>
 	                @endforeach

@@ -35,6 +35,7 @@ Route::get('/my-account', 'HomeController@index')->name('home');
 Route::get('/my-account/edit', 'HomeController@edit')->name('home.edit');
 Route::post('/my-account/edit', 'HomeController@update')->name('home.update');
 Route::post('/action/invite', 'HomeController@invite')->name('home.invite');
+Route::put('/my-account/displayImage', 'HomeController@displayImage')->name('home.displayImage');
 
 Route::get('/wishlists', 'WishlistController@index')->name('wishlists');
 Route::post('/wishlists/{classified_ad_id}', 'WishlistController@create')->name('wishlists.create');
@@ -52,6 +53,8 @@ Route::post('ads/next', 'AdController@next')->name('ads.next');
 Route::put('ads/nextupdate/{id}', 'AdController@nextUpdate')->name('ads.nextupdate');
 
 Route::delete('files/{id}', 'AdController@deleteFile')->name('ads.files.delete');
+
+Route::get('/classified_ads', 'ClassifiedAdController@index')->name('classified_ads.index');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/payment/{id?}', 'PaymentController@plans')->name('payment.plans');
@@ -72,7 +75,7 @@ Route::middleware(['auth'])->group(function () {
             'create', 'store', 'create'
             , 'index'
         ]);
-        Route::get('/classified_ads', 'ClassifiedAdController@index')->name('classified_ads.index');
+        
 
         Route::get('/classified_ads/review/{classified_ad}', 'ClassifiedAdController@review')->name('classified_ads.review');
 

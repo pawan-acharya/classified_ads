@@ -10,7 +10,11 @@
 					<a href="{{route('feedbacks.show', ['chat_room_id'=> $chat_room->id])}}">
 						<div class="user-card {{$chat_room->id ==$feedbacks->first()->chat_room->id?'active-chat':''}}">
 							<div class="user-avatar"><img src="{{ asset('images/avatar.png') }}"/></div>
-							<div class="user-content">
+							<div class="user-content" 
+								@if ($chat_room->feedbacks()->latest()->first()->read)
+									style="color: black;"
+								@endif
+							>
 								<p class="user-name">
 									{{($chat_room->advertiser == Auth::id())?$chat_room->visitor_user->name:$chat_room->advertiser_user->name}}
 								</p>
@@ -50,6 +54,26 @@
 						<div class="user-content">
 							<p class="user-name">{{ $feedback->user->first_name }}</p>
 							<p>Member since {{ date('d F, Y', strtotime($feedback->user->created_at)) }}</p>
+						</div>
+					</div>
+
+					<div class="sidebar-similar-ads">
+						<div class="featured-ads-items">
+							<h5>Ads</h5>
+								<div class="featured-ads-item d-flex">
+									<div class="aspect-ratio-box-wrap" style="width:20%;">
+										<div class="aspect-ratio-box">
+											<img src="{{ $chat_room->classified_ad->file->getPathAttribute() }}" width="100%">
+										</div>
+									</div>
+									<div class="pl-2" width="70%">
+										<h6>{{$chat_room->classified_ad->title}}</h6>
+										<h6 class="ads-item-price">
+											${{$chat_room->classified_ad->price}} 
+											{{$chat_room->classified_ad->price_for?'/':''}} {{$chat_room->classified_ad->price_for}}
+										</h6>
+									</div>
+								</div>
 						</div>
 					</div>
 					<div class="sidebar-similar-ads">

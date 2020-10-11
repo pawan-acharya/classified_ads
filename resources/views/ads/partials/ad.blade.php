@@ -1,8 +1,8 @@
 <div class= "col-md-3">
     @if($parent == 'index')
-    <a href= "{{ route('classified_ads.show',$ad->id ) }}" class="card ad  {{$index%2==0?'odd':'even'}} {{ $ad->is_special ? 'special': ''}}">
+    <a href= "{{ route('classified_ads.show',$ad->title ) }}" class="card ad  {{$index%2==0?'odd':'even'}} {{ $ad->is_special ? 'special': ''}}">
     @else
-    <a href= "{{ route('classified_ads.show',$ad->id ) }}" class="card ad">
+    <a href= "{{ route('classified_ads.show',$ad->title ) }}" class="card ad">
     @endif
         <div class="card-body">
             <div class= "row">
@@ -17,7 +17,7 @@
                 </div>
                 <div class= "col-12 col-sm-7 ad-desc-wrapper"> 
                     {{ $ad->title }}
-                    <button type="button" id="remove-from-whislists" class="btn btn-danger btn-sm" data-ad_id="{{$ad->id}}"> {{ __('ads.edit') }} </button>
+                    <button type="button" id="remove-from-whislists" class="btn btn-danger btn-sm" data-ad_id="{{$ad->id}}"> {{ __('ads.details') }} </button>
                 </div>
             </div>
         </div>

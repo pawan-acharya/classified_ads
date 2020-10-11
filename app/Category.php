@@ -10,7 +10,9 @@ class Category extends Model
 {
     use WithFiles, Uploader;
     
-    protected $fillable = ['category_name', 'description', 'image', 'type'];
+    protected $fillable = [
+        'category_name', 'description', 'image', 'type', 'sub_category', 'display_order'
+    ];
 
     // adding the appends value will call the accessor in the JSON response
     protected $appends = ['ids'];

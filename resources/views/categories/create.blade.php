@@ -1,5 +1,10 @@
 @extends('layouts.admin')
-
+@push('scripts-vars')
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	<style type="text/css">
+		select { font-family: 'FontAwesome', Verdana }
+	</style>
+@endpush
 @section('content')
     @include('layouts.admin.headers.cards')
 	<div class="container">
@@ -22,7 +27,8 @@
 						    <label for="exampleInputEmail1">Category Poster Image:</label>
 						    <input type="file" class="form-control" id="fname" name="image" required>
 					  	</div>
-					  	<div class="form-group col-6">
+					  	
+					  	<div class="form-group col-4">
 						    <label for="cat-type">Category Description:</label>
 						    <select class="form-control" id="cat-type" name="type" >
 						    	<option value="none"></option>
@@ -30,7 +36,32 @@
 						    	<option value="sales">Sales package</option>
 						    </select> 
 					  	</div>
-					  	<div class="form-group col-6">
+					  	<div class="form-group col-4">
+						    <label for="cat-sub-category">Will contain sub-category?</label>
+						    <select class="form-control" id="cat-sub-category" name="sub_category" >
+						    	<option value="none"></option>
+						    	<option value="services">Services</option>
+						    	<option value="packages">Packages & activities</option>
+						    </select> 
+					  	</div>
+					  	<div class="form-group col-4">
+						    <label for="cat-sub-category">Display Order</label>
+						    <select class="form-control" id="cat-sub-category" name="display_order" >
+						    	@php($total=0)
+						    	@for ($i = 1; $total <= 6; $i++)
+							    	@if (\App\Category::where('display_order', '=', $i)->exists())
+							    		<option value="{{ $i }}" disabled="">
+							    			{{ $i }}- {{App\Category::where('display_order', '=', $i)->first()->category_name}}
+							    		</option>
+						    		@else
+						    			@php($total++)
+							        	<option value="{{ $i }}">{{ $i }}</option>
+							    	@endif
+							    @endfor
+						    </select> 
+					  	</div>
+
+					  	<div class="form-group col-12">
 						    <label for="exampleInputEmail1">Category Description:</label>
 						    <textarea class="form-control" id="fname" name="description" ></textarea> 
 					  	</div>
@@ -85,10 +116,8 @@
 
 @push('js')	
 	<script type="text/javascript">
-		var js_array= [];
-		var js_logos= [];
-	 	js_array= {!! json_encode(config('form_items')) !!} ;
-	 	js_logos= {!! json_encode(\Illuminate\Support\Facades\Storage::disk('public')->files('logos')) !!} ;
+	 	var js_array= {!! json_encode(config('form_items')) !!} ;
+	 	var js_logos= {!!  json_encode(config('logos')) !!} ; ;
 
 		var html=`<div class="form-group row divRow">
 				<input type="hidden" name="ids[]" value="0">
@@ -157,6 +186,12 @@
 			    <input type="text" class="form-control " placeholder="Enter name for the form" name="child_names[]" required>
 			    </div>
 			    <div class="form-group   col-sm-3">
+			    	<select  class="form-control types"  name="logos[]">
+			    	<option></option>`;
+			    	for (var key in js_logos) {
+					  html_select+=`<option value= `+key+`> &#x`+js_logos[key]+`; </option>`;
+					}
+			    	html_select+=`</select>
 			    </div>
 			    <div class="form-group  col-sm-3">
 			    <button type="button" class="btn btn-success " onclick="addNewSelectBody($(this))">+</button>
@@ -179,6 +214,29 @@
 			    </div>
 	  	</div>` ;
 
+	  	var html_activity= `<div class="form-group row divRow">
+			<input type="hidden" name="ids[]" value="0">
+			<div class="form-group   col-sm-2">
+		    </div>
+		    	<div class="form-group   col-sm-3">
+			    <input type="text" class="form-control " placeholder="Enter name for the form" name="child_names[]" required>
+			    </div>
+			    <div class="form-group   col-sm-3">
+			    	<select  class="form-control types"  name="logos[]">`;
+			    	for (var key in js_logos) {
+					  html_activity+=`<option value= `+js_logos[key]+`> `+js_logos[key]+`</option>`;
+					}
+			    html_activity+=`</select>
+			    </div>
+			    <div class="form-group   col-sm-2">
+			   
+			    </div>
+			    <div class="form-group  col-sm-2">
+			    <button type="button" class="btn btn-success " onclick="addNewActivityBody($(this))">+</button>
+			    <button type="button" class="btn btn-danger" onclick="removeThisItem($(this))">X</button>
+			    </div>
+	  	</div>` ;
+
 
 
 
@@ -191,6 +249,10 @@
 		}
 		function addNewSelectBody(item){
 			item.closest('.divRow').parent().append(html_select) ;
+			item.remove();
+		}
+		function addNewActivityBody(item){
+			item.closest('.divRow').parent().append(html_activity) ;
 			item.remove();
 		}
 
@@ -209,7 +271,9 @@
 			}
 			else if(item.closest('.divRow').find('.types').first().val() =='secondary_price'){
 				item.closest('.divRow').append(html_secondary_price) ;
-			}	
+			}else if(item.closest('.divRow').find('.types').first().val() =='activity'){
+				item.closest('.divRow').append(html_activity) ;
+			}
 		}
 
 		function removeThisItem(item){
@@ -224,6 +288,7 @@
 			var url= "{{ route('categories.store') }}";
 			var category_name= $(this).find("input[name='category_name']").val();
 			var type= $(this).find("select[name='type']").val();
+			var sub_category= $(this).find("select[name='sub_category']").val();
 			var description= $(this).find("textarea[name='description']").val();
 			var image= $(this).find("input[name='image']").val();
 			var big_array= new Array();
@@ -244,13 +309,35 @@
 						});
 				    });
 			     	small_array['box_array']= tiny_array;
-				}else if($(value).find("select[name='types[]']").first().val()== 'select' || $(value).find("select[name='types[]']").first().val()== 'check_box' || $(value).find("select[name='types[]']").first().val()== 'secondary_price'){
+				}else if($(value).find("select[name='types[]']").first().val()== 'select' || $(value).find("select[name='types[]']").first().val()== 'check_box'){
+					var tiny_array =new Array();
+			 		$.each( $(value).find('.divRow'), function( key, value ) {
+			 			tiny_array.push({
+							'type': 'None',
+							'name': $(value).find("input[name='child_names[]']").first().val(),
+							'logo': $(value).find("select[name='logos[]']").first().val(),
+							'mandatory': 'yes',
+						});
+				 	});
+				 	small_array['box_array']= tiny_array;
+				}else if($(value).find("select[name='types[]']").first().val()== 'secondary_price'){
 					var tiny_array =new Array();
 			 		$.each( $(value).find('.divRow'), function( key, value ) {
 			 			tiny_array.push({
 							'type': 'None',
 							'name': $(value).find("input[name='child_names[]']").first().val(),
 							'mandatory': 'yes',
+						});
+				 	});
+				 	small_array['box_array']= tiny_array;
+				}
+				else if($(value).find("select[name='types[]']").first().val()== 'activity'){
+					var tiny_array =new Array();
+			 		$.each( $(value).find('.divRow'), function( key, value ) {
+			 			tiny_array.push({
+			 				'type': 'None',
+							'name': $(value).find("input[name='child_names[]']").first().val(),
+							'logo': $(value).find("select[name='logos[]']").first().val(),
 						});
 				 	});
 				 	small_array['box_array']= tiny_array;
@@ -263,10 +350,11 @@
 		  	formData.append('_token', "{{ csrf_token() }}");
 		  	formData.append('category_name', category_name);
 		  	formData.append('type', type);
+		  	formData.append('sub_category', sub_category);
 		  	formData.append('description', description);
 			formData.append('image', $(this).find("input[name='image']")[0].files[0]);
 		  	formData.append('big_array', JSON.stringify(big_array));
-		  	debugger;
+		  	
 		  	$.ajax({
 			  	type: "POST",
 			  	url: url,
