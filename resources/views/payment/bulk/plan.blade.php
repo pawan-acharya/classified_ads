@@ -38,7 +38,7 @@
                 <div class="valid-month">
                     <span>{{ __('payments.valid_month') }}</span>
                 </div>
-                <a href="/payment-form/3" class="btn btn-main w-100">{{ __('payments.payment_link') }}</a>
+                <a id="rental-submit" href="{{route('bulk_payment_form', ['type'=>'ten'])}}" class="btn btn-main w-100">{{ __('payments.payment_link') }}</a>
             </div>
             <div class="col-md-3 plan-item featured">
                 <div class="pt-3">
@@ -67,7 +67,7 @@
                 <div class="valid-month">
                     <span>{{ __('payments.valid_month') }}</span>
                 </div>
-                <a href="/payment-form/3" class="btn btn-main w-100">{{ __('payments.payment_link') }}</a>
+                <a id="sales-submit" href="{{route('bulk_payment_form', ['type'=>'ten'])}}" class="btn btn-main w-100">{{ __('payments.payment_link') }}</a>
             </div>
             <div class="col-md-3 plan-item premium">
                 <div class="pt-3">
@@ -88,7 +88,7 @@
                 <div class="valid-month">
                     <span>{{ __('payments.valid_month') }}</span>
                 </div>
-                <a href="/payment-form/3" class="btn btn-main w-100">{{ __('payments.payment_link_premium') }}</a>
+                <a href="{{route('become_member')}}" class="btn btn-main w-100">{{ __('payments.payment_link_premium') }}</a>
             </div>
         </div>
     </div>
@@ -100,12 +100,27 @@ window.addEventListener('DOMContentLoaded', function() {
     (function($) {
         $('#sales-month').on("change",function () {
             new_price = $(this).val();
+            debugger;
+            $('#sales-submit').attr("href", returnURL(new_price));
             $('#sales-month-price').html('$ ' + new_price);
         });
         $('#rental-month').on("change",function () {
             new_price_rental = $(this).val();
+            debugger;
+            $('#rental-submit').attr("href", returnURL(new_price_rental));
             $('#rental-month-price').html('$ ' + new_price_rental);
         });
+        function returnURL(price){
+            var url= '{{route("bulk_payment_form", ":type")}}';
+            if(price ==75){
+                url= url.replace(':type', 'ten');
+            }else if(price ==50){
+                url= url.replace(':type', 'five');
+            }else{
+                url= url.replace(':type', 'one');
+            }
+            return url;
+        }
     })(jQuery);
 });
 </script>
