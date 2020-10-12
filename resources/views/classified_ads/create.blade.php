@@ -10,7 +10,7 @@
 		    		<div class="card-header">
 		    			<select class="form-control" id="category-select" onchange="getCategoryForm($(this))">
 			    			@foreach ($categories as $category)
-			    				<option value="{{$category->id}}" {{$category->id==$category_id?'selected':''}}> {{$category->category_name}} </option>
+			    				<option value="{{$category->category_name}}" {{$category->id==$category_id?'selected':''}}> {{$category->category_name}} </option>
 			    			@endforeach
 		    			</select>
 		    		</div>

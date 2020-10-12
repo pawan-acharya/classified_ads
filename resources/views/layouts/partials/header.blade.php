@@ -18,7 +18,7 @@
                                 <select class="form-control search-slt @error('category') is-invalid @enderror" name="category" id="search-category" >
                                     <option value=""> {{ __('ads.all') }}</option>
                                     @foreach (\App\Category::oldest('display_order')->get() as $category)
-                                        <option value="{{$category->id}}" @if (request()->get('category') === $category->id) selected @endif> {{$category->category_name}}</option>
+                                        <option value="{{$category->category_name}}" @if (request()->get('category') === $category->category_name) selected @endif> {{$category->category_name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -82,7 +82,7 @@
                 <ul class="navbar-nav mr-auto">
                     @foreach (\App\Category::oldest('display_order')->get() as $category)
                     <li class="nav-item">
-                        <a class="nav-link {{ (Request::segment(1) == 'classified_ads' && Request::segment(2) == '') ? 'active' : '' }}" 
+                        <a class="nav-link {{ (Request::segment(1) == 'classified_ads' && request()->category == $category->category_name) ? 'active' : '' }}" 
                         href="{{ route('classified_ads.index', ['category'=> $category->category_name]) }}">
                         <span class="nav-text">{{ $category->category_name}} 
                             {{-- {{request()->category == $category->category_name}}  --}}
@@ -91,7 +91,13 @@
                     </li>
                     @endforeach
                     <li class="nav-item btn-main">
-                        <a class="nav-link" href="{{ url('/classified_ads/create') }}">
+                        <a class="nav-link" 
+                        @if (request()->category)
+                             href="{{ route('classified_ads.create', ['cat_id'=> request()->category]) }}"
+                        @else
+                             href="{{ route('classified_ads.create') }}"
+                        @endif
+                       >
                         <span class="nav-text">Post an Ad <i class="fas fa-chevron-right"></i></span>
                         </a>
                     </li>

@@ -52,13 +52,13 @@ class ClassifiedAdController extends Controller
      */
     public function create(Request $request, $cat_id=null)
     {
-        
-        $category_id=  $cat_id??null;
+        $category=  $cat_id?Category::where('category_name', $cat_id)->first():null;
         if($request->ajax()){
-            $category= Category::findOrFail($category_id);
+            // $category= Category::findOrFail($category_id);
             return view('classified_ads.partials.create', compact(['category']));
         }
         $categories= Category::all();
+        $category_id= $category?$category->id:null;
         return view('classified_ads.create', compact(['category_id', 'categories']));
     }
 
