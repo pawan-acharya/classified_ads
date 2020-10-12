@@ -25,14 +25,14 @@
                 </div>
                 <div class="price-box">
                     <div class="w-50 text-left">
-                        <select name="package_month" id="package_month">
-                            <option value="1">1 AD's</option>
-                            <option value="5">5 AD's</option>
-                            <option value="10">10 AD's</option>
+                        <select class="form-control" name="package-month-rental" id="rental-month">
+                            <option value="20">1 AD's</option>
+                            <option value="50">5 AD's</option>
+                            <option value="75" selected>10 AD's</option>
                         </select>
                     </div>
                     <div class="w-50 text-right">
-                        <p class="plan-price">75$</p>
+                        <p class="plan-price" id="rental-month-price">$ 75</p>
                     </div>
                 </div>
                 <div class="valid-month">
@@ -54,14 +54,14 @@
                 </div>
                 <div class="price-box">
                     <div class="w-50 text-left">
-                        <select name="package_month" id="package_month">
-                            <option value="1">1 AD's</option>
-                            <option value="5">5 AD's</option>
-                            <option value="10">10 AD's</option>
+                        <select class="form-control" name="package-month-sales" id="sales-month">
+                            <option value="20">1 AD's</option>
+                            <option value="50">5 AD's</option>
+                            <option value="75" selected>10 AD's</option>
                         </select>
                     </div>
                     <div class="w-50 text-right">
-                        <p class="plan-price">75$</p>
+                        <p class="plan-price" id="sales-month-price">$ 75</p>
                     </div>
                 </div>
                 <div class="valid-month">
@@ -95,6 +95,19 @@
 </section>
 
 @push('js')
-
+<script type="text/javascript">
+window.addEventListener('DOMContentLoaded', function() {
+    (function($) {
+        $('#sales-month').on("change",function () {
+            new_price = $(this).val();
+            $('#sales-month-price').html('$ ' + new_price);
+        });
+        $('#rental-month').on("change",function () {
+            new_price_rental = $(this).val();
+            $('#rental-month-price').html('$ ' + new_price_rental);
+        });
+    })(jQuery);
+});
+</script>
 @endpush
 @endsection

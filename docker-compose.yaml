@@ -17,7 +17,7 @@ services:
     environment:
       - DB_HOST=mariadb
       - DB_USERNAME=my_user
-      - DB_DATABASE=test
+      - DB_DATABASE=classified
       - DB_PASSWORD=my_password
     depends_on:
       - mariadb

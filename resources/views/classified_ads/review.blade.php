@@ -22,7 +22,7 @@
                 </div>
                 @if (!($classified_ad->plan_id && $classified_ad->plan->ends_at> date('Y-m-d')))
                     <div class="col-md-6"> 
-                        <a href="{{ route('payment.plans' , $classified_ad->id) }}" class="btn btn-secondary btn-round float-right">
+                        <a href="{{ route('payment.plans_form' , $classified_ad->id) }}" class="btn btn-secondary btn-round float-right">
                             {{ __('ads.review.approve_and_continue') }}
                         </a>    
                     </div>
