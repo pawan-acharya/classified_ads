@@ -42,14 +42,19 @@
                         @endif
                     @else
                         <li class="nav-item">
-                            <a class="dropdown-item" href="{{ route('chatrooms.index') }}"><i class="fas fa-comment-alt"></i></a>
+                            <a href="{{ route('chatrooms.index') }}"><i class="fas fa-comment-alt"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="dropdown-item" href="{{ route('wishlists') }}"><i class="fas fa-heart"></i></a>
+                            <a href="{{ route('wishlists') }}"><i class="fas fa-heart"></i></a>
                         </li>
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }} 
+                                @if (Auth::user()->file)
+                                <img src="{{ Auth::user()->file->getPathAttribute() }}" width="100%" class="displayimage"/>
+                                @else
+                                    <img src="{{ asset('images/avatar.png') }}" class="displayimage"/>
+                                @endif    
+                                <span>{{ Auth::user()->name }}</span>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

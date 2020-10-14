@@ -773,6 +773,12 @@ span.select2.select2-container.select2-container--default {
 }
 /* End Contact Page Styling */
 /* Plan Selection Styling */
+#plan-intro form#payment-form {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  margin-top: 20px;
+}
 #plan-intro .plan-item {
   flex-direction: column;
   align-items: center;
@@ -1066,6 +1072,8 @@ span.select2.select2-container.select2-container--default {
 }
 .search-sec {
   width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
 }
 .search-sec form {
   background: #E3E3E3;
@@ -1107,6 +1115,10 @@ span.select2.select2-container.select2-container--default {
 .header {
   box-shadow: 0px 0px 5px 0px #ccc;
   border-bottom: 1px solid #ccc;
+}
+.header .displayimage {
+  border-radius: 50%;
+  width: 31px;
 }
 .listing-ad-wrapper {
   background: white;
@@ -1498,4 +1510,67 @@ form#feed_back_form button {
   top: 10px;
   right: 8px;
   color: #F3626B;
+}
+span.note {
+  color: grey;
+  font-size: 12px;
+}
+.single-ad-premium {
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+  font-size: 11px;
+  background: #F0E6E4;
+  margin: 10px;
+  text-align: center;
+  padding: 16px;
+}
+.single-ad-premium ul {
+  list-style: none;
+  padding-left: 0px;
+}
+.single-ad-premium ul li {
+  background: #2774F0;
+  padding: 7px 20px;
+  color: #fff;
+  margin-bottom: 15px !important;
+  border-radius: 20px;
+  font-size: 16px;
+}
+.single-ad-premium ul li i {
+  margin-right: 7.5px;
+  color: #E2B90E;
+}
+.single-ad-premium ul li i.fa-star {
+  border-radius: 50%;
+  color: #fff;
+  background: #E2B90E;
+  padding: 3px;
+}
+.single-ad-premium .price-box {
+  border-top: 1px solid #707070;
+  padding: 20px 5px 0px 5px;
+  font-size: 26px;
+  font-weight: 500;
+  margin-bottom: 0px;
+}
+.single-ad-premium .valid-month {
+  width: 100%;
+  font-size: 16px;
+  color: #3D4853;
+  padding-left: 5px;
+  padding-bottom: 20px;
+}
+#ad-create .btn.btn-danger {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+}
+#navbarResponsiveAccount .account-menu .nav-item i {
+  padding: 15px 10px;
+  color: #6A6A6A;
+}
+.profile-ad-title {
+  font-size: 15px;
+  color: #000;
 }

@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class= "col-12 col-sm-7 ad-desc-wrapper"> 
-                    {{ $ad->title }}
+                    <h3 class="profile-ad-title">{{ $ad->title }}</h3>
                     <button type="button" id="remove-from-whislists" class="btn btn-danger btn-sm" data-ad_id="{{$ad->id}}"> {{ __('ads.details') }} </button>
                 </div>
             </div>

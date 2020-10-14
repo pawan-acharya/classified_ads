@@ -156,33 +156,6 @@
                     </div>
                 </div>
                 @endif
-
-                @if(!$user->partner) 
-                    <div class="col-md-12">
-                        <div class="row-head">{{ __('auth.my_partnership') }}<img src="{{ asset('images/icon/arrow-down.png') }}" alt="Arrow Down" /></div>
-                            <div class= "row info-block">
-                                <div class="col-md-12 text-center py-4"> 
-                                    <a type="submit" href="{{ route('partners.create') }}" class="btn btn-secondary btn-round">
-                                        {{ __('partners.become_a_partner') }}
-                                    </a>    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @else 
-                    @if($user->partner->status=='pending') 
-                    <div class="partnership">
-                        <div class="row-head">{{ __('auth.my_partnership') }}<img src="{{ asset('images/icon/arrow-down.png') }}" alt="Arrow Down" /></div>
-                        <div class= "row info-block">
-                            <div class="col-md-12 text-center py-4"> 
-                                <a href="javascript:void();" class="btn btn-primary btn-round">
-                                    {{ __('partners.partnership_pending') }}
-                                </a>    
-                            </div>
-                        </div>
-                    </div>
-                    @endif
-                @endif
             </div>
         </div>
     </div>

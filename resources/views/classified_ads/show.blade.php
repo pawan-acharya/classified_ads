@@ -58,7 +58,7 @@
             <h5>Best quarter list of ad’s for your choice</h5>
             <div class="owl-carousel">
             @foreach ($featured_ads as $classified_ad)
-            <a class="item featured-ads-item" href="/classified_ads/{{$classified_ad->id}}">
+            <a class="item featured-ads-item" href="/classified_ads/{{$classified_ad->title}}">
                 <div class="aspect-ratio-box">
                 @if (!empty($classified_ad->file))
                     <img src="{{ $classified_ad->file->getPathAttribute() }}" style="max-width: 100%;" />

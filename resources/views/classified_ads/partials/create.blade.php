@@ -33,9 +33,10 @@
 		    <label for="exampleInputEmail1" class="col-form-label text-md-right">#Images</label>
 		    <input type="file" class="" name="title_images[]" >
 	  	</div>
-	  	<div class="form-group  col-sm-3">
-	    	<button type="button" class="btn btn-secondary " onclick="addNewImageDiv()">+</button>
-	    	{{-- <button type="button" class="btn btn-danger" onclick="removeThisItem($(this))">X</button> --}}
+	  	<div class="form-group  col-sm-6">
+	    	<button type="button" class="btn btn-secondary btn-sm" onclick="addNewImageDiv()">+</button>
+			{{-- <button type="button" class="btn btn-danger btn-sm" onclick="removeThisItem($(this))">X</button> --}}
+			<span class="note">Extra $5 will be charged to add more than 5 images</span>
 		</div>
 	</div>
 	<div class="form-group col-sm-6">
@@ -44,10 +45,12 @@
   	</div>
   	<div class="form-group col-sm-6" id="url-div">
   		@if ($category->type != 'none' || Auth::user()->checkIfAdmin() || Auth::user()->ifLeftAds())
-	     	<label for="classified_ad-url" class="col-form-label text-md-right">Add a URl</label>
-		    <input type="text"  id="classified_ad-url" class="form-control  @error('url') is-invalid @enderror" name="url" >
+	     	<label for="classified_ad-url" class="col-form-label text-md-right">URL</label>
+		    <input type="text"  id="classified_ad-url" class="form-control  @error('url') is-invalid @enderror" name="url" placeholder="URL">
 	    @else
-	    	<label for="classified_ad-url" class="col-form-label text-md-right" onclick="addURL($(this))">Add a URL</label>
+			<label for="classified_ad-url" class="col-form-label text-md-right">URL</label>
+			<span class="note">Extra $1 will be charged to add a URL</span>
+			<button type="button" class="btn btn-secondary btn-sm mb-1" onclick="addURL($(this))">+</button>
   		@endif
   	</div>
 
@@ -57,24 +60,56 @@
   	</div>
 
   	@include('classified_ads.partials.add')
-  	
-  	<div class="form-group col-sm-6">
+	@if ($category->type != 'none' || Auth::user()->checkIfAdmin() || Auth::user()->ifLeftAds())
+	@else
+	<div class="form-group col-sm-6">
   		<label for="featured-ad" class="col-form-label text-md-right">Make this ad Featured</label>
   		<input type="checkbox"  id="make-featured" onclick="makeFeatured($(this))" name="is_featured">
-  	</div>
-  	<div class="form-group col-sm-6" id="featured-for">
-  		<label for="featured-ad-duration" class="col-form-label text-md-right">choose duration</label>
-  		<select  class="form-control" id="featured-ad-duration" name="feature_type" onchange="addFeaturedAmount($(this))">
-  			@if ($category->type =='none' && !Auth::user()->checkIfAdmin() && !Auth::user()->ifLeftAds())
-	  			<option value="day">1 Day</option>
-	  			<option value="week">1 Week</option>
-  			@endif
-  			<option value="month">1 Month</option>
-  		</select>
-  	</div>
+	</div>
+	<div class="form-group col-sm-6" id="featured-for">
+		<label for="featured-ad-duration" class="col-form-label text-md-right">choose duration</label>
+		<select  class="form-control" id="featured-ad-duration" name="feature_type" onchange="addFeaturedAmount($(this))">
+			@if ($category->type =='none' && !Auth::user()->checkIfAdmin() && !Auth::user()->ifLeftAds())
+				<option value="day">1 Day</option>
+				<option value="week">1 Week</option>
+			@endif
+			<option value="month">1 Month</option>
+		</select>
+	</div>
+	@endif
   	<div class="form-group col-sm-6">
-  		<button type="submit" class="btn btn-primary">Submit</button>
-  	</div>
+	  @if ($category->type != 'none' || Auth::user()->checkIfAdmin() || Auth::user()->ifLeftAds())
+	  <div class="single-ad-premium">
+		<div>
+			<ul>
+				<li class="mb-0"><i class="far fa-image"></i>{{ __('payments.payment_plans.sales.pictures') }}</li>
+				<li class="mb-0"><i class="fas fa-external-link-alt"></i>{{ __('payments.payment_plans.sales.url') }}</li>
+				<li><i class="fas fa-star"></i>{{ __('payments.payment_plans.sales.featured') }}</li>
+			</ul>
+		</div>
+		<div class="price-box">
+			<p class="plan-price" id="ad-total-amount"></p>
+		</div>
+		<div class="valid-month">
+			<span>{{ __('payments.valid_month') }}</span>
+		</div>
+		<button type="submit" class="btn btn-main w-100">{{ __('payments.payment_link') }}</button>
+	</div>
+	@else
+	<div class="single-ad-premium">
+		<div>
+			<ul id="selected-features">
+			</ul>
+		</div>
+		<div class="price-box">
+			<p class="plan-price" id="ad-total-amount"></p>
+		</div>
+		<div class="valid-month">
+			<span>{{ __('payments.valid_month') }}</span>
+		</div>
+		<button type="submit" class="btn btn-main w-100">{{ __('payments.payment_link') }}</button>
+	</div>
+	@endif
 </form>
 
 <script type="text/javascript">
@@ -85,14 +120,15 @@
 		    <input type="file" class="" name="title_images[]" >
 	  	</div>
 	  	<div class="form-group col-sm-6">
-		    <button type="button" class="btn btn-danger" onclick="removeThisItem($(this))">X</button>
+		    <button type="button" class="btn btn-danger btn-sm" onclick="removeThisItem($(this))">X</button>
 	  	</div>`;
 	  	var imageDivCount= $('#image-div input').length;
 	  	var category_type= "{!! $category->type !!}";
 	  	if(category_type == 'none' && !is_admin && !has_plan){
 		  	if(imageDivCount== 6){
 		  		calculateTotalAmount(5);
-		  	}
+				$('#selected-features').append('<li class="mb-0">More than 6 Images</li>');
+			}
 	  	}
 	  	$('#image-div').append(html);
 	}
@@ -111,7 +147,8 @@
 
 	function addURL(item){
 		calculateTotalAmount(1);
-		var url_input_field= '<input type="text"  id="classified_ad-url" class="form-control  @error('url') is-invalid @enderror" name="url" > <button type="button" class="btn btn-danger " onclick="removeURLField($(this))">X</button>';
+		$('#selected-features').append('<li class="mb-0">Added a URL</li>')
+		var url_input_field= '<input type="text"  id="classified_ad-url" class="form-control  @error('url') is-invalid @enderror" name="url" placeholder="URL"> <button type="button" class="btn btn-danger btn-sm" onclick="removeURLField($(this))">X</button>';
 		item.parent('#url-div').append(url_input_field);
 	}
 
@@ -145,13 +182,15 @@
   	}
 	function calculateTotalAmount(number){
 		totalamount+= number;
-		// alert('total amount= '+totalamount+ '$');
+		$('#ad-total-amount').html('Total Amount: '+totalamount+ '$')
+		
 	}
 
 	function makeFeatured(item){
 		if( item.is(':checked') ){
 			$('#featured-for').children().show();
 			addFeaturedAmount($('#featured-ad-duration'));
+			$('#selected-features').append('<li class="mb-0">Featured Ad</li>')
 		}else{
 			$('#featured-for').children().hide();
 			calculateTotalAmount(-previousAmount);

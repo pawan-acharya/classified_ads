@@ -92,7 +92,7 @@
                             </thead>
                             <tbody>
                                 <tr id="checkout-subscription">
-                                    <td class="col-md-9"><em>{{ __('payments.payment_plans.'.$payment_plan['slug'].'.title')}}</em></td>
+                                    <td class="col-md-9"><em>{{ __('payments.payment_plans.premium.title')}}</em></td>
                                     <td id="subscription-cost" class="col-md-1 text-center" data-cost="{{ $payment_plan['cost'] }}">{{ $checkout_data['cost_formatted'] }}</td>
                                 </tr>
                                 <tr id="checkout-voucher" class="d-none">
