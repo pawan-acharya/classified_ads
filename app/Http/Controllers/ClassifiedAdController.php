@@ -112,11 +112,11 @@ class ClassifiedAdController extends Controller
                     $classified_ad->file()->create($classified_ad->upload($value));
                 }
             }
-            if(Auth::user()->checkIfAdmin()){
-                $plan =Auth::user()->plan;
-                $classified_ad->plan()->associate($plan);
-                $classified_ad->save();
-            }
+            // if(Auth::user()->checkIfAdmin()){
+            //     $plan =Auth::user()->plan;
+            //     $classified_ad->plan()->associate($plan);
+            //     $classified_ad->save();
+            // }
             return redirect()->route('classified_ads.review', ['classified_ad'=>$classified_ad->id]);
         } catch (Exception $e) {
             dd($e);

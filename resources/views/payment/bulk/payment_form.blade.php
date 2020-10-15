@@ -9,7 +9,8 @@
                 {{ session('error') }}
             </div>
         @endif
-        <form id="payment-form" role="form" method="POST" action="{{ route('bulk_payment.charge', ['type'=> $type]) }}">
+        <form id="payment-form" role="form" method="POST" 
+        action="{{ route('bulk_payment.charge', ['type'=> $type,'package_type'=> $package_type]) }}">
             @csrf
             <h1 class="section-head mb-3">{{ __('payments.payment_details') }}</h1>
             <div class="row info-block p-0">

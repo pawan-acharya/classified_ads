@@ -8,8 +8,14 @@
     		@if (Auth::user()->checkIfAdmin())
     			Membership:- Expiry Date:- 
     			{{\Carbon\Carbon::parse(Auth::user()->plan->ends_at)->diffForHumans(\Carbon\Carbon::now())}}
-			@elseif (Auth::user()->ifLeftAds())
-				Remaining Ads:-	{{Auth::user()->getLeftAds()}}
+			@elseif (Auth::user()->ifLeftAds('sales'))
+				Remaining Ads:-	{{Auth::user()->getLeftAds('sales')}}
+				<br>
+				Package:-  {{ucfirst('sales')}}
+			@elseif (Auth::user()->ifLeftAds('rental'))
+				Remaining Ads:-	{{Auth::user()->getLeftAds('rental')}}
+				<br>
+				Package:-  {{ucfirst('rental')}}
     		@endif
     	</h1>
         <div class="row justify-content-center">

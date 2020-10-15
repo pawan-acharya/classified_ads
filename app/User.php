@@ -91,12 +91,12 @@ class User extends Authenticatable
         return ($this->plan_id && $this->plan->type== 'membership' && $this->plan->ends_at>= date('Y-m-d'));
     }
 
-    public function checkForPlan(){
-        return ($this->plan_id && ($this->plan->type== 'one' || $this->plan->type== 'five' || $this->plan->type== 'ten') && $this->plan->ends_at>= date('Y-m-d'));
+    public function checkForPlan($category_type){
+        return ($this->plan_id && ($this->plan->type== 'one' || $this->plan->type== 'five' || $this->plan->type== 'ten') && $this->plan->ends_at>= date('Y-m-d') && ($this->plan->package_type==$category_type));
     }
 
-    public function getLeftAds(){
-        if($this->checkForPlan()){
+    public function getLeftAds($category_type){
+        if($this->checkForPlan($category_type)){
             $ad_counts= $this->ads()->where('plan_id', $this->plan_id)->count();
             
             switch ($this->plan->type) {
@@ -115,7 +115,10 @@ class User extends Authenticatable
         }
     }
 
-    public function ifLeftAds(){
-        return ($this->getLeftAds()>0)? true: false;
+    public function ifLeftAds($category_type=null){
+        if($category_type == 'none'){
+            return false;
+        }
+        return ($this->getLeftAds($category_type)>0)? true: false;
     }
 }

@@ -36,7 +36,9 @@
 	  	<div class="form-group  col-sm-6">
 	    	<button type="button" class="btn btn-secondary btn-sm" onclick="addNewImageDiv()">+</button>
 			{{-- <button type="button" class="btn btn-danger btn-sm" onclick="removeThisItem($(this))">X</button> --}}
-			<span class="note">Extra $5 will be charged to add more than 5 images</span>
+			@if ($category->type == 'none')
+				<span class="note">Extra $5 will be charged to add more than 5 images</span>
+			@endif
 		</div>
 	</div>
 	<div class="form-group col-sm-6">
@@ -44,7 +46,7 @@
 	    <input type="text"  id="pac-input" class="form-control  @error('location') is-invalid @enderror" name="location" >
   	</div>
   	<div class="form-group col-sm-6" id="url-div">
-  		@if ($category->type != 'none' || Auth::user()->checkIfAdmin() || Auth::user()->ifLeftAds())
+  		@if ($category->type != 'none' || Auth::user()->checkIfAdmin())
 	     	<label for="classified_ad-url" class="col-form-label text-md-right">URL</label>
 		    <input type="text"  id="classified_ad-url" class="form-control  @error('url') is-invalid @enderror" name="url" placeholder="URL">
 	    @else
@@ -83,7 +85,7 @@
 	</div>
 
   	<div class="form-group col-sm-6">
-	  @if (Auth::user()->checkIfAdmin() || Auth::user()->ifLeftAds())
+	  @if (Auth::user()->checkIfAdmin() || Auth::user()->ifLeftAds($category->type))
 	  	<button type="submit" class="btn btn-main w-100">Create the Ad</button>
 	@else
 		<div class="single-ad-premium">
@@ -109,7 +111,7 @@
 
 <script type="text/javascript">
 	var is_admin= {!! Auth::user()->checkIfAdmin()?1:0!!} ;
-	var has_plan = {!! Auth::user()->ifLeftAds()?1:0!!};
+	var has_plan = {!! Auth::user()->ifLeftAds($category->type)?1:0!!};
 	function addNewImageDiv(){
 		var html= `<div class="form-group col-sm-6">
 		    <input type="file" class="" name="title_images[]" >

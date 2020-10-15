@@ -33,7 +33,8 @@
                         </div>
                         <div class= "col-md-3">
                             @if (Auth::user()->file)
-                                <img src="{{ Auth::user()->file->getPathAttribute() }}" width="100%"/>
+                                {{-- <img src="{{ Auth::user()->file->getPathAttribute() }}" width="100%"/> --}}
+                                <img src="{{ Auth::user()->file->getPathAttribute() }}" width="100%" class="displayimage"/>
                             @else
                                 <img src="{{ asset('images/avatar.png') }}"/>
                             @endif
@@ -50,12 +51,18 @@
                                 <a type="button" href="{{route('become_member')}}" class="btn btn-secondary mb-2" data-dismiss="modal">Become a member for a month</a>
                             @endif
                         
-                        
-                        
                             @if (!Auth::user()->checkIfAdmin())
-                                @if (Auth::user()->getLeftAds() > 0)
-                                    <a type="button"  class="btn btn-secondary" data-dismiss="modal">
-                                        Remaining Ads :- {{Auth::user()->getLeftAds()}}
+                                @if (Auth::user()->getLeftAds('sales') > 0)
+                                    <a type="button" href="{{route('bulk_pay')}}"  class="btn btn-secondary" data-dismiss="modal">
+                                        Remaining Ads :- {{Auth::user()->getLeftAds('sales')}}
+                                        <br>
+                                        Package:- {{ucfirst('sales')}}
+                                    </a>
+                                @elseif(Auth::user()->getLeftAds('rental') > 0)
+                                    <a type="button" href="{{route('bulk_pay')}}"  class="btn btn-secondary" data-dismiss="modal">
+                                        Remaining Ads :- {{Auth::user()->getLeftAds('rental')}}
+                                        <br>
+                                        Package:- {{ucfirst('rental')}}
                                     </a>
                                 @else
                                 <a type="button" href="{{route('bulk_pay')}}" class="btn btn-secondary" data-dismiss="modal">

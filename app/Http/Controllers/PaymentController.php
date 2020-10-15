@@ -24,9 +24,9 @@ class PaymentController extends Controller
 
 	public function plansForm($id) 
 	{
-		if(Auth::user()->checkIfAdmin() || Auth::user()->ifLeftAds()){
+        $classified_ad= ClassifiedAd::findOrFail($id);
+		if(Auth::user()->checkIfAdmin() || Auth::user()->ifLeftAds($classified_ad->category->type) || findTotalAmount($id)<=0){
             $plan =Auth::user()->plan;
-            $classified_ad= ClassifiedAd::findOrFail($id);
             $classified_ad->plan()->associate($plan);
             $classified_ad->save();
             return redirect()->route('home')->with('status', Lang::get('payments.payment_successful'));
@@ -200,7 +200,7 @@ class PaymentController extends Controller
 		return view('payment.bulk.plan');
 	}
 
-	public function bulk_payment_form($type){
+	public function bulk_payment_form($type, $package_type){
 		// if(Auth::user()->checkIfAdmin()){
 		// 	$plan =Auth::user()->plan;
 		// 	foreach (request()->session()->get('ids')[0] as $key => $value) {
@@ -227,10 +227,10 @@ class PaymentController extends Controller
 			'total' => $payment_plan['cost'] +  $payment_plan['cost']*Constants::TAX_RATE,
 		];
 		// request()->session()->push('ids', request()->session()->get('ids')[0]);
-		return view('payment.bulk.payment_form', compact('payment_plan', 'checkout_data', 'type'));
+		return view('payment.bulk.payment_form', compact('payment_plan', 'checkout_data', 'type', 'package_type'));
 	}
 
-	public function bulk_payment_charge(Request $request, $type){
+	public function bulk_payment_charge(Request $request, $type, $package_type){
 		$slug= 'exceptional';
 		try {
 			$payment_plan = Constants::PAYMENT_PLANS['exceptional'];
@@ -264,7 +264,8 @@ class PaymentController extends Controller
 				'name' => $payment_plan['title'],
 				'ends_at' => $ends_at,
 				'is_active' => 1,
-				'type'=> $type
+				'type'=> $type,
+				'package_type'=> $package_type
 			]);
 
 			$user = Auth::user();

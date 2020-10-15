@@ -19,7 +19,8 @@ class Plan extends Model
         'ad_id',
         'ends_at',
         'is_active',
-        'type'
+        'type',
+        'package_type'
     ];
 
 }

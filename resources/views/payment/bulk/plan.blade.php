@@ -38,7 +38,7 @@
                 <div class="valid-month">
                     <span>{{ __('payments.valid_month') }}</span>
                 </div>
-                <a id="rental-submit" href="{{route('bulk_payment_form', ['type'=>'ten'])}}" class="btn btn-main w-100">{{ __('payments.payment_link') }}</a>
+                <a id="rental-submit" href="{{route('bulk_payment_form', ['type'=>'ten', 'package_type'=> 'rental'])}}" class="btn btn-main w-100">{{ __('payments.payment_link') }}</a>
             </div>
             <div class="col-md-3 plan-item featured">
                 <div class="pt-3">
@@ -67,7 +67,7 @@
                 <div class="valid-month">
                     <span>{{ __('payments.valid_month') }}</span>
                 </div>
-                <a id="sales-submit" href="{{route('bulk_payment_form', ['type'=>'ten'])}}" class="btn btn-main w-100">{{ __('payments.payment_link') }}</a>
+                <a id="sales-submit" href="{{route('bulk_payment_form', ['type'=>'ten','package_type'=> 'sales'])}}" class="btn btn-main w-100">{{ __('payments.payment_link') }}</a>
             </div>
             <div class="col-md-3 plan-item premium">
                 <div class="pt-3">
@@ -100,18 +100,20 @@ window.addEventListener('DOMContentLoaded', function() {
     (function($) {
         $('#sales-month').on("change",function () {
             new_price = $(this).val();
-            debugger;
-            $('#sales-submit').attr("href", returnURL(new_price));
+            var sales_url= returnURL(new_price);
+            sales_url= sales_url.replace(':package_type', 'sales');
+            $('#sales-submit').attr("href", sales_url);
             $('#sales-month-price').html('$ ' + new_price);
         });
         $('#rental-month').on("change",function () {
             new_price_rental = $(this).val();
-            debugger;
-            $('#rental-submit').attr("href", returnURL(new_price_rental));
+            var rental_url= returnURL(new_price_rental);
+            rental_url= rental_url.replace(':package_type', 'rental');
+            $('#rental-submit').attr("href", rental_url);
             $('#rental-month-price').html('$ ' + new_price_rental);
         });
         function returnURL(price){
-            var url= '{{route("bulk_payment_form", ":type")}}';
+            var url= '{{route("bulk_payment_form", ["type"=>":type", "package_type"=>":package_type"])}}';
             if(price ==75){
                 url= url.replace(':type', 'ten');
             }else if(price ==50){
