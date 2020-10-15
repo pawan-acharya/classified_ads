@@ -9,7 +9,10 @@
 					@foreach ($chat_rooms as $chat_room)
 					<a href="{{route('feedbacks.show', ['chat_room_id'=> $chat_room->id])}}">
 						<div class="user-card {{$chat_room->id ==$feedbacks->first()->chat_room->id?'active-chat':''}}">
-							<div class="user-avatar"><img src="{{ asset('images/avatar.png') }}"/></div>
+							<div class="user-avatar">
+								{{-- <img src="{{ $chat_room->advertiser_user->file->getPathAttribute() }}" width="100%" class="displayimage"/> --}}
+								<img src="{{($chat_room->advertiser == Auth::id())?$chat_room->visitor_user->file->getPathAttribute():$chat_room->advertiser_user->file->getPathAttribute()}}" width="100%" class="displayimage"/>
+							</div>
 							<div class="user-content" 
 								@if ($chat_room->feedbacks()->latest()->first()->read)
 									style="color: black;"
