@@ -61,51 +61,49 @@
 
   	@include('classified_ads.partials.add')
 	
-	<div class="form-group col-sm-6">
+	<div class="form-group col-sm-6" 
+	@if ($category->type != 'none')
+		style="display: none"
+	@endif
+	>
   		<label for="featured-ad" class="col-form-label text-md-right">Make this ad Featured</label>
-  		<input type="checkbox"  id="make-featured" onclick="makeFeatured($(this))" name="is_featured">
+  		<input type="checkbox"  id="make-featured" onclick="makeFeatured($(this))" name="is_featured" {{$category->type != 'none'?'checked':''}}>
 	</div>
-	<div class="form-group col-sm-6" id="featured-for">
+	<div class="form-group col-sm-6" id="featured-for" 
+	@if ($category->type != 'none')
+		style="display: none"
+	@endif
+	>
 		<label for="featured-ad-duration" class="col-form-label text-md-right">choose duration</label>
 		<select  class="form-control" id="featured-ad-duration" name="feature_type" onchange="addFeaturedAmount($(this))">
 			<option value="day">1 Day</option>
 			<option value="week">1 Week</option>
-			<option value="month">1 Month</option>
+			<option value="month" {{$category->type != 'none'?'selected':''}}>1 Month</option>
 		</select>
 	</div>
 
   	<div class="form-group col-sm-6">
-	  @if ($category->type != 'none' || Auth::user()->checkIfAdmin() || Auth::user()->ifLeftAds())
-	  <div class="single-ad-premium">
-		<div>
-			<ul>
-				<li class="mb-0"><i class="far fa-image"></i>{{ __('payments.payment_plans.sales.pictures') }}</li>
-				<li class="mb-0"><i class="fas fa-external-link-alt"></i>{{ __('payments.payment_plans.sales.url') }}</li>
-				<li><i class="fas fa-star"></i>{{ __('payments.payment_plans.sales.featured') }}</li>
-			</ul>
-		</div>
-		<div class="price-box">
-			<p class="plan-price" id="ad-total-amount"></p>
-		</div>
-		<div class="valid-month">
-			<span>{{ __('payments.valid_month') }}</span>
-		</div>
-		<button type="submit" class="btn btn-main w-100">{{ __('payments.payment_link') }}</button>
-	</div>
+	  @if (Auth::user()->checkIfAdmin() || Auth::user()->ifLeftAds())
+	  	<button type="submit" class="btn btn-main w-100">Create the Ad</button>
 	@else
-	<div class="single-ad-premium">
-		<div>
-			<ul id="selected-features">
-			</ul>
+		<div class="single-ad-premium">
+			<div>
+				@if ($category->type != 'none')
+					<ul>
+						<li class="mb-0"><i class="far fa-image"></i>{{ __('payments.payment_plans.sales.pictures') }}</li>
+						<li class="mb-0"><i class="fas fa-external-link-alt"></i>{{ __('payments.payment_plans.sales.url') }}</li>
+						<li><i class="fas fa-star"></i>{{ __('payments.payment_plans.sales.featured') }}</li>
+					</ul>
+				@endif
+			</div>
+			<div class="price-box">
+				<p class="plan-price" id="ad-total-amount">{{$category->type != 'none'?20:''}}</p>
+			</div>
+			<div class="valid-month">
+				<span>{{ __('payments.valid_month') }}</span>
+			</div>
+			<button type="submit" class="btn btn-main w-100">{{ __('payments.payment_link') }}</button>
 		</div>
-		<div class="price-box">
-			<p class="plan-price" id="ad-total-amount"></p>
-		</div>
-		<div class="valid-month">
-			<span>{{ __('payments.valid_month') }}</span>
-		</div>
-		<button type="submit" class="btn btn-main w-100">{{ __('payments.payment_link') }}</button>
-	</div>
 	@endif
 </form>
 

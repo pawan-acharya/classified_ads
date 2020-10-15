@@ -55,6 +55,7 @@ class CategoryController extends Controller
             'sub_category'=> 'nullable',
             'display_order'=> 'required'
         ]);
+        
         $category = Category::create([
             'category_name'=>$validatedData['category_name'],
             'description'=> $validatedData['description'],

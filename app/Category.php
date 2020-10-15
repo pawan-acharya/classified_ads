@@ -36,4 +36,5 @@ class Category extends Model
     {
         return $this->form_items->pluck('id');
     }
+
 }

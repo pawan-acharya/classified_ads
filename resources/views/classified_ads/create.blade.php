@@ -4,6 +4,14 @@
    <section id="ad-create">
     <div class="container bg-white">
     	<h1 class="section-head">{{ Session::has('ad-edit') ? __('ads.lease_details') : __('ads.details') }}</h1>
+    	<h1 class="section-head">
+    		@if (Auth::user()->checkIfAdmin())
+    			Membership:- Expiry Date:- 
+    			{{\Carbon\Carbon::parse(Auth::user()->plan->ends_at)->diffForHumans(\Carbon\Carbon::now())}}
+			@elseif (Auth::user()->ifLeftAds())
+				Remaining Ads:-	{{Auth::user()->getLeftAds()}}
+    		@endif
+    	</h1>
         <div class="row justify-content-center">
             <div class="col-md-8 my-5">
 		    	<div class=" card">
