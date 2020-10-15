@@ -3,28 +3,7 @@
 @extends('layouts.app')
 
 @section('content')
-<section id="search-page-body">
-     <div class="search-body-head pt-2 pb-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-5 ml-auto">
-                    <form>
-                        <div class="form-row input-group">
-                            @if (app('request')->input('category') && \App\Category::where('category_name', app('request')->input('category'))->exists() && \App\Category::where('category_name', app('request')->input('category'))->first()->sub_category)
-                                @foreach (config('sub_category')[ \App\Category::where('category_name', app('request')->input('category'))->first()->sub_category] as $element)
-                                    <div class="form-group">
-                                        <input for="brand" class="col-form-label category_name" name="sub_category" data-value="{{ request()->fullUrlWithQuery(['sub_category' => $element]) }}" value="{{$element}}" readonly="">
-                                        &nbsp;
-                                    </div>
-                                @endforeach
-                            @endif
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
+<section id="search-page-body"> 
     <div class="search-body-head pt-2 pb-3">
         <div class="container">
             <div class="row">
@@ -52,6 +31,24 @@
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="sub-categories pt-2 pb-3">
+        <div class="container">
+            <div class="ml-auto">
+                <form>
+                    <div class="form-row input-group">
+                        @if (app('request')->input('category') && \App\Category::where('category_name', app('request')->input('category'))->exists() && \App\Category::where('category_name', app('request')->input('category'))->first()->sub_category)
+                            @foreach (config('sub_category')[ \App\Category::where('category_name', app('request')->input('category'))->first()->sub_category] as $element)
+                                <div class="form-group">
+                                    <input for="brand" class="col-form-label category_name" name="sub_category" data-value="{{ request()->fullUrlWithQuery(['sub_category' => $element]) }}" value="{{$element}}" readonly="">
+                                    &nbsp;
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
+                </form>
             </div>
         </div>
     </div>
