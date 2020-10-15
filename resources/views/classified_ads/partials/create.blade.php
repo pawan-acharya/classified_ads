@@ -60,8 +60,7 @@
   	</div>
 
   	@include('classified_ads.partials.add')
-	@if ($category->type != 'none' || Auth::user()->checkIfAdmin() || Auth::user()->ifLeftAds())
-	@else
+	
 	<div class="form-group col-sm-6">
   		<label for="featured-ad" class="col-form-label text-md-right">Make this ad Featured</label>
   		<input type="checkbox"  id="make-featured" onclick="makeFeatured($(this))" name="is_featured">
@@ -69,14 +68,12 @@
 	<div class="form-group col-sm-6" id="featured-for">
 		<label for="featured-ad-duration" class="col-form-label text-md-right">choose duration</label>
 		<select  class="form-control" id="featured-ad-duration" name="feature_type" onchange="addFeaturedAmount($(this))">
-			@if ($category->type =='none' && !Auth::user()->checkIfAdmin() && !Auth::user()->ifLeftAds())
-				<option value="day">1 Day</option>
-				<option value="week">1 Week</option>
-			@endif
+			<option value="day">1 Day</option>
+			<option value="week">1 Week</option>
 			<option value="month">1 Month</option>
 		</select>
 	</div>
-	@endif
+
   	<div class="form-group col-sm-6">
 	  @if ($category->type != 'none' || Auth::user()->checkIfAdmin() || Auth::user()->ifLeftAds())
 	  <div class="single-ad-premium">
