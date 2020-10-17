@@ -314,11 +314,15 @@ class PaymentController extends Controller
 			'tax' => $payment_plan['cost']* Constants::TAX_RATE,
 			'total' => $payment_plan['cost'] +  $payment_plan['cost']*Constants::TAX_RATE,
 		];
-		request()->session()->push('requests', request()->session()->get('requests'));
+		// request()->session()->push('requests', request()->session()->get('requests'));
 		return view('payment.edit.payment_form', compact('payment_plan', 'checkout_data', 'type', 'id'));
 	}
 
 	public function edit_payment_charge(Request $request, $id){
+		// dd($id);
+		update_on_payement($id);
+		return redirect()->route('classified_ads.show', ['classified_ad'=> ClassifiedAd::findOrFail($id)->title]);
+		
 		$slug= 'exceptional';
 		try {
 			$payment_plan = Constants::PAYMENT_PLANS['exceptional'];
@@ -436,4 +440,40 @@ function getPlanAmount($type){
 			return 20;
 			break;
 	}
+}
+
+function update_on_payement($id){
+	$classified_ad= ClassifiedAd::findOrFail($id);
+    $request= request()->session()->get('requests')[0];
+    // dd($request);
+    $form_values_array=[];
+    foreach ($request as $key => $value) {
+        $form_item_id= explode('-', $key)[0];
+        $form_item_value= $value;
+        $form_values_array[$form_item_id]=$form_item_value;
+    }
+    // dd($form_values_array);
+    $classified_ad->update([
+        'category_id' => $request['category_id'], 
+        'title' => $request['title'], 
+        'citq'=> $request['citq'], 
+        'price' => $request['price'], 
+        'price_for'=> $request['price_for'],
+        'descriptions' => $request['descriptions'], 
+        'form_values'=> json_encode( $form_values_array ),
+        // 'user_id'=> Auth::id(),
+        'location'=> $request['location'],
+        'url'=>  array_key_exists('url', $request)?$request['url']:null, 
+        'is_featured'=> array_key_exists('is_featured', $request)?1:0,
+        'feature_type'=> $request['feature_type']
+    ]);
+
+    if (request()->session()->has('title_images')) {
+        foreach(request()->session()->get('title_images') as $image) {
+            $classified_ad->file()->create($image);
+        }
+    }
+
+    request()->session()->forget('requests'); 
+    return;
 }

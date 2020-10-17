@@ -151,7 +151,7 @@
                     </div>
                 </div>
 
-                @if(count($expiredAds) > 0)
+                {{-- @if(count($expiredAds) > 0)
                 <div class="completed-ads">
                     <div class="row-head">{{ __('auth.completed_ads') }}<img src="{{ asset('images/icon/arrow-down.png') }}" alt="Arrow Down" /></div>
                     <div class="card-body">
@@ -162,7 +162,7 @@
                         </div>
                     </div>
                 </div>
-                @endif
+                @endif --}}
             </div>
         </div>
     </div>

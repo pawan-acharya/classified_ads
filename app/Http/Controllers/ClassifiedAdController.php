@@ -159,12 +159,15 @@ class ClassifiedAdController extends Controller
      */
     public function edit($id)
     {
+        request()->session()->forget('requests');
+        
         $classified_ad= ClassifiedAd::findOrFail($id);
         if(Auth::user()->id !=  $classified_ad->user_id){
             return redirect()->back();
         }
         $category= $classified_ad->category;
-        return view('classified_ads.edit', compact('classified_ad', 'category'));
+        $categories= Category::all();
+        return view('classified_ads.edit', compact('classified_ad', 'category','categories'));
     }
 
     /**
@@ -178,21 +181,27 @@ class ClassifiedAdController extends Controller
     {
         $classified_ad= ClassifiedAd::findOrFail($id);
         if(app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName()== 'classified_ads.edit'){
-            if(Auth::user()->checkIfAdmin() || (Auth::user()->checkForPlan() && $classified_ad->plan->id== Auth::user()->plan->id) || ($classified_ad->category->type== 'rental' || $classified_ad->category->type== 'sales') || !$classified_ad->plan || ($classified_ad->plan->ends_at< date('Y-m-d'))){
+            if(Auth::user()->checkIfAdmin() || 
+                // (Auth::user()->checkForPlan() && $classified_ad->plan->id== Auth::user()->plan->id) || 
+                ($classified_ad->category->type!= 'none' && Category::findOrFail($request['category_id'])->type != 'none' ) ||
+                !$classified_ad->plan || 
+                ($classified_ad->plan->ends_at< date('Y-m-d'))){
                 //no need to add additional money
             }else{
                 //no need to rediect to pay additional money
                 request()->session()->forget('requests');
-                request()->session()->push('requests', $request->except('title_images'));
+                request()->session()->forget('title_images');
+                request()->session()->push('requests', $request->except(['title_images', '_token', '_method']));
                 foreach($request->file('title_images') as $image) {
-                    $request->session()->push('title_images', $ad->upload($image));
+                    $request->session()->push('title_images', $classified_ad->upload($image));
                 }
-                return redirect()->route('edit_pay', ['id'=> $id]);
+                return redirect()->route('edit_payment_form', ['id'=> $id]);
             }
         }
-        if(app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName()== 'edit_payment.charge'){
-            $request= request()->session()->get('requests');
-        }
+        // dd(app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName());
+        // if(app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName()== 'edit_payment.charge'){
+        //     $request= request()->session()->get('requests');
+        // }
 
         $form_values_array=[];
         foreach ($request->except(['_token', '_method']) as $key => $value) {
@@ -200,24 +209,25 @@ class ClassifiedAdController extends Controller
             $form_item_value= $value;
             $form_values_array[$form_item_id]=$form_item_value;
         }
-        
+        dd('here');
         $classified_ad->update([
-            'title' => $validatedData['title'], 
-            'citq'=> $validatedData['citq'], 
-            'price' => $validatedData['price'], 
-            'price_for'=> $validatedData['price_for'],
-            'descriptions' => $validatedData['descriptions'], 
+            'category_id' => $request['category_id'], 
+            'title' => $request['title'], 
+            'citq'=> $request['citq'], 
+            'price' => $request['price'], 
+            'price_for'=> $request['price_for'],
+            'descriptions' => $request['descriptions'], 
             'form_values'=> json_encode( $form_values_array),
-            'user_id'=> Auth::id(),
-            'location'=> $validatedData['location'],
-            'url'=>  array_key_exists('url', $validatedData)?$validatedData['url']:null, 
-            'is_featured'=> array_key_exists('is_featured', $validatedData)?1:0,
-            'feature_type'=> $validatedData['feature_type']
+            // 'user_id'=> Auth::id(),
+            'location'=> $request['location'],
+            'url'=>  array_key_exists('url', $request)?$request['url']:null, 
+            'is_featured'=> array_key_exists('is_featured', $request)?1:0,
+            'feature_type'=> $request['feature_type']
         ]);
 
         if ($request->session()->has('title_images')) {
             foreach($request->session()->get('title_images') as $image) {
-                $ad->file()->create($image);
+                $classified_ad->file()->create($image);
             }
         }
 
@@ -284,4 +294,16 @@ class ClassifiedAdController extends Controller
     public function checkTitle($title){
         return ClassifiedAd::where('title', $title)->exists();
     }
+
+    public function editForm($category){
+        $category=  Category::findOrFail($category);
+        $parent= 'edit';
+        return view('classified_ads.partials.add', compact(['category', 'parent']));
+    }
+
+    public function checkTitleForEdit($classified, $title){
+        return ClassifiedAd::where('id', '<>', $classified)->where('title', $title)->exists();
+    }
 }
+
+

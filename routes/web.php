@@ -75,6 +75,8 @@ Route::middleware(['auth'])->group(function () {
             , 'index'
         ]);
         Route::get('/checkTitle/{title}', 'ClassifiedAdController@checkTitle')->name('classified_ads.checkTitle');
+        Route::get('/checkTitleForEdit/{classified}/{title}', 'ClassifiedAdController@checkTitleForEdit')->name('classified_ads.checkTitleForEdit');
+        Route::get('/editForm/{category}', 'ClassifiedAdController@editForm')->name('classified_ads.editForm');
 
         Route::get('/classified_ads/review/{classified_ad}', 'ClassifiedAdController@review')->name('classified_ads.review');
 

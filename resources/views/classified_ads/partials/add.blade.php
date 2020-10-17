@@ -1,3 +1,18 @@
+@if ($parent != 'create')
+	@if ($category->sub_category)
+    <div class="form-group col-sm-6" >
+        <label for="" class="col-form-label text-md-right">#Sub-Category</label>
+        <select class="form-control @error('sub_category') is-invalid @enderror" name="sub_category">
+            <option></option>
+            @foreach (config('sub_category')[$category->sub_category] as $element)
+                <option value="{{$element}}" >
+                    {{$element}}
+                </option>
+            @endforeach
+        </select>
+    </div>
+	@endif
+@endif
 @foreach ($category->form_items()->whereNotIn('type', ['check_box', 'select', 'None', 'secondary_price'])->where('parent', null)->get() as $form_item)
 	<div class="form-group col-sm-6">
 	    
@@ -109,4 +124,26 @@
 	        </div>
 	        <br> </br>
 	@endforeach
+@endif
+@if ($parent != 'create')
+	<div class="form-group col-sm-6"
+	    @if ($category->type != 'none')
+	        style="display: none"
+	    @endif
+	    >
+	        <label for="featured-ad" class="col-form-label text-md-right">Make this ad Featured</label>
+	        <input type="checkbox"  id="make-featured" onclick="makeFeatured($(this))" name="is_featured" {{$category->type != 'none'?'checked':''}}>
+	</div>
+	<div class="form-group col-sm-6" id="featured-for"
+	    @if ($category->type != 'none')
+	        style="display: none"
+	    @endif
+	    >
+        <label for="featured-ad-duration" class="col-form-label text-md-right">choose duration</label>
+        <select  class="form-control" id="featured-ad-duration" name="feature_type" onchange="addFeaturedAmount($(this))">
+            <option value="day" >1 Day</option>
+            <option value="week" >1 Week</option>
+            <option value="month" {{$category->type != 'none'?'selected':''}}>1 Month</option>
+        </select>
+	</div>
 @endif

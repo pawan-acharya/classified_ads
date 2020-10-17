@@ -8,7 +8,7 @@
             <div class="alert alert-success" role="alert">
                 {{ session('status') }}
             </div>
-        @endif
+        @endif 
         <div class="row plan-selection">
             <div class="col-md-4 plan-item featured">
                 <div class="plan-image pt-3">

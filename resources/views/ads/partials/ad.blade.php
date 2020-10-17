@@ -2,7 +2,7 @@
     @if($parent == 'index')
     <a href= "{{ route('classified_ads.show',$ad->title ) }}" class="card ad  {{$index%2==0?'odd':'even'}} {{ $ad->is_special ? 'special': ''}}">
     @else
-    <a href= "{{ route('classified_ads.show',$ad->title ) }}" class="card ad">
+    <a href= "{{ route('classified_ads.review',$ad->id ) }}" class="card ad">
     @endif
         <div class="card-body">
             <div class= "row">

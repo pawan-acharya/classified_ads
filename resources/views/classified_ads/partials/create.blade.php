@@ -61,7 +61,7 @@
 	    <textarea class="form-control"  name="descriptions"></textarea>
   	</div>
 
-  	@include('classified_ads.partials.add')
+  	@include('classified_ads.partials.add',['parent' => 'create'])
 	
 	<div class="form-group col-sm-6" 
 	@if ($category->type != 'none')
@@ -200,13 +200,11 @@
 		url= url.replace(':title', item.val());
 		$.get( url, function( data ) {
 	  		if(data){
-	  			// alert('duplicate title');
 	  			$('#add_new_classified_ad button:submit').prop('disabled', true);
 	  			$('input[name ="title"]').css('border', '1px solid red');
 	  		}else{
 	  			$('#add_new_classified_ad button:submit').prop('disabled', false);
-	  			//rempve the red border
-	  			debugger;
+	  			$('input[name ="title"]').css('border', 'none');
 	  		}
 		});
 	}
