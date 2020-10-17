@@ -200,12 +200,13 @@
 		url= url.replace(':title', item.val());
 		$.get( url, function( data ) {
 	  		if(data){
-	  			alert('duplicate title');
-	  			//disable the button
-	  			//red border arount
+	  			// alert('duplicate title');
+	  			$('#add_new_classified_ad button:submit').prop('disabled', true);
+	  			$('input[name ="title"]').css('border', '1px solid red');
 	  		}else{
-	  			//enable the button
+	  			$('#add_new_classified_ad button:submit').prop('disabled', false);
 	  			//rempve the red border
+	  			debugger;
 	  		}
 		});
 	}
