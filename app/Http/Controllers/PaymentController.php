@@ -25,7 +25,9 @@ class PaymentController extends Controller
 	public function plansForm($id) 
 	{
         $classified_ad= ClassifiedAd::findOrFail($id);
-		if(Auth::user()->checkIfAdmin() || Auth::user()->ifLeftAds($classified_ad->category->type) || findTotalAmount($id)<=0){
+		if(Auth::user()->checkIfAdmin() || Auth::user()->ifLeftAds($classified_ad->category->type) 
+			// || findTotalAmount($id)<=0
+		){
             $plan =Auth::user()->plan;
             $classified_ad->plan()->associate($plan);
             $classified_ad->save();

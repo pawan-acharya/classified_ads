@@ -53,13 +53,13 @@
                         
                             @if (!Auth::user()->checkIfAdmin())
                                 @if (Auth::user()->getLeftAds('sales') > 0)
-                                    <a type="button" href="{{route('bulk_pay')}}"  class="btn btn-secondary" data-dismiss="modal">
+                                    <a type="button" href="#"  class="btn btn-secondary" data-dismiss="modal" >
                                         Remaining Ads :- {{Auth::user()->getLeftAds('sales')}}
                                         <br>
                                         Package:- {{ucfirst('sales')}}
                                     </a>
                                 @elseif(Auth::user()->getLeftAds('rental') > 0)
-                                    <a type="button" href="{{route('bulk_pay')}}"  class="btn btn-secondary" data-dismiss="modal">
+                                    <a type="button" href="#"  class="btn btn-secondary" data-dismiss="modal" >
                                         Remaining Ads :- {{Auth::user()->getLeftAds('rental')}}
                                         <br>
                                         Package:- {{ucfirst('rental')}}

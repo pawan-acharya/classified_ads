@@ -98,7 +98,6 @@ class User extends Authenticatable
     public function getLeftAds($category_type){
         if($this->checkForPlan($category_type)){
             $ad_counts= $this->ads()->where('plan_id', $this->plan_id)->count();
-            
             switch ($this->plan->type) {
                 case 'ten':
                     $avaiilable_ads= 10;
@@ -110,7 +109,6 @@ class User extends Authenticatable
                     $avaiilable_ads= 1;
                     break;
             }
-
             return $avaiilable_ads- $ad_counts;
         }
     }

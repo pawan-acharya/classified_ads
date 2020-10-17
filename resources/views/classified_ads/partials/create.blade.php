@@ -14,7 +14,7 @@
 	@endif
 	<div class="form-group col-sm-6">
 	    <label for="" class="col-form-label text-md-right">Title</label>
-	    <input type="text" class="form-control  @error('title') is-invalid @enderror"  name="title" required>
+	    <input type="text" class="form-control  @error('title') is-invalid @enderror"  name="title" onblur="checkTitle($(this))" required>
   	</div> 
   	<div class="form-group col-sm-6" >
 	    <label for="" class="col-form-label text-md-right">#CITQ</label>
@@ -193,6 +193,21 @@
 			calculateTotalAmount(-previousAmount);
 			previousAmount= 0;
 		}
+	}
+	
+	function checkTitle(item){
+		var url= "{{route('classified_ads.checkTitle', ':title')}}";
+		url= url.replace(':title', item.val());
+		$.get( url, function( data ) {
+	  		if(data){
+	  			alert('duplicate title');
+	  			//disable the button
+	  			//red border arount
+	  		}else{
+	  			//enable the button
+	  			//rempve the red border
+	  		}
+		});
 	}
 	makeFeatured($('#make-featured'));
 </script>

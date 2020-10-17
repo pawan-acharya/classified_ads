@@ -1,39 +1,48 @@
 
-
 @extends('layouts.app')
 
 @section('content')
-<section id="search-page-body"> 
-    <div class="search-body-head pt-2 pb-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-5 ml-auto">
-                    <form>
-                        <div class="form-row input-group">
-                            <div class="form-group selectdiv col-md-3 my-auto">
-                                <label for="brand" class="col-form-label ">{{ __('ads.sort_by') }}</label>
-                                <select class="form-control filters" id="sort_by" name="order_by">
-                                    <option value="" selected disabled></option>
-                                    @foreach (__('ads.sort_by_options') as $key => $option)
-                                    <option value="{{ request()->fullUrlWithQuery(['sort_by' => $key]) }}" @if ( app('request')->input('sort_by') == $key) selected @endif> {{$option}}</option>
-                                    @endforeach
-                                </select>
+    @push('scripts-vars')
+        <!-- Material Design Bootstrap -->
+        {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet"> --}}
+    @endpush
+    <section id="search-page-body"> 
+        <div class="search-body-head pt-2 pb-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-5 ml-auto">
+                        <form>
+                            <div class="form-row input-group">
+                                 <div class="form-group selectdiv col-md-3 my-auto">
+                                    {{-- <label for="brand" class="col-form-label ">{{ __('ads.sort_by') }}</label> --}}
+                                    <form class="multi-range-field my-5 pb-5">
+                                        <input id="multi6" class="multi-range" type="range" />
+                                    </form>
+                                 </div>
+                                <div class="form-group selectdiv col-md-3 my-auto">
+                                    <label for="brand" class="col-form-label ">{{ __('ads.sort_by') }}</label>
+                                    <select class="form-control filters" id="sort_by" name="order_by">
+                                        <option value="" selected disabled></option>
+                                        @foreach (__('ads.sort_by_options') as $key => $option)
+                                        <option value="{{ request()->fullUrlWithQuery(['sort_by' => $key]) }}" @if ( app('request')->input('sort_by') == $key) selected @endif> {{$option}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group selectdiv col-md-3 my-auto">
+                                    <label for="brand" class="col-form-label ">{{ __('ads.order') }}</label>
+                                    <select class="form-control filters" id="order" name="order_by">
+                                        <option value="" selected disabled></option>
+                                        @foreach (__('ads.order_options') as $key => $option)
+                                        <option value="{{ request()->fullUrlWithQuery(['order' => $key]) }}" @if (app('request')->input('order') == $key) selected @endif> {{$option}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group selectdiv col-md-3 my-auto">
-                                <label for="brand" class="col-form-label ">{{ __('ads.order') }}</label>
-                                <select class="form-control filters" id="order" name="order_by">
-                                    <option value="" selected disabled></option>
-                                    @foreach (__('ads.order_options') as $key => $option)
-                                    <option value="{{ request()->fullUrlWithQuery(['order' => $key]) }}" @if (app('request')->input('order') == $key) selected @endif> {{$option}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     <div class="sub-categories pt-2 pb-3">
         <div class="container">
             <div class="ml-auto">
@@ -94,6 +103,7 @@
 </section>
     
 @push('scripts-vars')
+    {{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script> --}}
     <script>
         var options ={!! json_encode(__('ads.model_options')) !!};
         var old_model = '{{request()->get('model')}}';
@@ -124,6 +134,21 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     google.maps.event.addDomListener(window, 'load', initialize);
+
+    $('#multi6').mdbRange({
+      value: {
+        min: 1,
+        max: 1000
+      },
+      width: '25%',
+      single: {
+        active: true,
+        multi: {
+          active: true,
+          rangeLength: 1
+        },
+      }
+    });
 </script>
 @endpush
 @endsection

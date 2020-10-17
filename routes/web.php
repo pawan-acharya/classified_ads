@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 //Static Pages
 Route::get('/', 'HomeController@homepage');
 Route::get('/faq', function () {
@@ -75,7 +74,7 @@ Route::middleware(['auth'])->group(function () {
             'create', 'store', 'create'
             , 'index'
         ]);
-        
+        Route::get('/checkTitle/{title}', 'ClassifiedAdController@checkTitle')->name('classified_ads.checkTitle');
 
         Route::get('/classified_ads/review/{classified_ad}', 'ClassifiedAdController@review')->name('classified_ads.review');
 

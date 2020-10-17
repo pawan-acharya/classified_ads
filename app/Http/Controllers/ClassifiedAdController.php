@@ -38,6 +38,13 @@ class ClassifiedAdController extends Controller
         if($request->query('sub_category')){
             $classified_ads->where('sub_category', '=',  $request->query('sub_category'));
         }
+        
+        // if(true){
+        //     $min=10;
+        //     $max=1000;
+        //     $classified_ads->where('price', '>=',  $min);
+        //     $classified_ads->where('price', '<=',  $max);
+        // }
         $classified_ads_count= $classified_ads->count();
         $classified_ads= $classified_ads->paginate(PER_PAGE);
 
@@ -272,5 +279,9 @@ class ClassifiedAdController extends Controller
     public function ads_list(){
         $classified_ads= ClassifiedAd::whereNull('plan_id')->get();
         return view('classified_ads.list', compact('classified_ads'));
+    }
+
+    public function checkTitle($title){
+        return ClassifiedAd::where('title', $title)->exists();
     }
 }
